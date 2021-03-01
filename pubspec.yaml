@@ -12,3 +12,4 @@ dependencies:
 
 dev_dependencies:
   pedantic: ^1.10.0
+  ffigen: ^2.0.1

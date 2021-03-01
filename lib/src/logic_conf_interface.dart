@@ -9,6 +9,8 @@ abstract class LogicConfPlatform {
     _instance = instance;
   }
 
+  List<dynamic> listDevices();
+
   bool openDevice(String path);
 
   void closeDevice();

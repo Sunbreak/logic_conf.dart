@@ -1,0 +1,14 @@
+name: SetupAPI
+description: Bindings to `SetupAPI.h`.
+llvm-lib: 'C:\Program Files\LLVM\bin'
+output: 'lib/src/windows/setupapi.dart'
+headers:
+  entry-points:
+    - 'windows/SetupAPI_.h'
+  include-directives: # include only these header files and necessary structs from other header files
+    # - '**SetupAPI.h'
+    - '**SetupAPI_.h'
+array-workaround: true
+size-map:
+  long: 4
+  unsigned long: 4

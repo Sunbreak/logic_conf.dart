@@ -23,6 +23,8 @@ LogicConfPlatform get _platform {
 }
 
 class LogicConf {
+  static List<dynamic> listDevices() => _platform.listDevices();
+
   static bool openDevice(String path) => _platform.openDevice(path);
 
   static void closeDevice() => _platform.closeDevice();
