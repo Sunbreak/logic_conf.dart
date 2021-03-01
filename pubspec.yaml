@@ -4,10 +4,12 @@ description: A simple command-line application.
 # homepage: https://www.example.com
 
 environment:
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: '>=2.12.0-259.9.beta <3.0.0' # ffi: ^1.0.0 required
 
-#dependencies:
-#  path: ^1.7.0
+dependencies:
+  win32: ^2.0.0
+  ffi: ^1.0.0
 
 dev_dependencies:
-  pedantic: ^1.9.0
+  pedantic: ^1.10.0
+  ffigen: ^2.0.1
