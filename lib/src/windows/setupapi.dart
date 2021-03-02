@@ -25,7 +25,7 @@ class SetupAPI {
 
   int SetupDiEnumDeviceInterfaces(
     ffi.Pointer<ffi.Void> DeviceInfoSet,
-    ffi.Pointer<SP_DEVINFO_DATA> DeviceInfoData,
+    ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
     ffi.Pointer<GUID> InterfaceClassGuid,
     int MemberIndex,
     ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
@@ -49,7 +49,7 @@ class SetupAPI {
     ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
     int DeviceInterfaceDetailDataSize,
     ffi.Pointer<ffi.Uint32> RequiredSize,
-    ffi.Pointer<SP_DEVINFO_DATA> DeviceInfoData,
+    ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
   ) {
     return (_SetupDiGetDeviceInterfaceDetailW ??= _dylib.lookupFunction<
             _c_SetupDiGetDeviceInterfaceDetailW,
@@ -190,7 +190,7 @@ class ArrayHelper_GUID_Data4_level0 {
   }
 }
 
-class SP_DEVINFO_DATA extends ffi.Struct {
+class PSP_DEVINFO_DATA extends ffi.Struct {
   @ffi.Uint32()
   external int cbSize;
 
@@ -293,7 +293,7 @@ typedef _dart_SetupDiDestroyDeviceInfoList = int Function(
 
 typedef _c_SetupDiEnumDeviceInterfaces = ffi.Int32 Function(
   ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<SP_DEVINFO_DATA> DeviceInfoData,
+  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
   ffi.Pointer<GUID> InterfaceClassGuid,
   ffi.Uint32 MemberIndex,
   ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
@@ -301,7 +301,7 @@ typedef _c_SetupDiEnumDeviceInterfaces = ffi.Int32 Function(
 
 typedef _dart_SetupDiEnumDeviceInterfaces = int Function(
   ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<SP_DEVINFO_DATA> DeviceInfoData,
+  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
   ffi.Pointer<GUID> InterfaceClassGuid,
   int MemberIndex,
   ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
@@ -313,7 +313,7 @@ typedef _c_SetupDiGetDeviceInterfaceDetailW = ffi.Int32 Function(
   ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
   ffi.Uint32 DeviceInterfaceDetailDataSize,
   ffi.Pointer<ffi.Uint32> RequiredSize,
-  ffi.Pointer<SP_DEVINFO_DATA> DeviceInfoData,
+  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
 );
 
 typedef _dart_SetupDiGetDeviceInterfaceDetailW = int Function(
@@ -322,7 +322,7 @@ typedef _dart_SetupDiGetDeviceInterfaceDetailW = int Function(
   ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
   int DeviceInterfaceDetailDataSize,
   ffi.Pointer<ffi.Uint32> RequiredSize,
-  ffi.Pointer<SP_DEVINFO_DATA> DeviceInfoData,
+  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
 );
 
 typedef _c_SetupDiGetClassDevsW = ffi.Pointer<ffi.Void> Function(
