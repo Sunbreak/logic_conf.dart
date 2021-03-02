@@ -59,7 +59,10 @@ class LogicConfWindows extends LogicConfPlatform {
         // FIXME Utf16.decode
         var devicePath = utf8.decode(deviceInterfaceDetailDataPtr.getDevicePathData(requiredSizePtr.value));
     
-        devHandle = CreateFile(devicePath.toNativeUtf16(), 0, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, NULL);
+        var nativeUtf16 = devicePath.toNativeUtf16();
+        devHandle = CreateFile(nativeUtf16, 0, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, NULL);
+        malloc.free(nativeUtf16);
+
         if (devHandle == INVALID_HANDLE_VALUE) {
           print('CreateFile error ${GetLastError()}');
           continue;
@@ -125,8 +128,9 @@ class LogicConfWindows extends LogicConfPlatform {
 
   @override
   bool openDevice(String path) {
+    var nativeUtf16 = path.toNativeUtf16();
     _devHandle = CreateFile(
-      path.toNativeUtf16(),
+      nativeUtf16,
       GENERIC_READ | GENERIC_WRITE,
       FILE_SHARE_READ | FILE_SHARE_WRITE,
       nullptr,
@@ -134,6 +138,8 @@ class LogicConfWindows extends LogicConfPlatform {
       0,
       NULL,
     );
+    malloc.free(nativeUtf16);
+
     return _devHandle != INVALID_HANDLE_VALUE;
   }
 

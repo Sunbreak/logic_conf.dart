@@ -19,7 +19,10 @@ class LogicConfLinux extends LogicConfPlatform {
 
   @override
   bool openDevice(String path) {
-    var descriptor = _libc.open2(path.toNativeUtf8().cast(), O_RDWR);
+    var nativeUtf8 = path.toNativeUtf8();
+    var descriptor = _libc.open2(nativeUtf8.cast(), O_RDWR);
+    malloc.free(nativeUtf8);
+
     if (descriptor < 0) {
       // TODO strerror()
       print('open2 error');

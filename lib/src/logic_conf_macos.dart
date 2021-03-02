@@ -25,7 +25,10 @@ class LogicConfMacos extends LogicConfPlatform {
   
   @override
   bool openDevice(String path) {
-    _entryPtr = _io.IORegistryEntryFromPath(kIOMasterPortDefault, path.toNativeUtf8().cast());
+    var nativeUtf8 = path.toNativeUtf8();
+    _entryPtr = _io.IORegistryEntryFromPath(kIOMasterPortDefault, nativeUtf8.cast());
+    malloc.free(nativeUtf8);
+
     if (_entryPtr == nullptr) {
         print('IORegistryEntryFromPath error');
         return false;
