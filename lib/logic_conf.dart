@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'src/logic_conf_interface.dart';
+import 'src/logic_conf_macos.dart';
 import 'src/logic_conf_linux.dart';
 import 'src/logic_conf_windows.dart';
 
@@ -16,6 +17,8 @@ LogicConfPlatform get _platform {
     // with a non-default instance.
     if (Platform.isWindows) {
       LogicConfPlatform.instance = LogicConfWindows();
+    } if (Platform.isMacOS) {
+      LogicConfPlatform.instance = LogicConfMacos();
     } else if (Platform.isLinux) {
       LogicConfPlatform.instance = LogicConfLinux();
     }
