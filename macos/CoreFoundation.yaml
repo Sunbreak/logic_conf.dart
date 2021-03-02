@@ -1,0 +1,12 @@
+name: CoreFoundation
+description: Bindings to `CoreFoundation.h`.
+output: 'lib/src/macos/corefoundation.dart'
+compiler-opts: '-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Kernel.framework/Headers/'
+headers:
+  entry-points:
+    - 'macos/CoreFoundation_.h'
+  include-directives: # include only these header files and necessary structs from other header files
+    - '**CoreFoundation_.h'
+structs:
+  rename:
+    'CFAllocatorRef': 'CFAllocator'

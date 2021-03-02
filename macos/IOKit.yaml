@@ -1,0 +1,14 @@
+name: IOKit
+description: Bindings to `IOKit.h`.
+output: 'lib/src/macos/iokit.dart'
+compiler-opts: '-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Kernel.framework/Headers/'
+headers:
+  entry-points:
+    - 'macos/IOKit_.h'
+  include-directives: # include only these header files and necessary structs from other header files
+    - '**IOKit_.h'
+structs:
+  rename:
+    'CFAllocatorRef': 'CFAllocator'
+    'IOHIDManagerRef': 'IOHIDManager'
+    'IOHIDDeviceRef': 'IOHIDDevice'
