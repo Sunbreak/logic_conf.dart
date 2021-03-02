@@ -6,11 +6,13 @@ headers:
   entry-points:
     - 'windows/hidsdi_.h'
   include-directives: # include only these header files and necessary structs from other header files
-    - '**hidsdi_.h'
+    - '**hidusage.h'
+    - '**hidpi.h'
+    - '**hidsdi.h'
 structs:
   rename:
     'PHIDD_ATTRIBUTES': 'HIDD_ATTRIBUTES'
-    'PHIDP_PREPARSED_DATA': 'HIDP_PREPARSED_DATA'
+    '_HIDP_PREPARSED_DATA': 'HIDP_PREPARSED_DATA'
     'PHIDP_CAPS': 'HIDP_CAPS'
 array-workaround: true
 size-map:

@@ -24,6 +24,571 @@ class HidSdi {
 
   _dart_HidP_GetCaps? _HidP_GetCaps;
 
+  int HidP_GetLinkCollectionNodes(
+    ffi.Pointer<PHIDP_LINK_COLLECTION_NODE> LinkCollectionNodes,
+    ffi.Pointer<ffi.Uint32> LinkCollectionNodesLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_GetLinkCollectionNodes ??= _dylib.lookupFunction<
+        _c_HidP_GetLinkCollectionNodes,
+        _dart_HidP_GetLinkCollectionNodes>('HidP_GetLinkCollectionNodes'))(
+      LinkCollectionNodes,
+      LinkCollectionNodesLength,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_GetLinkCollectionNodes? _HidP_GetLinkCollectionNodes;
+
+  int HidP_GetSpecificButtonCaps(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    ffi.Pointer<PHIDP_BUTTON_CAPS> ButtonCaps,
+    ffi.Pointer<ffi.Uint16> ButtonCapsLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_GetSpecificButtonCaps ??= _dylib.lookupFunction<
+        _c_HidP_GetSpecificButtonCaps,
+        _dart_HidP_GetSpecificButtonCaps>('HidP_GetSpecificButtonCaps'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      ButtonCaps,
+      ButtonCapsLength,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_GetSpecificButtonCaps? _HidP_GetSpecificButtonCaps;
+
+  int HidP_GetButtonCaps(
+    int ReportType,
+    ffi.Pointer<PHIDP_BUTTON_CAPS> ButtonCaps,
+    ffi.Pointer<ffi.Uint16> ButtonCapsLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_GetButtonCaps ??=
+        _dylib.lookupFunction<_c_HidP_GetButtonCaps, _dart_HidP_GetButtonCaps>(
+            'HidP_GetButtonCaps'))(
+      ReportType,
+      ButtonCaps,
+      ButtonCapsLength,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_GetButtonCaps? _HidP_GetButtonCaps;
+
+  int HidP_GetSpecificValueCaps(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    ffi.Pointer<PHIDP_VALUE_CAPS> ValueCaps,
+    ffi.Pointer<ffi.Uint16> ValueCapsLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_GetSpecificValueCaps ??= _dylib.lookupFunction<
+        _c_HidP_GetSpecificValueCaps,
+        _dart_HidP_GetSpecificValueCaps>('HidP_GetSpecificValueCaps'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      ValueCaps,
+      ValueCapsLength,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_GetSpecificValueCaps? _HidP_GetSpecificValueCaps;
+
+  int HidP_GetValueCaps(
+    int ReportType,
+    ffi.Pointer<PHIDP_VALUE_CAPS> ValueCaps,
+    ffi.Pointer<ffi.Uint16> ValueCapsLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_GetValueCaps ??=
+        _dylib.lookupFunction<_c_HidP_GetValueCaps, _dart_HidP_GetValueCaps>(
+            'HidP_GetValueCaps'))(
+      ReportType,
+      ValueCaps,
+      ValueCapsLength,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_GetValueCaps? _HidP_GetValueCaps;
+
+  int HidP_GetExtendedAttributes(
+    int ReportType,
+    int DataIndex,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<PHIDP_EXTENDED_ATTRIBUTES> Attributes,
+    ffi.Pointer<ffi.Uint32> LengthAttributes,
+  ) {
+    return (_HidP_GetExtendedAttributes ??= _dylib.lookupFunction<
+        _c_HidP_GetExtendedAttributes,
+        _dart_HidP_GetExtendedAttributes>('HidP_GetExtendedAttributes'))(
+      ReportType,
+      DataIndex,
+      PreparsedData,
+      Attributes,
+      LengthAttributes,
+    );
+  }
+
+  _dart_HidP_GetExtendedAttributes? _HidP_GetExtendedAttributes;
+
+  int HidP_InitializeReportForID(
+    int ReportType,
+    int ReportID,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_InitializeReportForID ??= _dylib.lookupFunction<
+        _c_HidP_InitializeReportForID,
+        _dart_HidP_InitializeReportForID>('HidP_InitializeReportForID'))(
+      ReportType,
+      ReportID,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_InitializeReportForID? _HidP_InitializeReportForID;
+
+  int HidP_SetData(
+    int ReportType,
+    ffi.Pointer<PHIDP_DATA> DataList,
+    ffi.Pointer<ffi.Uint32> DataLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_SetData ??= _dylib
+        .lookupFunction<_c_HidP_SetData, _dart_HidP_SetData>('HidP_SetData'))(
+      ReportType,
+      DataList,
+      DataLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_SetData? _HidP_SetData;
+
+  int HidP_GetData(
+    int ReportType,
+    ffi.Pointer<PHIDP_DATA> DataList,
+    ffi.Pointer<ffi.Uint32> DataLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_GetData ??= _dylib
+        .lookupFunction<_c_HidP_GetData, _dart_HidP_GetData>('HidP_GetData'))(
+      ReportType,
+      DataList,
+      DataLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_GetData? _HidP_GetData;
+
+  int HidP_MaxDataListLength(
+    int ReportType,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_MaxDataListLength ??= _dylib.lookupFunction<
+        _c_HidP_MaxDataListLength,
+        _dart_HidP_MaxDataListLength>('HidP_MaxDataListLength'))(
+      ReportType,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_MaxDataListLength? _HidP_MaxDataListLength;
+
+  int HidP_SetUsages(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    ffi.Pointer<ffi.Uint16> UsageList,
+    ffi.Pointer<ffi.Uint32> UsageLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_SetUsages ??=
+        _dylib.lookupFunction<_c_HidP_SetUsages, _dart_HidP_SetUsages>(
+            'HidP_SetUsages'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      UsageList,
+      UsageLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_SetUsages? _HidP_SetUsages;
+
+  int HidP_UnsetUsages(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    ffi.Pointer<ffi.Uint16> UsageList,
+    ffi.Pointer<ffi.Uint32> UsageLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_UnsetUsages ??=
+        _dylib.lookupFunction<_c_HidP_UnsetUsages, _dart_HidP_UnsetUsages>(
+            'HidP_UnsetUsages'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      UsageList,
+      UsageLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_UnsetUsages? _HidP_UnsetUsages;
+
+  int HidP_GetUsages(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    ffi.Pointer<ffi.Uint16> UsageList,
+    ffi.Pointer<ffi.Uint32> UsageLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_GetUsages ??=
+        _dylib.lookupFunction<_c_HidP_GetUsages, _dart_HidP_GetUsages>(
+            'HidP_GetUsages'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      UsageList,
+      UsageLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_GetUsages? _HidP_GetUsages;
+
+  int HidP_GetUsagesEx(
+    int ReportType,
+    int LinkCollection,
+    ffi.Pointer<PUSAGE_AND_PAGE> ButtonList,
+    ffi.Pointer<ffi.Uint32> UsageLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_GetUsagesEx ??=
+        _dylib.lookupFunction<_c_HidP_GetUsagesEx, _dart_HidP_GetUsagesEx>(
+            'HidP_GetUsagesEx'))(
+      ReportType,
+      LinkCollection,
+      ButtonList,
+      UsageLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_GetUsagesEx? _HidP_GetUsagesEx;
+
+  int HidP_MaxUsageListLength(
+    int ReportType,
+    int UsagePage,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ) {
+    return (_HidP_MaxUsageListLength ??= _dylib.lookupFunction<
+        _c_HidP_MaxUsageListLength,
+        _dart_HidP_MaxUsageListLength>('HidP_MaxUsageListLength'))(
+      ReportType,
+      UsagePage,
+      PreparsedData,
+    );
+  }
+
+  _dart_HidP_MaxUsageListLength? _HidP_MaxUsageListLength;
+
+  int HidP_SetUsageValue(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    int UsageValue,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_SetUsageValue ??=
+        _dylib.lookupFunction<_c_HidP_SetUsageValue, _dart_HidP_SetUsageValue>(
+            'HidP_SetUsageValue'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      UsageValue,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_SetUsageValue? _HidP_SetUsageValue;
+
+  int HidP_SetScaledUsageValue(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    int UsageValue,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_SetScaledUsageValue ??= _dylib.lookupFunction<
+        _c_HidP_SetScaledUsageValue,
+        _dart_HidP_SetScaledUsageValue>('HidP_SetScaledUsageValue'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      UsageValue,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_SetScaledUsageValue? _HidP_SetScaledUsageValue;
+
+  int HidP_SetUsageValueArray(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    ffi.Pointer<ffi.Int8> UsageValue,
+    int UsageValueByteLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_SetUsageValueArray ??= _dylib.lookupFunction<
+        _c_HidP_SetUsageValueArray,
+        _dart_HidP_SetUsageValueArray>('HidP_SetUsageValueArray'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      UsageValue,
+      UsageValueByteLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_SetUsageValueArray? _HidP_SetUsageValueArray;
+
+  int HidP_GetUsageValue(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    ffi.Pointer<ffi.Uint32> UsageValue,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_GetUsageValue ??=
+        _dylib.lookupFunction<_c_HidP_GetUsageValue, _dart_HidP_GetUsageValue>(
+            'HidP_GetUsageValue'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      UsageValue,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_GetUsageValue? _HidP_GetUsageValue;
+
+  int HidP_GetScaledUsageValue(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    ffi.Pointer<ffi.Int32> UsageValue,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_GetScaledUsageValue ??= _dylib.lookupFunction<
+        _c_HidP_GetScaledUsageValue,
+        _dart_HidP_GetScaledUsageValue>('HidP_GetScaledUsageValue'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      UsageValue,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_GetScaledUsageValue? _HidP_GetScaledUsageValue;
+
+  int HidP_GetUsageValueArray(
+    int ReportType,
+    int UsagePage,
+    int LinkCollection,
+    int Usage,
+    ffi.Pointer<ffi.Int8> UsageValue,
+    int UsageValueByteLength,
+    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<ffi.Int8> Report,
+    int ReportLength,
+  ) {
+    return (_HidP_GetUsageValueArray ??= _dylib.lookupFunction<
+        _c_HidP_GetUsageValueArray,
+        _dart_HidP_GetUsageValueArray>('HidP_GetUsageValueArray'))(
+      ReportType,
+      UsagePage,
+      LinkCollection,
+      Usage,
+      UsageValue,
+      UsageValueByteLength,
+      PreparsedData,
+      Report,
+      ReportLength,
+    );
+  }
+
+  _dart_HidP_GetUsageValueArray? _HidP_GetUsageValueArray;
+
+  int HidP_UsageListDifference(
+    ffi.Pointer<ffi.Uint16> PreviousUsageList,
+    ffi.Pointer<ffi.Uint16> CurrentUsageList,
+    ffi.Pointer<ffi.Uint16> BreakUsageList,
+    ffi.Pointer<ffi.Uint16> MakeUsageList,
+    int UsageListLength,
+  ) {
+    return (_HidP_UsageListDifference ??= _dylib.lookupFunction<
+        _c_HidP_UsageListDifference,
+        _dart_HidP_UsageListDifference>('HidP_UsageListDifference'))(
+      PreviousUsageList,
+      CurrentUsageList,
+      BreakUsageList,
+      MakeUsageList,
+      UsageListLength,
+    );
+  }
+
+  _dart_HidP_UsageListDifference? _HidP_UsageListDifference;
+
+  int HidP_UsageAndPageListDifference(
+    ffi.Pointer<PUSAGE_AND_PAGE> PreviousUsageList,
+    ffi.Pointer<PUSAGE_AND_PAGE> CurrentUsageList,
+    ffi.Pointer<PUSAGE_AND_PAGE> BreakUsageList,
+    ffi.Pointer<PUSAGE_AND_PAGE> MakeUsageList,
+    int UsageListLength,
+  ) {
+    return (_HidP_UsageAndPageListDifference ??= _dylib.lookupFunction<
+            _c_HidP_UsageAndPageListDifference,
+            _dart_HidP_UsageAndPageListDifference>(
+        'HidP_UsageAndPageListDifference'))(
+      PreviousUsageList,
+      CurrentUsageList,
+      BreakUsageList,
+      MakeUsageList,
+      UsageListLength,
+    );
+  }
+
+  _dart_HidP_UsageAndPageListDifference? _HidP_UsageAndPageListDifference;
+
+  int HidP_TranslateUsageAndPagesToI8042ScanCodes(
+    ffi.Pointer<PUSAGE_AND_PAGE> ChangedUsageList,
+    int UsageListLength,
+    int KeyAction,
+    ffi.Pointer<PHIDP_KEYBOARD_MODIFIER_STATE> ModifierState,
+    ffi.Pointer<ffi.NativeFunction<PHIDP_INSERT_SCANCODES>>
+        InsertCodesProcedure,
+    ffi.Pointer<ffi.Void> InsertCodesContext,
+  ) {
+    return (_HidP_TranslateUsageAndPagesToI8042ScanCodes ??=
+        _dylib.lookupFunction<_c_HidP_TranslateUsageAndPagesToI8042ScanCodes,
+                _dart_HidP_TranslateUsageAndPagesToI8042ScanCodes>(
+            'HidP_TranslateUsageAndPagesToI8042ScanCodes'))(
+      ChangedUsageList,
+      UsageListLength,
+      KeyAction,
+      ModifierState,
+      InsertCodesProcedure,
+      InsertCodesContext,
+    );
+  }
+
+  _dart_HidP_TranslateUsageAndPagesToI8042ScanCodes?
+      _HidP_TranslateUsageAndPagesToI8042ScanCodes;
+
+  int HidP_TranslateUsagesToI8042ScanCodes(
+    ffi.Pointer<ffi.Uint16> ChangedUsageList,
+    int UsageListLength,
+    int KeyAction,
+    ffi.Pointer<PHIDP_KEYBOARD_MODIFIER_STATE> ModifierState,
+    ffi.Pointer<ffi.NativeFunction<PHIDP_INSERT_SCANCODES>>
+        InsertCodesProcedure,
+    ffi.Pointer<ffi.Void> InsertCodesContext,
+  ) {
+    return (_HidP_TranslateUsagesToI8042ScanCodes ??= _dylib.lookupFunction<
+            _c_HidP_TranslateUsagesToI8042ScanCodes,
+            _dart_HidP_TranslateUsagesToI8042ScanCodes>(
+        'HidP_TranslateUsagesToI8042ScanCodes'))(
+      ChangedUsageList,
+      UsageListLength,
+      KeyAction,
+      ModifierState,
+      InsertCodesProcedure,
+      InsertCodesContext,
+    );
+  }
+
+  _dart_HidP_TranslateUsagesToI8042ScanCodes?
+      _HidP_TranslateUsagesToI8042ScanCodes;
+
   int HidD_GetAttributes(
     ffi.Pointer<ffi.Void> HidDeviceObject,
     ffi.Pointer<HIDD_ATTRIBUTES> Attributes,
@@ -37,6 +602,18 @@ class HidSdi {
   }
 
   _dart_HidD_GetAttributes? _HidD_GetAttributes;
+
+  void HidD_GetHidGuid(
+    ffi.Pointer<LPGUID> HidGuid,
+  ) {
+    return (_HidD_GetHidGuid ??=
+        _dylib.lookupFunction<_c_HidD_GetHidGuid, _dart_HidD_GetHidGuid>(
+            'HidD_GetHidGuid'))(
+      HidGuid,
+    );
+  }
+
+  _dart_HidD_GetHidGuid? _HidD_GetHidGuid;
 
   int HidD_GetPreparsedData(
     ffi.Pointer<ffi.Void> HidDeviceObject,
@@ -63,7 +640,537 @@ class HidSdi {
   }
 
   _dart_HidD_FreePreparsedData? _HidD_FreePreparsedData;
+
+  int HidD_FlushQueue(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+  ) {
+    return (_HidD_FlushQueue ??=
+        _dylib.lookupFunction<_c_HidD_FlushQueue, _dart_HidD_FlushQueue>(
+            'HidD_FlushQueue'))(
+      HidDeviceObject,
+    );
+  }
+
+  _dart_HidD_FlushQueue? _HidD_FlushQueue;
+
+  int HidD_GetConfiguration(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<PHIDD_CONFIGURATION> Configuration,
+    int ConfigurationLength,
+  ) {
+    return (_HidD_GetConfiguration ??= _dylib.lookupFunction<
+        _c_HidD_GetConfiguration,
+        _dart_HidD_GetConfiguration>('HidD_GetConfiguration'))(
+      HidDeviceObject,
+      Configuration,
+      ConfigurationLength,
+    );
+  }
+
+  _dart_HidD_GetConfiguration? _HidD_GetConfiguration;
+
+  int HidD_SetConfiguration(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<PHIDD_CONFIGURATION> Configuration,
+    int ConfigurationLength,
+  ) {
+    return (_HidD_SetConfiguration ??= _dylib.lookupFunction<
+        _c_HidD_SetConfiguration,
+        _dart_HidD_SetConfiguration>('HidD_SetConfiguration'))(
+      HidDeviceObject,
+      Configuration,
+      ConfigurationLength,
+    );
+  }
+
+  _dart_HidD_SetConfiguration? _HidD_SetConfiguration;
+
+  int HidD_GetFeature(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> ReportBuffer,
+    int ReportBufferLength,
+  ) {
+    return (_HidD_GetFeature ??=
+        _dylib.lookupFunction<_c_HidD_GetFeature, _dart_HidD_GetFeature>(
+            'HidD_GetFeature'))(
+      HidDeviceObject,
+      ReportBuffer,
+      ReportBufferLength,
+    );
+  }
+
+  _dart_HidD_GetFeature? _HidD_GetFeature;
+
+  int HidD_SetFeature(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> ReportBuffer,
+    int ReportBufferLength,
+  ) {
+    return (_HidD_SetFeature ??=
+        _dylib.lookupFunction<_c_HidD_SetFeature, _dart_HidD_SetFeature>(
+            'HidD_SetFeature'))(
+      HidDeviceObject,
+      ReportBuffer,
+      ReportBufferLength,
+    );
+  }
+
+  _dart_HidD_SetFeature? _HidD_SetFeature;
+
+  int HidD_GetInputReport(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> ReportBuffer,
+    int ReportBufferLength,
+  ) {
+    return (_HidD_GetInputReport ??= _dylib.lookupFunction<
+        _c_HidD_GetInputReport,
+        _dart_HidD_GetInputReport>('HidD_GetInputReport'))(
+      HidDeviceObject,
+      ReportBuffer,
+      ReportBufferLength,
+    );
+  }
+
+  _dart_HidD_GetInputReport? _HidD_GetInputReport;
+
+  int HidD_SetOutputReport(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> ReportBuffer,
+    int ReportBufferLength,
+  ) {
+    return (_HidD_SetOutputReport ??= _dylib.lookupFunction<
+        _c_HidD_SetOutputReport,
+        _dart_HidD_SetOutputReport>('HidD_SetOutputReport'))(
+      HidDeviceObject,
+      ReportBuffer,
+      ReportBufferLength,
+    );
+  }
+
+  _dart_HidD_SetOutputReport? _HidD_SetOutputReport;
+
+  int HidD_GetNumInputBuffers(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Uint32> NumberBuffers,
+  ) {
+    return (_HidD_GetNumInputBuffers ??= _dylib.lookupFunction<
+        _c_HidD_GetNumInputBuffers,
+        _dart_HidD_GetNumInputBuffers>('HidD_GetNumInputBuffers'))(
+      HidDeviceObject,
+      NumberBuffers,
+    );
+  }
+
+  _dart_HidD_GetNumInputBuffers? _HidD_GetNumInputBuffers;
+
+  int HidD_SetNumInputBuffers(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    int NumberBuffers,
+  ) {
+    return (_HidD_SetNumInputBuffers ??= _dylib.lookupFunction<
+        _c_HidD_SetNumInputBuffers,
+        _dart_HidD_SetNumInputBuffers>('HidD_SetNumInputBuffers'))(
+      HidDeviceObject,
+      NumberBuffers,
+    );
+  }
+
+  _dart_HidD_SetNumInputBuffers? _HidD_SetNumInputBuffers;
+
+  int HidD_GetPhysicalDescriptor(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> Buffer,
+    int BufferLength,
+  ) {
+    return (_HidD_GetPhysicalDescriptor ??= _dylib.lookupFunction<
+        _c_HidD_GetPhysicalDescriptor,
+        _dart_HidD_GetPhysicalDescriptor>('HidD_GetPhysicalDescriptor'))(
+      HidDeviceObject,
+      Buffer,
+      BufferLength,
+    );
+  }
+
+  _dart_HidD_GetPhysicalDescriptor? _HidD_GetPhysicalDescriptor;
+
+  int HidD_GetManufacturerString(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> Buffer,
+    int BufferLength,
+  ) {
+    return (_HidD_GetManufacturerString ??= _dylib.lookupFunction<
+        _c_HidD_GetManufacturerString,
+        _dart_HidD_GetManufacturerString>('HidD_GetManufacturerString'))(
+      HidDeviceObject,
+      Buffer,
+      BufferLength,
+    );
+  }
+
+  _dart_HidD_GetManufacturerString? _HidD_GetManufacturerString;
+
+  int HidD_GetProductString(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> Buffer,
+    int BufferLength,
+  ) {
+    return (_HidD_GetProductString ??= _dylib.lookupFunction<
+        _c_HidD_GetProductString,
+        _dart_HidD_GetProductString>('HidD_GetProductString'))(
+      HidDeviceObject,
+      Buffer,
+      BufferLength,
+    );
+  }
+
+  _dart_HidD_GetProductString? _HidD_GetProductString;
+
+  int HidD_GetIndexedString(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    int StringIndex,
+    ffi.Pointer<ffi.Void> Buffer,
+    int BufferLength,
+  ) {
+    return (_HidD_GetIndexedString ??= _dylib.lookupFunction<
+        _c_HidD_GetIndexedString,
+        _dart_HidD_GetIndexedString>('HidD_GetIndexedString'))(
+      HidDeviceObject,
+      StringIndex,
+      Buffer,
+      BufferLength,
+    );
+  }
+
+  _dart_HidD_GetIndexedString? _HidD_GetIndexedString;
+
+  int HidD_GetSerialNumberString(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> Buffer,
+    int BufferLength,
+  ) {
+    return (_HidD_GetSerialNumberString ??= _dylib.lookupFunction<
+        _c_HidD_GetSerialNumberString,
+        _dart_HidD_GetSerialNumberString>('HidD_GetSerialNumberString'))(
+      HidDeviceObject,
+      Buffer,
+      BufferLength,
+    );
+  }
+
+  _dart_HidD_GetSerialNumberString? _HidD_GetSerialNumberString;
+
+  int HidD_GetMsGenreDescriptor(
+    ffi.Pointer<ffi.Void> HidDeviceObject,
+    ffi.Pointer<ffi.Void> Buffer,
+    int BufferLength,
+  ) {
+    return (_HidD_GetMsGenreDescriptor ??= _dylib.lookupFunction<
+        _c_HidD_GetMsGenreDescriptor,
+        _dart_HidD_GetMsGenreDescriptor>('HidD_GetMsGenreDescriptor'))(
+      HidDeviceObject,
+      Buffer,
+      BufferLength,
+    );
+  }
+
+  _dart_HidD_GetMsGenreDescriptor? _HidD_GetMsGenreDescriptor;
 }
+
+abstract class HIDP_REPORT_TYPE {
+  static const int HidP_Input = 0;
+  static const int HidP_Output = 1;
+  static const int HidP_Feature = 2;
+}
+
+class PUSAGE_AND_PAGE extends ffi.Struct {
+  @ffi.Uint16()
+  external int Usage;
+
+  @ffi.Uint16()
+  external int UsagePage;
+}
+
+class PHIDP_BUTTON_CAPS extends ffi.Struct {
+  @ffi.Uint16()
+  external int UsagePage;
+
+  @ffi.Uint8()
+  external int ReportID;
+
+  @ffi.Uint8()
+  external int IsAlias;
+
+  @ffi.Uint16()
+  external int BitField;
+
+  @ffi.Uint16()
+  external int LinkCollection;
+
+  @ffi.Uint16()
+  external int LinkUsage;
+
+  @ffi.Uint16()
+  external int LinkUsagePage;
+
+  @ffi.Uint8()
+  external int IsRange;
+
+  @ffi.Uint8()
+  external int IsStringRange;
+
+  @ffi.Uint8()
+  external int IsDesignatorRange;
+
+  @ffi.Uint8()
+  external int IsAbsolute;
+
+  @ffi.Uint32()
+  external int _unique_Reserved_item_0;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_1;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_2;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_3;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_4;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_5;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_6;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_7;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_8;
+  @ffi.Uint32()
+  external int _unique_Reserved_item_9;
+
+  /// Helper for array `Reserved`.
+  ArrayHelper_PHIDP_BUTTON_CAPS_Reserved_level0 get Reserved =>
+      ArrayHelper_PHIDP_BUTTON_CAPS_Reserved_level0(this, [10], 0, 0);
+}
+
+/// Helper for array `Reserved` in struct `PHIDP_BUTTON_CAPS`.
+class ArrayHelper_PHIDP_BUTTON_CAPS_Reserved_level0 {
+  final PHIDP_BUTTON_CAPS _struct;
+  final List<int> dimensions;
+  final int level;
+  final int _absoluteIndex;
+  int get length => dimensions[level];
+  ArrayHelper_PHIDP_BUTTON_CAPS_Reserved_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
+  void _checkBounds(int index) {
+    if (index >= length || index < 0) {
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
+    }
+  }
+
+  int operator [](int index) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        return _struct._unique_Reserved_item_0;
+      case 1:
+        return _struct._unique_Reserved_item_1;
+      case 2:
+        return _struct._unique_Reserved_item_2;
+      case 3:
+        return _struct._unique_Reserved_item_3;
+      case 4:
+        return _struct._unique_Reserved_item_4;
+      case 5:
+        return _struct._unique_Reserved_item_5;
+      case 6:
+        return _struct._unique_Reserved_item_6;
+      case 7:
+        return _struct._unique_Reserved_item_7;
+      case 8:
+        return _struct._unique_Reserved_item_8;
+      case 9:
+        return _struct._unique_Reserved_item_9;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+
+  void operator []=(int index, int value) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        _struct._unique_Reserved_item_0 = value;
+        break;
+      case 1:
+        _struct._unique_Reserved_item_1 = value;
+        break;
+      case 2:
+        _struct._unique_Reserved_item_2 = value;
+        break;
+      case 3:
+        _struct._unique_Reserved_item_3 = value;
+        break;
+      case 4:
+        _struct._unique_Reserved_item_4 = value;
+        break;
+      case 5:
+        _struct._unique_Reserved_item_5 = value;
+        break;
+      case 6:
+        _struct._unique_Reserved_item_6 = value;
+        break;
+      case 7:
+        _struct._unique_Reserved_item_7 = value;
+        break;
+      case 8:
+        _struct._unique_Reserved_item_8 = value;
+        break;
+      case 9:
+        _struct._unique_Reserved_item_9 = value;
+        break;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+}
+
+class PHIDP_VALUE_CAPS extends ffi.Struct {
+  @ffi.Uint16()
+  external int UsagePage;
+
+  @ffi.Uint8()
+  external int ReportID;
+
+  @ffi.Uint8()
+  external int IsAlias;
+
+  @ffi.Uint16()
+  external int BitField;
+
+  @ffi.Uint16()
+  external int LinkCollection;
+
+  @ffi.Uint16()
+  external int LinkUsage;
+
+  @ffi.Uint16()
+  external int LinkUsagePage;
+
+  @ffi.Uint8()
+  external int IsRange;
+
+  @ffi.Uint8()
+  external int IsStringRange;
+
+  @ffi.Uint8()
+  external int IsDesignatorRange;
+
+  @ffi.Uint8()
+  external int IsAbsolute;
+
+  @ffi.Uint8()
+  external int HasNull;
+
+  @ffi.Uint8()
+  external int Reserved;
+
+  @ffi.Uint16()
+  external int BitSize;
+
+  @ffi.Uint16()
+  external int ReportCount;
+
+  @ffi.Uint16()
+  external int _unique_Reserved2_item_0;
+  @ffi.Uint16()
+  external int _unique_Reserved2_item_1;
+  @ffi.Uint16()
+  external int _unique_Reserved2_item_2;
+  @ffi.Uint16()
+  external int _unique_Reserved2_item_3;
+  @ffi.Uint16()
+  external int _unique_Reserved2_item_4;
+
+  /// Helper for array `Reserved2`.
+  ArrayHelper_PHIDP_VALUE_CAPS_Reserved2_level0 get Reserved2 =>
+      ArrayHelper_PHIDP_VALUE_CAPS_Reserved2_level0(this, [5], 0, 0);
+  @ffi.Uint32()
+  external int UnitsExp;
+
+  @ffi.Uint32()
+  external int Units;
+
+  @ffi.Int32()
+  external int LogicalMin;
+
+  @ffi.Int32()
+  external int LogicalMax;
+
+  @ffi.Int32()
+  external int PhysicalMin;
+
+  @ffi.Int32()
+  external int PhysicalMax;
+}
+
+/// Helper for array `Reserved2` in struct `PHIDP_VALUE_CAPS`.
+class ArrayHelper_PHIDP_VALUE_CAPS_Reserved2_level0 {
+  final PHIDP_VALUE_CAPS _struct;
+  final List<int> dimensions;
+  final int level;
+  final int _absoluteIndex;
+  int get length => dimensions[level];
+  ArrayHelper_PHIDP_VALUE_CAPS_Reserved2_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
+  void _checkBounds(int index) {
+    if (index >= length || index < 0) {
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
+    }
+  }
+
+  int operator [](int index) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        return _struct._unique_Reserved2_item_0;
+      case 1:
+        return _struct._unique_Reserved2_item_1;
+      case 2:
+        return _struct._unique_Reserved2_item_2;
+      case 3:
+        return _struct._unique_Reserved2_item_3;
+      case 4:
+        return _struct._unique_Reserved2_item_4;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+
+  void operator []=(int index, int value) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        _struct._unique_Reserved2_item_0 = value;
+        break;
+      case 1:
+        _struct._unique_Reserved2_item_1 = value;
+        break;
+      case 2:
+        _struct._unique_Reserved2_item_2 = value;
+        break;
+      case 3:
+        _struct._unique_Reserved2_item_3 = value;
+        break;
+      case 4:
+        _struct._unique_Reserved2_item_4 = value;
+        break;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+}
+
+class PHIDP_LINK_COLLECTION_NODE extends ffi.Opaque {}
 
 class HIDP_PREPARSED_DATA extends ffi.Opaque {}
 
@@ -270,6 +1377,207 @@ class ArrayHelper_HIDP_CAPS_Reserved_level0 {
   }
 }
 
+class PHIDP_DATA extends ffi.Struct {
+  @ffi.Uint16()
+  external int DataIndex;
+
+  @ffi.Uint16()
+  external int Reserved;
+}
+
+class PHIDP_UNKNOWN_TOKEN extends ffi.Struct {
+  @ffi.Uint8()
+  external int Token;
+
+  @ffi.Uint8()
+  external int _unique_Reserved_item_0;
+  @ffi.Uint8()
+  external int _unique_Reserved_item_1;
+  @ffi.Uint8()
+  external int _unique_Reserved_item_2;
+
+  /// Helper for array `Reserved`.
+  ArrayHelper_PHIDP_UNKNOWN_TOKEN_Reserved_level0 get Reserved =>
+      ArrayHelper_PHIDP_UNKNOWN_TOKEN_Reserved_level0(this, [3], 0, 0);
+  @ffi.Uint32()
+  external int BitField;
+}
+
+/// Helper for array `Reserved` in struct `PHIDP_UNKNOWN_TOKEN`.
+class ArrayHelper_PHIDP_UNKNOWN_TOKEN_Reserved_level0 {
+  final PHIDP_UNKNOWN_TOKEN _struct;
+  final List<int> dimensions;
+  final int level;
+  final int _absoluteIndex;
+  int get length => dimensions[level];
+  ArrayHelper_PHIDP_UNKNOWN_TOKEN_Reserved_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
+  void _checkBounds(int index) {
+    if (index >= length || index < 0) {
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
+    }
+  }
+
+  int operator [](int index) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        return _struct._unique_Reserved_item_0;
+      case 1:
+        return _struct._unique_Reserved_item_1;
+      case 2:
+        return _struct._unique_Reserved_item_2;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+
+  void operator []=(int index, int value) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        _struct._unique_Reserved_item_0 = value;
+        break;
+      case 1:
+        _struct._unique_Reserved_item_1 = value;
+        break;
+      case 2:
+        _struct._unique_Reserved_item_2 = value;
+        break;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+}
+
+class PHIDP_EXTENDED_ATTRIBUTES extends ffi.Struct {
+  @ffi.Uint8()
+  external int NumGlobalUnknowns;
+
+  @ffi.Uint8()
+  external int _unique_Reserved_item_0;
+  @ffi.Uint8()
+  external int _unique_Reserved_item_1;
+  @ffi.Uint8()
+  external int _unique_Reserved_item_2;
+
+  /// Helper for array `Reserved`.
+  ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Reserved_level0 get Reserved =>
+      ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Reserved_level0(this, [3], 0, 0);
+  external ffi.Pointer<PHIDP_UNKNOWN_TOKEN> GlobalUnknowns;
+
+  @ffi.Uint32()
+  external int _unique_Data_item_0;
+
+  /// Helper for array `Data`.
+  ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Data_level0 get Data =>
+      ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Data_level0(this, [1], 0, 0);
+}
+
+/// Helper for array `Reserved` in struct `PHIDP_EXTENDED_ATTRIBUTES`.
+class ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Reserved_level0 {
+  final PHIDP_EXTENDED_ATTRIBUTES _struct;
+  final List<int> dimensions;
+  final int level;
+  final int _absoluteIndex;
+  int get length => dimensions[level];
+  ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Reserved_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
+  void _checkBounds(int index) {
+    if (index >= length || index < 0) {
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
+    }
+  }
+
+  int operator [](int index) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        return _struct._unique_Reserved_item_0;
+      case 1:
+        return _struct._unique_Reserved_item_1;
+      case 2:
+        return _struct._unique_Reserved_item_2;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+
+  void operator []=(int index, int value) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        _struct._unique_Reserved_item_0 = value;
+        break;
+      case 1:
+        _struct._unique_Reserved_item_1 = value;
+        break;
+      case 2:
+        _struct._unique_Reserved_item_2 = value;
+        break;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+}
+
+/// Helper for array `Data` in struct `PHIDP_EXTENDED_ATTRIBUTES`.
+class ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Data_level0 {
+  final PHIDP_EXTENDED_ATTRIBUTES _struct;
+  final List<int> dimensions;
+  final int level;
+  final int _absoluteIndex;
+  int get length => dimensions[level];
+  ArrayHelper_PHIDP_EXTENDED_ATTRIBUTES_Data_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
+  void _checkBounds(int index) {
+    if (index >= length || index < 0) {
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
+    }
+  }
+
+  int operator [](int index) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        return _struct._unique_Data_item_0;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+
+  void operator []=(int index, int value) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        _struct._unique_Data_item_0 = value;
+        break;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+}
+
+abstract class HIDP_KEYBOARD_DIRECTION {
+  static const int HidP_Keyboard_Break = 0;
+  static const int HidP_Keyboard_Make = 1;
+}
+
+class PHIDP_KEYBOARD_MODIFIER_STATE extends ffi.Opaque {}
+
+class PHIDD_CONFIGURATION extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> cookie;
+
+  @ffi.Uint32()
+  external int size;
+
+  @ffi.Uint32()
+  external int RingBufferSize;
+}
+
 class HIDD_ATTRIBUTES extends ffi.Struct {
   @ffi.Uint32()
   external int Size;
@@ -284,7 +1592,1364 @@ class HIDD_ATTRIBUTES extends ffi.Struct {
   external int VersionNumber;
 }
 
+class LPGUID extends ffi.Struct {
+  @ffi.Uint32()
+  external int Data1;
+
+  @ffi.Uint16()
+  external int Data2;
+
+  @ffi.Uint16()
+  external int Data3;
+
+  @ffi.Uint8()
+  external int _unique_Data4_item_0;
+  @ffi.Uint8()
+  external int _unique_Data4_item_1;
+  @ffi.Uint8()
+  external int _unique_Data4_item_2;
+  @ffi.Uint8()
+  external int _unique_Data4_item_3;
+  @ffi.Uint8()
+  external int _unique_Data4_item_4;
+  @ffi.Uint8()
+  external int _unique_Data4_item_5;
+  @ffi.Uint8()
+  external int _unique_Data4_item_6;
+  @ffi.Uint8()
+  external int _unique_Data4_item_7;
+
+  /// Helper for array `Data4`.
+  ArrayHelper_LPGUID_Data4_level0 get Data4 =>
+      ArrayHelper_LPGUID_Data4_level0(this, [8], 0, 0);
+}
+
+/// Helper for array `Data4` in struct `LPGUID`.
+class ArrayHelper_LPGUID_Data4_level0 {
+  final LPGUID _struct;
+  final List<int> dimensions;
+  final int level;
+  final int _absoluteIndex;
+  int get length => dimensions[level];
+  ArrayHelper_LPGUID_Data4_level0(
+      this._struct, this.dimensions, this.level, this._absoluteIndex);
+  void _checkBounds(int index) {
+    if (index >= length || index < 0) {
+      throw RangeError(
+          'Dimension $level: index not in range 0..${length} exclusive.');
+    }
+  }
+
+  int operator [](int index) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        return _struct._unique_Data4_item_0;
+      case 1:
+        return _struct._unique_Data4_item_1;
+      case 2:
+        return _struct._unique_Data4_item_2;
+      case 3:
+        return _struct._unique_Data4_item_3;
+      case 4:
+        return _struct._unique_Data4_item_4;
+      case 5:
+        return _struct._unique_Data4_item_5;
+      case 6:
+        return _struct._unique_Data4_item_6;
+      case 7:
+        return _struct._unique_Data4_item_7;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+
+  void operator []=(int index, int value) {
+    _checkBounds(index);
+    switch (_absoluteIndex + index) {
+      case 0:
+        _struct._unique_Data4_item_0 = value;
+        break;
+      case 1:
+        _struct._unique_Data4_item_1 = value;
+        break;
+      case 2:
+        _struct._unique_Data4_item_2 = value;
+        break;
+      case 3:
+        _struct._unique_Data4_item_3 = value;
+        break;
+      case 4:
+        _struct._unique_Data4_item_4 = value;
+        break;
+      case 5:
+        _struct._unique_Data4_item_5 = value;
+        break;
+      case 6:
+        _struct._unique_Data4_item_6 = value;
+        break;
+      case 7:
+        _struct._unique_Data4_item_7 = value;
+        break;
+      default:
+        throw Exception('Invalid Array Helper generated.');
+    }
+  }
+}
+
+const int HID_USAGE_PAGE_UNDEFINED = 0;
+
+const int HID_USAGE_PAGE_GENERIC = 1;
+
+const int HID_USAGE_PAGE_SIMULATION = 2;
+
+const int HID_USAGE_PAGE_VR = 3;
+
+const int HID_USAGE_PAGE_SPORT = 4;
+
+const int HID_USAGE_PAGE_GAME = 5;
+
+const int HID_USAGE_PAGE_GENERIC_DEVICE = 6;
+
+const int HID_USAGE_PAGE_KEYBOARD = 7;
+
+const int HID_USAGE_PAGE_LED = 8;
+
+const int HID_USAGE_PAGE_BUTTON = 9;
+
+const int HID_USAGE_PAGE_ORDINAL = 10;
+
+const int HID_USAGE_PAGE_TELEPHONY = 11;
+
+const int HID_USAGE_PAGE_CONSUMER = 12;
+
+const int HID_USAGE_PAGE_DIGITIZER = 13;
+
+const int HID_USAGE_PAGE_HAPTICS = 14;
+
+const int HID_USAGE_PAGE_PID = 15;
+
+const int HID_USAGE_PAGE_UNICODE = 16;
+
+const int HID_USAGE_PAGE_ALPHANUMERIC = 20;
+
+const int HID_USAGE_PAGE_SENSOR = 32;
+
+const int HID_USAGE_PAGE_LIGHTING_ILLUMINATION = 89;
+
+const int HID_USAGE_PAGE_BARCODE_SCANNER = 140;
+
+const int HID_USAGE_PAGE_WEIGHING_DEVICE = 141;
+
+const int HID_USAGE_PAGE_MAGNETIC_STRIPE_READER = 142;
+
+const int HID_USAGE_PAGE_CAMERA_CONTROL = 144;
+
+const int HID_USAGE_PAGE_ARCADE = 145;
+
+const int HID_USAGE_PAGE_MICROSOFT_BLUETOOTH_HANDSFREE = 65523;
+
+const int HID_USAGE_PAGE_VENDOR_DEFINED_BEGIN = 65280;
+
+const int HID_USAGE_PAGE_VENDOR_DEFINED_END = 65535;
+
+const int HID_USAGE_GENERIC_POINTER = 1;
+
+const int HID_USAGE_GENERIC_MOUSE = 2;
+
+const int HID_USAGE_GENERIC_JOYSTICK = 4;
+
+const int HID_USAGE_GENERIC_GAMEPAD = 5;
+
+const int HID_USAGE_GENERIC_KEYBOARD = 6;
+
+const int HID_USAGE_GENERIC_KEYPAD = 7;
+
+const int HID_USAGE_GENERIC_MULTI_AXIS_CONTROLLER = 8;
+
+const int HID_USAGE_GENERIC_TABLET_PC_SYSTEM_CTL = 9;
+
+const int HID_USAGE_GENERIC_PORTABLE_DEVICE_CONTROL = 13;
+
+const int HID_USAGE_GENERIC_INTERACTIVE_CONTROL = 14;
+
+const int HID_USAGE_GENERIC_COUNTED_BUFFER = 58;
+
+const int HID_USAGE_GENERIC_SYSTEM_CTL = 128;
+
+const int HID_USAGE_GENERIC_X = 48;
+
+const int HID_USAGE_GENERIC_Y = 49;
+
+const int HID_USAGE_GENERIC_Z = 50;
+
+const int HID_USAGE_GENERIC_RX = 51;
+
+const int HID_USAGE_GENERIC_RY = 52;
+
+const int HID_USAGE_GENERIC_RZ = 53;
+
+const int HID_USAGE_GENERIC_SLIDER = 54;
+
+const int HID_USAGE_GENERIC_DIAL = 55;
+
+const int HID_USAGE_GENERIC_WHEEL = 56;
+
+const int HID_USAGE_GENERIC_HATSWITCH = 57;
+
+const int HID_USAGE_GENERIC_BYTE_COUNT = 59;
+
+const int HID_USAGE_GENERIC_MOTION_WAKEUP = 60;
+
+const int HID_USAGE_GENERIC_START = 61;
+
+const int HID_USAGE_GENERIC_SELECT = 62;
+
+const int HID_USAGE_GENERIC_VX = 64;
+
+const int HID_USAGE_GENERIC_VY = 65;
+
+const int HID_USAGE_GENERIC_VZ = 66;
+
+const int HID_USAGE_GENERIC_VBRX = 67;
+
+const int HID_USAGE_GENERIC_VBRY = 68;
+
+const int HID_USAGE_GENERIC_VBRZ = 69;
+
+const int HID_USAGE_GENERIC_VNO = 70;
+
+const int HID_USAGE_GENERIC_FEATURE_NOTIFICATION = 71;
+
+const int HID_USAGE_GENERIC_RESOLUTION_MULTIPLIER = 72;
+
+const int HID_USAGE_GENERIC_SYSCTL_POWER = 129;
+
+const int HID_USAGE_GENERIC_SYSCTL_SLEEP = 130;
+
+const int HID_USAGE_GENERIC_SYSCTL_WAKE = 131;
+
+const int HID_USAGE_GENERIC_SYSCTL_CONTEXT_MENU = 132;
+
+const int HID_USAGE_GENERIC_SYSCTL_MAIN_MENU = 133;
+
+const int HID_USAGE_GENERIC_SYSCTL_APP_MENU = 134;
+
+const int HID_USAGE_GENERIC_SYSCTL_HELP_MENU = 135;
+
+const int HID_USAGE_GENERIC_SYSCTL_MENU_EXIT = 136;
+
+const int HID_USAGE_GENERIC_SYSCTL_MENU_SELECT = 137;
+
+const int HID_USAGE_GENERIC_SYSCTL_MENU_RIGHT = 138;
+
+const int HID_USAGE_GENERIC_SYSCTL_MENU_LEFT = 139;
+
+const int HID_USAGE_GENERIC_SYSCTL_MENU_UP = 140;
+
+const int HID_USAGE_GENERIC_SYSCTL_MENU_DOWN = 141;
+
+const int HID_USAGE_GENERIC_SYSCTL_COLD_RESTART = 142;
+
+const int HID_USAGE_GENERIC_SYSCTL_WARM_RESTART = 143;
+
+const int HID_USAGE_GENERIC_DPAD_UP = 144;
+
+const int HID_USAGE_GENERIC_DPAD_DOWN = 145;
+
+const int HID_USAGE_GENERIC_DPAD_RIGHT = 146;
+
+const int HID_USAGE_GENERIC_DPAD_LEFT = 147;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISMISS_NOTIFICATION = 154;
+
+const int HID_USAGE_GENERIC_SYSCTL_DOCK = 160;
+
+const int HID_USAGE_GENERIC_SYSCTL_UNDOCK = 161;
+
+const int HID_USAGE_GENERIC_SYSCTL_SETUP = 162;
+
+const int HID_USAGE_GENERIC_SYSCTL_SYS_BREAK = 163;
+
+const int HID_USAGE_GENERIC_SYSCTL_SYS_DBG_BREAK = 164;
+
+const int HID_USAGE_GENERIC_SYSCTL_APP_BREAK = 165;
+
+const int HID_USAGE_GENERIC_SYSCTL_APP_DBG_BREAK = 166;
+
+const int HID_USAGE_GENERIC_SYSCTL_MUTE = 167;
+
+const int HID_USAGE_GENERIC_SYSCTL_HIBERNATE = 168;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_INVERT = 176;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_INTERNAL = 177;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_EXTERNAL = 178;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_BOTH = 179;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_DUAL = 180;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_TOGGLE = 181;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_SWAP = 182;
+
+const int HID_USAGE_GENERIC_SYSCTL_DISP_AUTOSCALE = 183;
+
+const int HID_USAGE_GENERIC_SYSTEM_DISPLAY_ROTATION_LOCK_BUTTON = 201;
+
+const int HID_USAGE_GENERIC_SYSTEM_DISPLAY_ROTATION_LOCK_SLIDER_SWITCH = 202;
+
+const int HID_USAGE_GENERIC_CONTROL_ENABLE = 203;
+
+const int HID_USAGE_SIMULATION_FLIGHT_SIMULATION_DEVICE = 1;
+
+const int HID_USAGE_SIMULATION_AUTOMOBILE_SIMULATION_DEVICE = 2;
+
+const int HID_USAGE_SIMULATION_TANK_SIMULATION_DEVICE = 3;
+
+const int HID_USAGE_SIMULATION_SPACESHIP_SIMULATION_DEVICE = 4;
+
+const int HID_USAGE_SIMULATION_SUBMARINE_SIMULATION_DEVICE = 5;
+
+const int HID_USAGE_SIMULATION_SAILING_SIMULATION_DEVICE = 6;
+
+const int HID_USAGE_SIMULATION_MOTORCYCLE_SIMULATION_DEVICE = 7;
+
+const int HID_USAGE_SIMULATION_SPORTS_SIMULATION_DEVICE = 8;
+
+const int HID_USAGE_SIMULATION_AIRPLANE_SIMULATION_DEVICE = 9;
+
+const int HID_USAGE_SIMULATION_HELICOPTER_SIMULATION_DEVICE = 10;
+
+const int HID_USAGE_SIMULATION_MAGIC_CARPET_SIMULATION_DEVICE = 11;
+
+const int HID_USAGE_SIMULATION_BICYCLE_SIMULATION_DEVICE = 12;
+
+const int HID_USAGE_SIMULATION_FLIGHT_CONTROL_STICK = 32;
+
+const int HID_USAGE_SIMULATION_FLIGHT_STICK = 33;
+
+const int HID_USAGE_SIMULATION_CYCLIC_CONTROL = 34;
+
+const int HID_USAGE_SIMULATION_CYCLIC_TRIM = 35;
+
+const int HID_USAGE_SIMULATION_FLIGHT_YOKE = 36;
+
+const int HID_USAGE_SIMULATION_TRACK_CONTROL = 37;
+
+const int HID_USAGE_SIMULATION_AILERON = 176;
+
+const int HID_USAGE_SIMULATION_AILERON_TRIM = 177;
+
+const int HID_USAGE_SIMULATION_ANTI_TORQUE_CONTROL = 178;
+
+const int HID_USAGE_SIMULATION_AUTOPIOLOT_ENABLE = 179;
+
+const int HID_USAGE_SIMULATION_CHAFF_RELEASE = 180;
+
+const int HID_USAGE_SIMULATION_COLLECTIVE_CONTROL = 181;
+
+const int HID_USAGE_SIMULATION_DIVE_BRAKE = 182;
+
+const int HID_USAGE_SIMULATION_ELECTRONIC_COUNTERMEASURES = 183;
+
+const int HID_USAGE_SIMULATION_ELEVATOR = 184;
+
+const int HID_USAGE_SIMULATION_ELEVATOR_TRIM = 185;
+
+const int HID_USAGE_SIMULATION_RUDDER = 186;
+
+const int HID_USAGE_SIMULATION_THROTTLE = 187;
+
+const int HID_USAGE_SIMULATION_FLIGHT_COMMUNICATIONS = 188;
+
+const int HID_USAGE_SIMULATION_FLARE_RELEASE = 189;
+
+const int HID_USAGE_SIMULATION_LANDING_GEAR = 190;
+
+const int HID_USAGE_SIMULATION_TOE_BRAKE = 191;
+
+const int HID_USAGE_SIMULATION_TRIGGER = 192;
+
+const int HID_USAGE_SIMULATION_WEAPONS_ARM = 193;
+
+const int HID_USAGE_SIMULATION_WEAPONS_SELECT = 194;
+
+const int HID_USAGE_SIMULATION_WING_FLAPS = 195;
+
+const int HID_USAGE_SIMULATION_ACCELLERATOR = 196;
+
+const int HID_USAGE_SIMULATION_BRAKE = 197;
+
+const int HID_USAGE_SIMULATION_CLUTCH = 198;
+
+const int HID_USAGE_SIMULATION_SHIFTER = 199;
+
+const int HID_USAGE_SIMULATION_STEERING = 200;
+
+const int HID_USAGE_SIMULATION_TURRET_DIRECTION = 201;
+
+const int HID_USAGE_SIMULATION_BARREL_ELEVATION = 202;
+
+const int HID_USAGE_SIMULATION_DIVE_PLANE = 203;
+
+const int HID_USAGE_SIMULATION_BALLAST = 204;
+
+const int HID_USAGE_SIMULATION_BICYCLE_CRANK = 205;
+
+const int HID_USAGE_SIMULATION_HANDLE_BARS = 206;
+
+const int HID_USAGE_SIMULATION_FRONT_BRAKE = 207;
+
+const int HID_USAGE_SIMULATION_REAR_BRAKE = 208;
+
+const int HID_USAGE_VR_BELT = 1;
+
+const int HID_USAGE_VR_BODY_SUIT = 2;
+
+const int HID_USAGE_VR_FLEXOR = 3;
+
+const int HID_USAGE_VR_GLOVE = 4;
+
+const int HID_USAGE_VR_HEAD_TRACKER = 5;
+
+const int HID_USAGE_VR_HEAD_MOUNTED_DISPLAY = 6;
+
+const int HID_USAGE_VR_HAND_TRACKER = 7;
+
+const int HID_USAGE_VR_OCULOMETER = 8;
+
+const int HID_USAGE_VR_VEST = 9;
+
+const int HID_USAGE_VR_ANIMATRONIC_DEVICE = 10;
+
+const int HID_USAGE_VR_STEREO_ENABLE = 32;
+
+const int HID_USAGE_VR_DISPLAY_ENABLE = 33;
+
+const int HID_USAGE_SPORT_BASEBALL_BAT = 1;
+
+const int HID_USAGE_SPORT_GOLF_CLUB = 2;
+
+const int HID_USAGE_SPORT_ROWING_MACHINE = 3;
+
+const int HID_USAGE_SPORT_TREADMILL = 4;
+
+const int HID_USAGE_SPORT_STICK_TYPE = 56;
+
+const int HID_USAGE_SPORT_OAR = 48;
+
+const int HID_USAGE_SPORT_SLOPE = 49;
+
+const int HID_USAGE_SPORT_RATE = 50;
+
+const int HID_USAGE_SPORT_STICK_SPEED = 51;
+
+const int HID_USAGE_SPORT_STICK_FACE_ANGLE = 52;
+
+const int HID_USAGE_SPORT_HEEL_TOE = 53;
+
+const int HID_USAGE_SPORT_FOLLOW_THROUGH = 54;
+
+const int HID_USAGE_SPORT_TEMPO = 55;
+
+const int HID_USAGE_SPORT_HEIGHT = 57;
+
+const int HID_USAGE_SPORT_PUTTER = 80;
+
+const int HID_USAGE_SPORT_1_IRON = 81;
+
+const int HID_USAGE_SPORT_2_IRON = 82;
+
+const int HID_USAGE_SPORT_3_IRON = 83;
+
+const int HID_USAGE_SPORT_4_IRON = 84;
+
+const int HID_USAGE_SPORT_5_IRON = 85;
+
+const int HID_USAGE_SPORT_6_IRON = 86;
+
+const int HID_USAGE_SPORT_7_IRON = 87;
+
+const int HID_USAGE_SPORT_8_IRON = 88;
+
+const int HID_USAGE_SPORT_9_IRON = 89;
+
+const int HID_USAGE_SPORT_10_IRON = 90;
+
+const int HID_USAGE_SPORT_11_IRON = 91;
+
+const int HID_USAGE_SPORT_SAND_WEDGE = 92;
+
+const int HID_USAGE_SPORT_LOFT_WEDGE = 93;
+
+const int HID_USAGE_SPORT_POWER_WEDGE = 94;
+
+const int HID_USAGE_SPORT_1_WOOD = 95;
+
+const int HID_USAGE_SPORT_3_WOOD = 96;
+
+const int HID_USAGE_SPORT_5_WOOD = 97;
+
+const int HID_USAGE_SPORT_7_WOOD = 98;
+
+const int HID_USAGE_SPORT_9_WOOD = 99;
+
+const int HID_USAGE_GAME_3D_GAME_CONTROLLER = 1;
+
+const int HID_USAGE_GAME_PINBALL_DEVICE = 2;
+
+const int HID_USAGE_GAME_GUN_DEVICE = 3;
+
+const int HID_USAGE_GAME_POINT_OF_VIEW = 32;
+
+const int HID_USAGE_GAME_GUN_SELECTOR = 50;
+
+const int HID_USAGE_GAME_GAMEPAD_FIRE_JUMP = 55;
+
+const int HID_USAGE_GAME_GAMEPAD_TRIGGER = 57;
+
+const int HID_USAGE_GAME_TURN_RIGHT_LEFT = 33;
+
+const int HID_USAGE_GAME_PITCH_FORWARD_BACK = 34;
+
+const int HID_USAGE_GAME_ROLL_RIGHT_LEFT = 35;
+
+const int HID_USAGE_GAME_MOVE_RIGHT_LEFT = 36;
+
+const int HID_USAGE_GAME_MOVE_FORWARD_BACK = 37;
+
+const int HID_USAGE_GAME_MOVE_UP_DOWN = 38;
+
+const int HID_USAGE_GAME_LEAN_RIGHT_LEFT = 39;
+
+const int HID_USAGE_GAME_LEAN_FORWARD_BACK = 40;
+
+const int HID_USAGE_GAME_POV_HEIGHT = 41;
+
+const int HID_USAGE_GAME_FLIPPER = 42;
+
+const int HID_USAGE_GAME_SECONDARY_FLIPPER = 43;
+
+const int HID_USAGE_GAME_BUMP = 44;
+
+const int HID_USAGE_GAME_NEW_GAME = 45;
+
+const int HID_USAGE_GAME_SHOOT_BALL = 46;
+
+const int HID_USAGE_GAME_PLAYER = 47;
+
+const int HID_USAGE_GAME_GUN_BOLT = 48;
+
+const int HID_USAGE_GAME_GUN_CLIP = 49;
+
+const int HID_USAGE_GAME_GUN_SINGLE_SHOT = 51;
+
+const int HID_USAGE_GAME_GUN_BURST = 52;
+
+const int HID_USAGE_GAME_GUN_AUTOMATIC = 53;
+
+const int HID_USAGE_GAME_GUN_SAFETY = 54;
+
+const int HID_USAGE_GENERIC_DEVICE_BATTERY_STRENGTH = 32;
+
+const int HID_USAGE_GENERIC_DEVICE_WIRELESS_CHANNEL = 33;
+
+const int HID_USAGE_GENERIC_DEVICE_WIRELESS_ID = 34;
+
+const int HID_USAGE_GENERIC_DEVICE_DISCOVER_WIRELESS_CONTROL = 35;
+
+const int HID_USAGE_GENERIC_DEVICE_SECURITY_CODE_CHAR_ENTERED = 36;
+
+const int HID_USAGE_GENERIC_DEVICE_SECURITY_CODE_CHAR_ERASED = 37;
+
+const int HID_USAGE_GENERIC_DEVICE_SECURITY_CODE_CLEARED = 38;
+
+const int HID_USAGE_KEYBOARD_NOEVENT = 0;
+
+const int HID_USAGE_KEYBOARD_ROLLOVER = 1;
+
+const int HID_USAGE_KEYBOARD_POSTFAIL = 2;
+
+const int HID_USAGE_KEYBOARD_UNDEFINED = 3;
+
+const int HID_USAGE_KEYBOARD_aA = 4;
+
+const int HID_USAGE_KEYBOARD_zZ = 29;
+
+const int HID_USAGE_KEYBOARD_ONE = 30;
+
+const int HID_USAGE_KEYBOARD_ZERO = 39;
+
+const int HID_USAGE_KEYBOARD_LCTRL = 224;
+
+const int HID_USAGE_KEYBOARD_LSHFT = 225;
+
+const int HID_USAGE_KEYBOARD_LALT = 226;
+
+const int HID_USAGE_KEYBOARD_LGUI = 227;
+
+const int HID_USAGE_KEYBOARD_RCTRL = 228;
+
+const int HID_USAGE_KEYBOARD_RSHFT = 229;
+
+const int HID_USAGE_KEYBOARD_RALT = 230;
+
+const int HID_USAGE_KEYBOARD_RGUI = 231;
+
+const int HID_USAGE_KEYBOARD_SCROLL_LOCK = 71;
+
+const int HID_USAGE_KEYBOARD_NUM_LOCK = 83;
+
+const int HID_USAGE_KEYBOARD_CAPS_LOCK = 57;
+
+const int HID_USAGE_KEYBOARD_F1 = 58;
+
+const int HID_USAGE_KEYBOARD_F2 = 59;
+
+const int HID_USAGE_KEYBOARD_F3 = 60;
+
+const int HID_USAGE_KEYBOARD_F4 = 61;
+
+const int HID_USAGE_KEYBOARD_F5 = 62;
+
+const int HID_USAGE_KEYBOARD_F6 = 63;
+
+const int HID_USAGE_KEYBOARD_F7 = 64;
+
+const int HID_USAGE_KEYBOARD_F8 = 65;
+
+const int HID_USAGE_KEYBOARD_F9 = 66;
+
+const int HID_USAGE_KEYBOARD_F10 = 67;
+
+const int HID_USAGE_KEYBOARD_F11 = 68;
+
+const int HID_USAGE_KEYBOARD_F12 = 69;
+
+const int HID_USAGE_KEYBOARD_F13 = 104;
+
+const int HID_USAGE_KEYBOARD_F14 = 105;
+
+const int HID_USAGE_KEYBOARD_F15 = 106;
+
+const int HID_USAGE_KEYBOARD_F16 = 107;
+
+const int HID_USAGE_KEYBOARD_F17 = 108;
+
+const int HID_USAGE_KEYBOARD_F18 = 109;
+
+const int HID_USAGE_KEYBOARD_F19 = 110;
+
+const int HID_USAGE_KEYBOARD_F20 = 111;
+
+const int HID_USAGE_KEYBOARD_F21 = 112;
+
+const int HID_USAGE_KEYBOARD_F22 = 113;
+
+const int HID_USAGE_KEYBOARD_F23 = 114;
+
+const int HID_USAGE_KEYBOARD_F24 = 115;
+
+const int HID_USAGE_KEYBOARD_RETURN = 40;
+
+const int HID_USAGE_KEYBOARD_ESCAPE = 41;
+
+const int HID_USAGE_KEYBOARD_DELETE = 42;
+
+const int HID_USAGE_KEYBOARD_PRINT_SCREEN = 70;
+
+const int HID_USAGE_KEYBOARD_DELETE_FORWARD = 76;
+
+const int HID_USAGE_LED_NUM_LOCK = 1;
+
+const int HID_USAGE_LED_CAPS_LOCK = 2;
+
+const int HID_USAGE_LED_SCROLL_LOCK = 3;
+
+const int HID_USAGE_LED_COMPOSE = 4;
+
+const int HID_USAGE_LED_KANA = 5;
+
+const int HID_USAGE_LED_POWER = 6;
+
+const int HID_USAGE_LED_SHIFT = 7;
+
+const int HID_USAGE_LED_DO_NOT_DISTURB = 8;
+
+const int HID_USAGE_LED_MUTE = 9;
+
+const int HID_USAGE_LED_TONE_ENABLE = 10;
+
+const int HID_USAGE_LED_HIGH_CUT_FILTER = 11;
+
+const int HID_USAGE_LED_LOW_CUT_FILTER = 12;
+
+const int HID_USAGE_LED_EQUALIZER_ENABLE = 13;
+
+const int HID_USAGE_LED_SOUND_FIELD_ON = 14;
+
+const int HID_USAGE_LED_SURROUND_FIELD_ON = 15;
+
+const int HID_USAGE_LED_REPEAT = 16;
+
+const int HID_USAGE_LED_STEREO = 17;
+
+const int HID_USAGE_LED_SAMPLING_RATE_DETECT = 18;
+
+const int HID_USAGE_LED_SPINNING = 19;
+
+const int HID_USAGE_LED_CAV = 20;
+
+const int HID_USAGE_LED_CLV = 21;
+
+const int HID_USAGE_LED_RECORDING_FORMAT_DET = 22;
+
+const int HID_USAGE_LED_OFF_HOOK = 23;
+
+const int HID_USAGE_LED_RING = 24;
+
+const int HID_USAGE_LED_MESSAGE_WAITING = 25;
+
+const int HID_USAGE_LED_DATA_MODE = 26;
+
+const int HID_USAGE_LED_BATTERY_OPERATION = 27;
+
+const int HID_USAGE_LED_BATTERY_OK = 28;
+
+const int HID_USAGE_LED_BATTERY_LOW = 29;
+
+const int HID_USAGE_LED_SPEAKER = 30;
+
+const int HID_USAGE_LED_HEAD_SET = 31;
+
+const int HID_USAGE_LED_HOLD = 32;
+
+const int HID_USAGE_LED_MICROPHONE = 33;
+
+const int HID_USAGE_LED_COVERAGE = 34;
+
+const int HID_USAGE_LED_NIGHT_MODE = 35;
+
+const int HID_USAGE_LED_SEND_CALLS = 36;
+
+const int HID_USAGE_LED_CALL_PICKUP = 37;
+
+const int HID_USAGE_LED_CONFERENCE = 38;
+
+const int HID_USAGE_LED_STAND_BY = 39;
+
+const int HID_USAGE_LED_CAMERA_ON = 40;
+
+const int HID_USAGE_LED_CAMERA_OFF = 41;
+
+const int HID_USAGE_LED_ON_LINE = 42;
+
+const int HID_USAGE_LED_OFF_LINE = 43;
+
+const int HID_USAGE_LED_BUSY = 44;
+
+const int HID_USAGE_LED_READY = 45;
+
+const int HID_USAGE_LED_PAPER_OUT = 46;
+
+const int HID_USAGE_LED_PAPER_JAM = 47;
+
+const int HID_USAGE_LED_REMOTE = 48;
+
+const int HID_USAGE_LED_FORWARD = 49;
+
+const int HID_USAGE_LED_REVERSE = 50;
+
+const int HID_USAGE_LED_STOP = 51;
+
+const int HID_USAGE_LED_REWIND = 52;
+
+const int HID_USAGE_LED_FAST_FORWARD = 53;
+
+const int HID_USAGE_LED_PLAY = 54;
+
+const int HID_USAGE_LED_PAUSE = 55;
+
+const int HID_USAGE_LED_RECORD = 56;
+
+const int HID_USAGE_LED_ERROR = 57;
+
+const int HID_USAGE_LED_SELECTED_INDICATOR = 58;
+
+const int HID_USAGE_LED_IN_USE_INDICATOR = 59;
+
+const int HID_USAGE_LED_MULTI_MODE_INDICATOR = 60;
+
+const int HID_USAGE_LED_INDICATOR_ON = 61;
+
+const int HID_USAGE_LED_INDICATOR_FLASH = 62;
+
+const int HID_USAGE_LED_INDICATOR_SLOW_BLINK = 63;
+
+const int HID_USAGE_LED_INDICATOR_FAST_BLINK = 64;
+
+const int HID_USAGE_LED_INDICATOR_OFF = 65;
+
+const int HID_USAGE_LED_FLASH_ON_TIME = 66;
+
+const int HID_USAGE_LED_SLOW_BLINK_ON_TIME = 67;
+
+const int HID_USAGE_LED_SLOW_BLINK_OFF_TIME = 68;
+
+const int HID_USAGE_LED_FAST_BLINK_ON_TIME = 69;
+
+const int HID_USAGE_LED_FAST_BLINK_OFF_TIME = 70;
+
+const int HID_USAGE_LED_INDICATOR_COLOR = 71;
+
+const int HID_USAGE_LED_RED = 72;
+
+const int HID_USAGE_LED_GREEN = 73;
+
+const int HID_USAGE_LED_AMBER = 74;
+
+const int HID_USAGE_LED_GENERIC_INDICATOR = 75;
+
+const int HID_USAGE_LED_SYSTEM_SUSPEND = 76;
+
+const int HID_USAGE_LED_EXTERNAL_POWER = 77;
+
+const int HID_USAGE_TELEPHONY_PHONE = 1;
+
+const int HID_USAGE_TELEPHONY_ANSWERING_MACHINE = 2;
+
+const int HID_USAGE_TELEPHONY_MESSAGE_CONTROLS = 3;
+
+const int HID_USAGE_TELEPHONY_HANDSET = 4;
+
+const int HID_USAGE_TELEPHONY_HEADSET = 5;
+
+const int HID_USAGE_TELEPHONY_KEYPAD = 6;
+
+const int HID_USAGE_TELEPHONY_PROGRAMMABLE_BUTTON = 7;
+
+const int HID_USAGE_TELEPHONY_REDIAL = 36;
+
+const int HID_USAGE_TELEPHONY_TRANSFER = 37;
+
+const int HID_USAGE_TELEPHONY_DROP = 38;
+
+const int HID_USAGE_TELEPHONY_LINE = 42;
+
+const int HID_USAGE_TELEPHONY_RING_ENABLE = 45;
+
+const int HID_USAGE_TELEPHONY_SEND = 49;
+
+const int HID_USAGE_TELEPHONY_KEYPAD_0 = 176;
+
+const int HID_USAGE_TELEPHONY_KEYPAD_D = 191;
+
+const int HID_USAGE_TELEPHONY_HOST_AVAILABLE = 241;
+
+const int HID_USAGE_CONSUMERCTRL = 1;
+
+const int HID_USAGE_CONSUMER_CHANNEL_INCREMENT = 156;
+
+const int HID_USAGE_CONSUMER_CHANNEL_DECREMENT = 157;
+
+const int HID_USAGE_CONSUMER_PLAY = 176;
+
+const int HID_USAGE_CONSUMER_PAUSE = 177;
+
+const int HID_USAGE_CONSUMER_RECORD = 178;
+
+const int HID_USAGE_CONSUMER_FAST_FORWARD = 179;
+
+const int HID_USAGE_CONSUMER_REWIND = 180;
+
+const int HID_USAGE_CONSUMER_SCAN_NEXT_TRACK = 181;
+
+const int HID_USAGE_CONSUMER_SCAN_PREV_TRACK = 182;
+
+const int HID_USAGE_CONSUMER_STOP = 183;
+
+const int HID_USAGE_CONSUMER_PLAY_PAUSE = 205;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_OPEN_GAMEBAR = 208;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_TOGGLE_RECORD = 209;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_RECORD_CLIP = 210;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_SCREENSHOT = 211;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_TOGGLE_INDICATOR = 212;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_TOGGLE_MICROPHONE = 213;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_TOGGLE_CAMERA = 214;
+
+const int HID_USAGE_CONSUMER_GAMEDVR_TOGGLE_BROADCAST = 215;
+
+const int HID_USAGE_CONSUMER_VOLUME = 224;
+
+const int HID_USAGE_CONSUMER_BALANCE = 225;
+
+const int HID_USAGE_CONSUMER_MUTE = 226;
+
+const int HID_USAGE_CONSUMER_BASS = 227;
+
+const int HID_USAGE_CONSUMER_TREBLE = 228;
+
+const int HID_USAGE_CONSUMER_BASS_BOOST = 229;
+
+const int HID_USAGE_CONSUMER_SURROUND_MODE = 230;
+
+const int HID_USAGE_CONSUMER_LOUDNESS = 231;
+
+const int HID_USAGE_CONSUMER_MPX = 232;
+
+const int HID_USAGE_CONSUMER_VOLUME_INCREMENT = 233;
+
+const int HID_USAGE_CONSUMER_VOLUME_DECREMENT = 234;
+
+const int HID_USAGE_CONSUMER_BASS_INCREMENT = 338;
+
+const int HID_USAGE_CONSUMER_BASS_DECREMENT = 339;
+
+const int HID_USAGE_CONSUMER_TREBLE_INCREMENT = 340;
+
+const int HID_USAGE_CONSUMER_TREBLE_DECREMENT = 341;
+
+const int HID_USAGE_CONSUMER_AL_CONFIGURATION = 387;
+
+const int HID_USAGE_CONSUMER_AL_EMAIL = 394;
+
+const int HID_USAGE_CONSUMER_AL_CALCULATOR = 402;
+
+const int HID_USAGE_CONSUMER_AL_BROWSER = 404;
+
+const int HID_USAGE_CONSUMER_AL_SEARCH = 454;
+
+const int HID_USAGE_CONSUMER_AC_SEARCH = 545;
+
+const int HID_USAGE_CONSUMER_AC_GOTO = 546;
+
+const int HID_USAGE_CONSUMER_AC_HOME = 547;
+
+const int HID_USAGE_CONSUMER_AC_BACK = 548;
+
+const int HID_USAGE_CONSUMER_AC_FORWARD = 549;
+
+const int HID_USAGE_CONSUMER_AC_STOP = 550;
+
+const int HID_USAGE_CONSUMER_AC_REFRESH = 551;
+
+const int HID_USAGE_CONSUMER_AC_PREVIOUS = 552;
+
+const int HID_USAGE_CONSUMER_AC_NEXT = 553;
+
+const int HID_USAGE_CONSUMER_AC_BOOKMARKS = 554;
+
+const int HID_USAGE_CONSUMER_AC_PAN = 568;
+
+const int HID_USAGE_CONSUMER_EXTENDED_KEYBOARD_ATTRIBUTES_COLLECTION = 704;
+
+const int HID_USAGE_CONSUMER_KEYBOARD_FORM_FACTOR = 705;
+
+const int HID_USAGE_CONSUMER_KEYBOARD_KEY_TYPE = 706;
+
+const int HID_USAGE_CONSUMER_KEYBOARD_PHYSICAL_LAYOUT = 707;
+
+const int HID_USAGE_CONSUMER_VENDOR_SPECIFIC_KEYBOARD_PHYSICAL_LAYOUT = 708;
+
+const int HID_USAGE_CONSUMER_KEYBOARD_IETF_LANGUAGE_TAG_INDEX = 709;
+
+const int HID_USAGE_CONSUMER_IMPLEMENTED_KEYBOARD_INPUT_ASSIST_CONTROLS = 710;
+
+const int HID_USAGE_DIGITIZER_DIGITIZER = 1;
+
+const int HID_USAGE_DIGITIZER_PEN = 2;
+
+const int HID_USAGE_DIGITIZER_LIGHT_PEN = 3;
+
+const int HID_USAGE_DIGITIZER_TOUCH_SCREEN = 4;
+
+const int HID_USAGE_DIGITIZER_TOUCH_PAD = 5;
+
+const int HID_USAGE_DIGITIZER_WHITE_BOARD = 6;
+
+const int HID_USAGE_DIGITIZER_COORD_MEASURING = 7;
+
+const int HID_USAGE_DIGITIZER_3D_DIGITIZER = 8;
+
+const int HID_USAGE_DIGITIZER_STEREO_PLOTTER = 9;
+
+const int HID_USAGE_DIGITIZER_ARTICULATED_ARM = 10;
+
+const int HID_USAGE_DIGITIZER_ARMATURE = 11;
+
+const int HID_USAGE_DIGITIZER_MULTI_POINT = 12;
+
+const int HID_USAGE_DIGITIZER_FREE_SPACE_WAND = 13;
+
+const int HID_USAGE_DIGITIZER_STYLUS = 32;
+
+const int HID_USAGE_DIGITIZER_PUCK = 33;
+
+const int HID_USAGE_DIGITIZER_FINGER = 34;
+
+const int HID_USAGE_DIGITIZER_TABLET_FUNC_KEYS = 57;
+
+const int HID_USAGE_DIGITIZER_PROG_CHANGE_KEYS = 58;
+
+const int HID_USAGE_DIGITIZER_TIP_PRESSURE = 48;
+
+const int HID_USAGE_DIGITIZER_BARREL_PRESSURE = 49;
+
+const int HID_USAGE_DIGITIZER_IN_RANGE = 50;
+
+const int HID_USAGE_DIGITIZER_TOUCH = 51;
+
+const int HID_USAGE_DIGITIZER_UNTOUCH = 52;
+
+const int HID_USAGE_DIGITIZER_TAP = 53;
+
+const int HID_USAGE_DIGITIZER_QUALITY = 54;
+
+const int HID_USAGE_DIGITIZER_DATA_VALID = 55;
+
+const int HID_USAGE_DIGITIZER_TRANSDUCER_INDEX = 56;
+
+const int HID_USAGE_DIGITIZER_BATTERY_STRENGTH = 59;
+
+const int HID_USAGE_DIGITIZER_INVERT = 60;
+
+const int HID_USAGE_DIGITIZER_X_TILT = 61;
+
+const int HID_USAGE_DIGITIZER_Y_TILT = 62;
+
+const int HID_USAGE_DIGITIZER_AZIMUTH = 63;
+
+const int HID_USAGE_DIGITIZER_ALTITUDE = 64;
+
+const int HID_USAGE_DIGITIZER_TWIST = 65;
+
+const int HID_USAGE_DIGITIZER_TIP_SWITCH = 66;
+
+const int HID_USAGE_DIGITIZER_SECONDARY_TIP_SWITCH = 67;
+
+const int HID_USAGE_DIGITIZER_BARREL_SWITCH = 68;
+
+const int HID_USAGE_DIGITIZER_ERASER = 69;
+
+const int HID_USAGE_DIGITIZER_TABLET_PICK = 70;
+
+const int HID_USAGE_DIGITIZER_TRANSDUCER_SERIAL = 91;
+
+const int HID_USAGE_DIGITIZER_TRANSDUCER_VENDOR = 146;
+
+const int HID_USAGE_DIGITIZER_TRANSDUCER_CONNECTED = 162;
+
+const int HID_USAGE_HAPTICS_SIMPLE_CONTROLLER = 1;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_LIST = 16;
+
+const int HID_USAGE_HAPTICS_DURATION_LIST = 17;
+
+const int HID_USAGE_HAPTICS_AUTO_TRIGGER = 32;
+
+const int HID_USAGE_HAPTICS_MANUAL_TRIGGER = 33;
+
+const int HID_USAGE_HAPTICS_AUTO_ASSOCIATED_CONTROL = 34;
+
+const int HID_USAGE_HAPTICS_INTENSITY = 35;
+
+const int HID_USAGE_HAPTICS_REPEAT_COUNT = 36;
+
+const int HID_USAGE_HAPTICS_RETRIGGER_PERIOD = 37;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_VENDOR_PAGE = 38;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_VENDOR_ID = 39;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_CUTOFF_TIME = 40;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_BEGIN = 4096;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_STOP = 4097;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_NULL = 4098;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_CLICK = 4099;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_BUZZ = 4100;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_RUMBLE = 4101;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_PRESS = 4102;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_RELEASE = 4103;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_END = 8191;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_VENDOR_BEGIN = 8192;
+
+const int HID_USAGE_HAPTICS_WAVEFORM_VENDOR_END = 12287;
+
+const int HID_USAGE_ALPHANUMERIC_ALPHANUMERIC_DISPLAY = 1;
+
+const int HID_USAGE_ALPHANUMERIC_BITMAPPED_DISPLAY = 2;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_ATTRIBUTES_REPORT = 32;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_CONTROL_REPORT = 36;
+
+const int HID_USAGE_ALPHANUMERIC_CHARACTER_REPORT = 43;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_STATUS = 45;
+
+const int HID_USAGE_ALPHANUMERIC_CURSOR_POSITION_REPORT = 50;
+
+const int HID_USAGE_ALPHANUMERIC_FONT_REPORT = 59;
+
+const int HID_USAGE_ALPHANUMERIC_FONT_DATA = 60;
+
+const int HID_USAGE_ALPHANUMERIC_CHARACTER_ATTRIBUTE = 72;
+
+const int HID_USAGE_ALPHANUMERIC_PALETTE_REPORT = 133;
+
+const int HID_USAGE_ALPHANUMERIC_PALETTE_DATA = 136;
+
+const int HID_USAGE_ALPHANUMERIC_BLIT_REPORT = 138;
+
+const int HID_USAGE_ALPHANUMERIC_BLIT_DATA = 143;
+
+const int HID_USAGE_ALPHANUMERIC_SOFT_BUTTON = 144;
+
+const int HID_USAGE_ALPHANUMERIC_ASCII_CHARACTER_SET = 33;
+
+const int HID_USAGE_ALPHANUMERIC_DATA_READ_BACK = 34;
+
+const int HID_USAGE_ALPHANUMERIC_FONT_READ_BACK = 35;
+
+const int HID_USAGE_ALPHANUMERIC_CLEAR_DISPLAY = 37;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_ENABLE = 38;
+
+const int HID_USAGE_ALPHANUMERIC_SCREEN_SAVER_DELAY = 39;
+
+const int HID_USAGE_ALPHANUMERIC_SCREEN_SAVER_ENABLE = 40;
+
+const int HID_USAGE_ALPHANUMERIC_VERTICAL_SCROLL = 41;
+
+const int HID_USAGE_ALPHANUMERIC_HORIZONTAL_SCROLL = 42;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_DATA = 44;
+
+const int HID_USAGE_ALPHANUMERIC_STATUS_NOT_READY = 46;
+
+const int HID_USAGE_ALPHANUMERIC_STATUS_READY = 47;
+
+const int HID_USAGE_ALPHANUMERIC_ERR_NOT_A_LOADABLE_CHARACTER = 48;
+
+const int HID_USAGE_ALPHANUMERIC_ERR_FONT_DATA_CANNOT_BE_READ = 49;
+
+const int HID_USAGE_ALPHANUMERIC_ROW = 51;
+
+const int HID_USAGE_ALPHANUMERIC_COLUMN = 52;
+
+const int HID_USAGE_ALPHANUMERIC_ROWS = 53;
+
+const int HID_USAGE_ALPHANUMERIC_COLUMNS = 54;
+
+const int HID_USAGE_ALPHANUMERIC_CURSOR_PIXEL_POSITIONING = 55;
+
+const int HID_USAGE_ALPHANUMERIC_CURSOR_MODE = 56;
+
+const int HID_USAGE_ALPHANUMERIC_CURSOR_ENABLE = 57;
+
+const int HID_USAGE_ALPHANUMERIC_CURSOR_BLINK = 58;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_WIDTH = 61;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_HEIGHT = 62;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_SPACING_HORIZONTAL = 63;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_SPACING_VERTICAL = 64;
+
+const int HID_USAGE_ALPHANUMERIC_UNICODE_CHAR_SET = 65;
+
+const int HID_USAGE_ALPHANUMERIC_FONT_7_SEGMENT = 66;
+
+const int HID_USAGE_ALPHANUMERIC_7_SEGMENT_DIRECT_MAP = 67;
+
+const int HID_USAGE_ALPHANUMERIC_FONT_14_SEGMENT = 68;
+
+const int HID_USAGE_ALPHANUMERIC_14_SEGMENT_DIRECT_MAP = 69;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_BRIGHTNESS = 70;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_CONTRAST = 71;
+
+const int HID_USAGE_ALPHANUMERIC_ATTRIBUTE_READBACK = 73;
+
+const int HID_USAGE_ALPHANUMERIC_ATTRIBUTE_DATA = 74;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_ATTR_ENHANCE = 75;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_ATTR_UNDERLINE = 76;
+
+const int HID_USAGE_ALPHANUMERIC_CHAR_ATTR_BLINK = 77;
+
+const int HID_USAGE_ALPHANUMERIC_BITMAP_SIZE_X = 128;
+
+const int HID_USAGE_ALPHANUMERIC_BITMAP_SIZE_Y = 129;
+
+const int HID_USAGE_ALPHANUMERIC_BIT_DEPTH_FORMAT = 131;
+
+const int HID_USAGE_ALPHANUMERIC_DISPLAY_ORIENTATION = 132;
+
+const int HID_USAGE_ALPHANUMERIC_PALETTE_DATA_SIZE = 134;
+
+const int HID_USAGE_ALPHANUMERIC_PALETTE_DATA_OFFSET = 135;
+
+const int HID_USAGE_ALPHANUMERIC_BLIT_RECTANGLE_X1 = 139;
+
+const int HID_USAGE_ALPHANUMERIC_BLIT_RECTANGLE_Y1 = 140;
+
+const int HID_USAGE_ALPHANUMERIC_BLIT_RECTANGLE_X2 = 141;
+
+const int HID_USAGE_ALPHANUMERIC_BLIT_RECTANGLE_Y2 = 142;
+
+const int HID_USAGE_ALPHANUMERIC_SOFT_BUTTON_ID = 145;
+
+const int HID_USAGE_ALPHANUMERIC_SOFT_BUTTON_SIDE = 146;
+
+const int HID_USAGE_ALPHANUMERIC_SOFT_BUTTON_OFFSET1 = 147;
+
+const int HID_USAGE_ALPHANUMERIC_SOFT_BUTTON_OFFSET2 = 148;
+
+const int HID_USAGE_ALPHANUMERIC_SOFT_BUTTON_REPORT = 149;
+
+const int HID_USAGE_LAMPARRAY = 1;
+
+const int HID_USAGE_LAMPARRAY_ATTRBIUTES_REPORT = 2;
+
+const int HID_USAGE_LAMPARRAY_LAMP_COUNT = 3;
+
+const int HID_USAGE_LAMPARRAY_BOUNDING_BOX_WIDTH_IN_MICROMETERS = 4;
+
+const int HID_USAGE_LAMPARRAY_BOUNDING_BOX_HEIGHT_IN_MICROMETERS = 5;
+
+const int HID_USAGE_LAMPARRAY_BOUNDING_BOX_DEPTH_IN_MICROMETERS = 6;
+
+const int HID_USAGE_LAMPARRAY_KIND = 7;
+
+const int HID_USAGE_LAMPARRAY_MIN_UPDATE_INTERVAL_IN_MICROSECONDS = 8;
+
+const int HID_USAGE_LAMPARRAY_LAMP_ATTRIBUTES_REQUEST_REPORT = 32;
+
+const int HID_USAGE_LAMPARRAY_LAMP_ID = 33;
+
+const int HID_USAGE_LAMPARRAY_LAMP_ATTRIBUTES_RESPONSE_REPORT = 34;
+
+const int HID_USAGE_LAMPARRAY_POSITION_X_IN_MICROMETERS = 35;
+
+const int HID_USAGE_LAMPARRAY_POSITION_Y_IN_MICROMETERS = 36;
+
+const int HID_USAGE_LAMPARRAY_POSITION_Z_IN_MICROMETERS = 37;
+
+const int HID_USAGE_LAMPARRAY_LAMP_PURPOSES = 38;
+
+const int HID_USAGE_LAMPARRAY_UPDATE_LATENCY_IN_MICROSECONDS = 39;
+
+const int HID_USAGE_LAMPARRAY_RED_LEVEL_COUNT = 40;
+
+const int HID_USAGE_LAMPARRAY_GREEN_LEVEL_COUNT = 41;
+
+const int HID_USAGE_LAMPARRAY_BLUE_LEVEL_COUNT = 42;
+
+const int HID_USAGE_LAMPARRAY_INTENSITY_LEVEL_COUNT = 43;
+
+const int HID_USAGE_LAMPARRAY_IS_PROGRAMMABLE = 44;
+
+const int HID_USAGE_LAMPARRAY_INPUT_BINDING = 45;
+
+const int HID_USAGE_LAMPARRAY_LAMP_MULTI_UPDATE_REPORT = 80;
+
+const int HID_USAGE_LAMPARRAY_LAMP_RED_UPDATE_CHANNEL = 81;
+
+const int HID_USAGE_LAMPARRAY_LAMP_GREEN_UPDATE_CHANNEL = 82;
+
+const int HID_USAGE_LAMPARRAY_LAMP_BLUE_UPDATE_CHANNEL = 83;
+
+const int HID_USAGE_LAMPARRAY_LAMP_INTENSITY_UPDATE_CHANNEL = 84;
+
+const int HID_USAGE_LAMPARRAY_LAMP_UPDATE_FLAGS = 85;
+
+const int HID_USAGE_LAMPARRAY_LAMP_RANGE_UPDATE_REPORT = 96;
+
+const int HID_USAGE_LAMPARRAY_LAMP_ID_START = 97;
+
+const int HID_USAGE_LAMPARRAY_LAMP_ID_END = 98;
+
+const int HID_USAGE_LAMPARRAY_CONTROL_REPORT = 112;
+
+const int HID_USAGE_LAMPARRAY_AUTONOMOUS_MODE = 113;
+
+const int HID_USAGE_CAMERA_AUTO_FOCUS = 32;
+
+const int HID_USAGE_CAMERA_SHUTTER = 33;
+
+const int HID_USAGE_MS_BTH_HF_DIALNUMBER = 33;
+
+const int HID_USAGE_MS_BTH_HF_DIALMEMORY = 34;
+
+const int HIDP_LINK_COLLECTION_ROOT = 65535;
+
+const int HIDP_LINK_COLLECTION_UNSPECIFIED = 0;
+
+const int FACILITY_HID_ERROR_CODE = 17;
+
 const int HIDP_STATUS_SUCCESS = 1114112;
+
+const int HIDP_STATUS_NULL = -2146369535;
+
+const int HIDP_STATUS_INVALID_PREPARSED_DATA = -1072627711;
+
+const int HIDP_STATUS_INVALID_REPORT_TYPE = -1072627710;
+
+const int HIDP_STATUS_INVALID_REPORT_LENGTH = -1072627709;
+
+const int HIDP_STATUS_USAGE_NOT_FOUND = -1072627708;
+
+const int HIDP_STATUS_VALUE_OUT_OF_RANGE = -1072627707;
+
+const int HIDP_STATUS_BAD_LOG_PHY_VALUES = -1072627706;
+
+const int HIDP_STATUS_BUFFER_TOO_SMALL = -1072627705;
+
+const int HIDP_STATUS_INTERNAL_ERROR = -1072627704;
+
+const int HIDP_STATUS_I8042_TRANS_UNKNOWN = -1072627703;
+
+const int HIDP_STATUS_INCOMPATIBLE_REPORT_ID = -1072627702;
+
+const int HIDP_STATUS_NOT_VALUE_ARRAY = -1072627701;
+
+const int HIDP_STATUS_IS_VALUE_ARRAY = -1072627700;
+
+const int HIDP_STATUS_DATA_INDEX_NOT_FOUND = -1072627699;
+
+const int HIDP_STATUS_DATA_INDEX_OUT_OF_RANGE = -1072627698;
+
+const int HIDP_STATUS_BUTTON_NOT_PRESSED = -1072627697;
+
+const int HIDP_STATUS_REPORT_DOES_NOT_EXIST = -1072627696;
+
+const int HIDP_STATUS_NOT_IMPLEMENTED = -1072627680;
+
+const int HIDP_STATUS_I8242_TRANS_UNKNOWN = -1072627703;
 
 typedef _c_HidP_GetCaps = ffi.Int32 Function(
   ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
@@ -296,6 +2961,472 @@ typedef _dart_HidP_GetCaps = int Function(
   ffi.Pointer<HIDP_CAPS> Capabilities,
 );
 
+typedef _c_HidP_GetLinkCollectionNodes = ffi.Int32 Function(
+  ffi.Pointer<PHIDP_LINK_COLLECTION_NODE> LinkCollectionNodes,
+  ffi.Pointer<ffi.Uint32> LinkCollectionNodesLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_GetLinkCollectionNodes = int Function(
+  ffi.Pointer<PHIDP_LINK_COLLECTION_NODE> LinkCollectionNodes,
+  ffi.Pointer<ffi.Uint32> LinkCollectionNodesLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_GetSpecificButtonCaps = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Pointer<PHIDP_BUTTON_CAPS> ButtonCaps,
+  ffi.Pointer<ffi.Uint16> ButtonCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_GetSpecificButtonCaps = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  ffi.Pointer<PHIDP_BUTTON_CAPS> ButtonCaps,
+  ffi.Pointer<ffi.Uint16> ButtonCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_GetButtonCaps = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Pointer<PHIDP_BUTTON_CAPS> ButtonCaps,
+  ffi.Pointer<ffi.Uint16> ButtonCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_GetButtonCaps = int Function(
+  int ReportType,
+  ffi.Pointer<PHIDP_BUTTON_CAPS> ButtonCaps,
+  ffi.Pointer<ffi.Uint16> ButtonCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_GetSpecificValueCaps = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Pointer<PHIDP_VALUE_CAPS> ValueCaps,
+  ffi.Pointer<ffi.Uint16> ValueCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_GetSpecificValueCaps = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  ffi.Pointer<PHIDP_VALUE_CAPS> ValueCaps,
+  ffi.Pointer<ffi.Uint16> ValueCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_GetValueCaps = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Pointer<PHIDP_VALUE_CAPS> ValueCaps,
+  ffi.Pointer<ffi.Uint16> ValueCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_GetValueCaps = int Function(
+  int ReportType,
+  ffi.Pointer<PHIDP_VALUE_CAPS> ValueCaps,
+  ffi.Pointer<ffi.Uint16> ValueCapsLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_GetExtendedAttributes = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 DataIndex,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<PHIDP_EXTENDED_ATTRIBUTES> Attributes,
+  ffi.Pointer<ffi.Uint32> LengthAttributes,
+);
+
+typedef _dart_HidP_GetExtendedAttributes = int Function(
+  int ReportType,
+  int DataIndex,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<PHIDP_EXTENDED_ATTRIBUTES> Attributes,
+  ffi.Pointer<ffi.Uint32> LengthAttributes,
+);
+
+typedef _c_HidP_InitializeReportForID = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint8 ReportID,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_InitializeReportForID = int Function(
+  int ReportType,
+  int ReportID,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_SetData = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Pointer<PHIDP_DATA> DataList,
+  ffi.Pointer<ffi.Uint32> DataLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_SetData = int Function(
+  int ReportType,
+  ffi.Pointer<PHIDP_DATA> DataList,
+  ffi.Pointer<ffi.Uint32> DataLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_GetData = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Pointer<PHIDP_DATA> DataList,
+  ffi.Pointer<ffi.Uint32> DataLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_GetData = int Function(
+  int ReportType,
+  ffi.Pointer<PHIDP_DATA> DataList,
+  ffi.Pointer<ffi.Uint32> DataLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_MaxDataListLength = ffi.Uint32 Function(
+  ffi.Int32 ReportType,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_MaxDataListLength = int Function(
+  int ReportType,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_SetUsages = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Pointer<ffi.Uint16> UsageList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_SetUsages = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  ffi.Pointer<ffi.Uint16> UsageList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_UnsetUsages = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Pointer<ffi.Uint16> UsageList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_UnsetUsages = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  ffi.Pointer<ffi.Uint16> UsageList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_GetUsages = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Pointer<ffi.Uint16> UsageList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_GetUsages = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  ffi.Pointer<ffi.Uint16> UsageList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_GetUsagesEx = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 LinkCollection,
+  ffi.Pointer<PUSAGE_AND_PAGE> ButtonList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_GetUsagesEx = int Function(
+  int ReportType,
+  int LinkCollection,
+  ffi.Pointer<PUSAGE_AND_PAGE> ButtonList,
+  ffi.Pointer<ffi.Uint32> UsageLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_MaxUsageListLength = ffi.Uint32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _dart_HidP_MaxUsageListLength = int Function(
+  int ReportType,
+  int UsagePage,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidP_SetUsageValue = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Uint32 UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_SetUsageValue = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  int UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_SetScaledUsageValue = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Int32 UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_SetScaledUsageValue = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  int UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_SetUsageValueArray = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Pointer<ffi.Int8> UsageValue,
+  ffi.Uint16 UsageValueByteLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_SetUsageValueArray = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  ffi.Pointer<ffi.Int8> UsageValue,
+  int UsageValueByteLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_GetUsageValue = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Pointer<ffi.Uint32> UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_GetUsageValue = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  ffi.Pointer<ffi.Uint32> UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_GetScaledUsageValue = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Pointer<ffi.Int32> UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_GetScaledUsageValue = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  ffi.Pointer<ffi.Int32> UsageValue,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_GetUsageValueArray = ffi.Int32 Function(
+  ffi.Int32 ReportType,
+  ffi.Uint16 UsagePage,
+  ffi.Uint16 LinkCollection,
+  ffi.Uint16 Usage,
+  ffi.Pointer<ffi.Int8> UsageValue,
+  ffi.Uint16 UsageValueByteLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  ffi.Uint32 ReportLength,
+);
+
+typedef _dart_HidP_GetUsageValueArray = int Function(
+  int ReportType,
+  int UsagePage,
+  int LinkCollection,
+  int Usage,
+  ffi.Pointer<ffi.Int8> UsageValue,
+  int UsageValueByteLength,
+  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<ffi.Int8> Report,
+  int ReportLength,
+);
+
+typedef _c_HidP_UsageListDifference = ffi.Int32 Function(
+  ffi.Pointer<ffi.Uint16> PreviousUsageList,
+  ffi.Pointer<ffi.Uint16> CurrentUsageList,
+  ffi.Pointer<ffi.Uint16> BreakUsageList,
+  ffi.Pointer<ffi.Uint16> MakeUsageList,
+  ffi.Uint32 UsageListLength,
+);
+
+typedef _dart_HidP_UsageListDifference = int Function(
+  ffi.Pointer<ffi.Uint16> PreviousUsageList,
+  ffi.Pointer<ffi.Uint16> CurrentUsageList,
+  ffi.Pointer<ffi.Uint16> BreakUsageList,
+  ffi.Pointer<ffi.Uint16> MakeUsageList,
+  int UsageListLength,
+);
+
+typedef _c_HidP_UsageAndPageListDifference = ffi.Int32 Function(
+  ffi.Pointer<PUSAGE_AND_PAGE> PreviousUsageList,
+  ffi.Pointer<PUSAGE_AND_PAGE> CurrentUsageList,
+  ffi.Pointer<PUSAGE_AND_PAGE> BreakUsageList,
+  ffi.Pointer<PUSAGE_AND_PAGE> MakeUsageList,
+  ffi.Uint32 UsageListLength,
+);
+
+typedef _dart_HidP_UsageAndPageListDifference = int Function(
+  ffi.Pointer<PUSAGE_AND_PAGE> PreviousUsageList,
+  ffi.Pointer<PUSAGE_AND_PAGE> CurrentUsageList,
+  ffi.Pointer<PUSAGE_AND_PAGE> BreakUsageList,
+  ffi.Pointer<PUSAGE_AND_PAGE> MakeUsageList,
+  int UsageListLength,
+);
+
+typedef PHIDP_INSERT_SCANCODES = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void>,
+  ffi.Pointer<ffi.Int8>,
+  ffi.Uint32,
+);
+
+typedef _c_HidP_TranslateUsageAndPagesToI8042ScanCodes = ffi.Int32 Function(
+  ffi.Pointer<PUSAGE_AND_PAGE> ChangedUsageList,
+  ffi.Uint32 UsageListLength,
+  ffi.Int32 KeyAction,
+  ffi.Pointer<PHIDP_KEYBOARD_MODIFIER_STATE> ModifierState,
+  ffi.Pointer<ffi.NativeFunction<PHIDP_INSERT_SCANCODES>> InsertCodesProcedure,
+  ffi.Pointer<ffi.Void> InsertCodesContext,
+);
+
+typedef _dart_HidP_TranslateUsageAndPagesToI8042ScanCodes = int Function(
+  ffi.Pointer<PUSAGE_AND_PAGE> ChangedUsageList,
+  int UsageListLength,
+  int KeyAction,
+  ffi.Pointer<PHIDP_KEYBOARD_MODIFIER_STATE> ModifierState,
+  ffi.Pointer<ffi.NativeFunction<PHIDP_INSERT_SCANCODES>> InsertCodesProcedure,
+  ffi.Pointer<ffi.Void> InsertCodesContext,
+);
+
+typedef _c_HidP_TranslateUsagesToI8042ScanCodes = ffi.Int32 Function(
+  ffi.Pointer<ffi.Uint16> ChangedUsageList,
+  ffi.Uint32 UsageListLength,
+  ffi.Int32 KeyAction,
+  ffi.Pointer<PHIDP_KEYBOARD_MODIFIER_STATE> ModifierState,
+  ffi.Pointer<ffi.NativeFunction<PHIDP_INSERT_SCANCODES>> InsertCodesProcedure,
+  ffi.Pointer<ffi.Void> InsertCodesContext,
+);
+
+typedef _dart_HidP_TranslateUsagesToI8042ScanCodes = int Function(
+  ffi.Pointer<ffi.Uint16> ChangedUsageList,
+  int UsageListLength,
+  int KeyAction,
+  ffi.Pointer<PHIDP_KEYBOARD_MODIFIER_STATE> ModifierState,
+  ffi.Pointer<ffi.NativeFunction<PHIDP_INSERT_SCANCODES>> InsertCodesProcedure,
+  ffi.Pointer<ffi.Void> InsertCodesContext,
+);
+
 typedef _c_HidD_GetAttributes = ffi.Uint8 Function(
   ffi.Pointer<ffi.Void> HidDeviceObject,
   ffi.Pointer<HIDD_ATTRIBUTES> Attributes,
@@ -304,6 +3435,14 @@ typedef _c_HidD_GetAttributes = ffi.Uint8 Function(
 typedef _dart_HidD_GetAttributes = int Function(
   ffi.Pointer<ffi.Void> HidDeviceObject,
   ffi.Pointer<HIDD_ATTRIBUTES> Attributes,
+);
+
+typedef _c_HidD_GetHidGuid = ffi.Void Function(
+  ffi.Pointer<LPGUID> HidGuid,
+);
+
+typedef _dart_HidD_GetHidGuid = void Function(
+  ffi.Pointer<LPGUID> HidGuid,
 );
 
 typedef _c_HidD_GetPreparsedData = ffi.Uint8 Function(
@@ -322,4 +3461,178 @@ typedef _c_HidD_FreePreparsedData = ffi.Uint8 Function(
 
 typedef _dart_HidD_FreePreparsedData = int Function(
   ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+);
+
+typedef _c_HidD_FlushQueue = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+);
+
+typedef _dart_HidD_FlushQueue = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+);
+
+typedef _c_HidD_GetConfiguration = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<PHIDD_CONFIGURATION> Configuration,
+  ffi.Uint32 ConfigurationLength,
+);
+
+typedef _dart_HidD_GetConfiguration = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<PHIDD_CONFIGURATION> Configuration,
+  int ConfigurationLength,
+);
+
+typedef _c_HidD_SetConfiguration = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<PHIDD_CONFIGURATION> Configuration,
+  ffi.Uint32 ConfigurationLength,
+);
+
+typedef _dart_HidD_SetConfiguration = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<PHIDD_CONFIGURATION> Configuration,
+  int ConfigurationLength,
+);
+
+typedef _c_HidD_GetFeature = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  ffi.Uint32 ReportBufferLength,
+);
+
+typedef _dart_HidD_GetFeature = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  int ReportBufferLength,
+);
+
+typedef _c_HidD_SetFeature = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  ffi.Uint32 ReportBufferLength,
+);
+
+typedef _dart_HidD_SetFeature = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  int ReportBufferLength,
+);
+
+typedef _c_HidD_GetInputReport = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  ffi.Uint32 ReportBufferLength,
+);
+
+typedef _dart_HidD_GetInputReport = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  int ReportBufferLength,
+);
+
+typedef _c_HidD_SetOutputReport = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  ffi.Uint32 ReportBufferLength,
+);
+
+typedef _dart_HidD_SetOutputReport = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> ReportBuffer,
+  int ReportBufferLength,
+);
+
+typedef _c_HidD_GetNumInputBuffers = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Uint32> NumberBuffers,
+);
+
+typedef _dart_HidD_GetNumInputBuffers = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Uint32> NumberBuffers,
+);
+
+typedef _c_HidD_SetNumInputBuffers = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Uint32 NumberBuffers,
+);
+
+typedef _dart_HidD_SetNumInputBuffers = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  int NumberBuffers,
+);
+
+typedef _c_HidD_GetPhysicalDescriptor = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  ffi.Uint32 BufferLength,
+);
+
+typedef _dart_HidD_GetPhysicalDescriptor = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  int BufferLength,
+);
+
+typedef _c_HidD_GetManufacturerString = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  ffi.Uint32 BufferLength,
+);
+
+typedef _dart_HidD_GetManufacturerString = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  int BufferLength,
+);
+
+typedef _c_HidD_GetProductString = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  ffi.Uint32 BufferLength,
+);
+
+typedef _dart_HidD_GetProductString = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  int BufferLength,
+);
+
+typedef _c_HidD_GetIndexedString = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Uint32 StringIndex,
+  ffi.Pointer<ffi.Void> Buffer,
+  ffi.Uint32 BufferLength,
+);
+
+typedef _dart_HidD_GetIndexedString = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  int StringIndex,
+  ffi.Pointer<ffi.Void> Buffer,
+  int BufferLength,
+);
+
+typedef _c_HidD_GetSerialNumberString = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  ffi.Uint32 BufferLength,
+);
+
+typedef _dart_HidD_GetSerialNumberString = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  int BufferLength,
+);
+
+typedef _c_HidD_GetMsGenreDescriptor = ffi.Uint8 Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  ffi.Uint32 BufferLength,
+);
+
+typedef _dart_HidD_GetMsGenreDescriptor = int Function(
+  ffi.Pointer<ffi.Void> HidDeviceObject,
+  ffi.Pointer<ffi.Void> Buffer,
+  int BufferLength,
 );
