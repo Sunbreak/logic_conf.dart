@@ -7,6 +7,7 @@ import 'linux/hidraw.dart';
 import 'linux/libudev.dart';
 import 'logic_conf_interface.dart';
 import 'linux/libc.dart';
+import 'util/pool.dart';
 
 class LogicConfLinux extends LogicConfPlatform {
   int _devDescriptor = -1;
@@ -26,9 +27,10 @@ class LogicConfLinux extends LogicConfPlatform {
 
     var enumerateContext = _libudev.udev_enumerate_new(udevContext);
     try {
-      var hidrawStr = 'hidraw'.toNativeUtf8();
-      _libudev.udev_enumerate_add_match_subsystem(enumerateContext, hidrawStr.cast());
-      malloc.free(hidrawStr);
+      using((Pool pool) {
+        var nativeUtf8 = 'hidraw'.toNativeUtf8(allocator: pool);
+        return _libudev.udev_enumerate_add_match_subsystem(enumerateContext, nativeUtf8.cast());
+      });
       _libudev.udev_enumerate_scan_devices(enumerateContext);
 
       var deviceList = _libudev.udev_enumerate_get_list_entry(enumerateContext);
@@ -70,19 +72,21 @@ class LogicConfLinux extends LogicConfPlatform {
   }
 
   Map<String, dynamic>? _getSysAttributes(Pointer<udev_device> rawDevice) {
-    var hidStr = 'hid'.toNativeUtf8();
     // Do not unref parent
-    var parentDevice = _libudev.udev_device_get_parent_with_subsystem_devtype(rawDevice, hidStr.cast(), nullptr);
-    malloc.free(hidStr);
+    var parentDevice = using((Pool pool) {
+      var nativeUtf8 = 'hid'.toNativeUtf8(allocator: pool);
+      return _libudev.udev_device_get_parent_with_subsystem_devtype(rawDevice, nativeUtf8.cast(), nullptr);
+    });
     if (parentDevice == nullptr) {
       return null;
     }
 
     var path = _libudev.udev_device_get_devnode(parentDevice);
     
-    var ueventStr = 'uevent'.toNativeUtf8();
-    var sysAttributeValuesPtr = _libudev.udev_device_get_sysattr_value(parentDevice, ueventStr.cast());
-    malloc.free(ueventStr);
+    var sysAttributeValuesPtr = using((Pool pool) {
+      var nativeUtf8 = 'uevent'.toNativeUtf8(allocator: pool);
+      return _libudev.udev_device_get_sysattr_value(parentDevice, nativeUtf8.cast());
+    });
     var sysAttributeValues = sysAttributeValuesPtr.cast<Utf8>().toDartString();
     for (var attributeValue in sysAttributeValues.split('\n')) {
       if (!attributeValue.contains('=')) continue;
@@ -105,9 +109,10 @@ class LogicConfLinux extends LogicConfPlatform {
   }
 
   Uint8List? _readReportDescriptor(String sysfsPath) {
-    var reportDescPathStr = '$sysfsPath/device/report_descriptor'.toNativeUtf8();
-    var reportDescriptor = _libc.open2(reportDescPathStr.cast(), O_RDONLY);
-    malloc.free(reportDescPathStr);
+    var reportDescriptor = using((Pool pool) {
+      var nativeUtf8 = '$sysfsPath/device/report_descriptor'.toNativeUtf8(allocator: pool);
+      return _libc.open2(nativeUtf8.cast(), O_RDONLY);
+    });
     if (reportDescriptor < 0) {
       // TODO strerror()
       print('open error');
@@ -219,9 +224,10 @@ class LogicConfLinux extends LogicConfPlatform {
 
   @override
   bool openDevice(String path) {
-    var nativeUtf8 = path.toNativeUtf8();
-    var descriptor = _libc.open2(nativeUtf8.cast(), O_RDWR);
-    malloc.free(nativeUtf8);
+    var descriptor = using((Pool pool) {
+      var nativeUtf8 = path.toNativeUtf8(allocator: pool);
+      return _libc.open2(nativeUtf8.cast(), O_RDWR);
+    });
 
     if (descriptor < 0) {
       // TODO strerror()
