@@ -7,6 +7,7 @@ import 'logic_conf_interface.dart';
 import 'macos/constants.dart';
 import 'macos/corefoundation.dart';
 import 'macos/iokit.dart';
+import 'util/pool.dart';
 
 class LogicConfMacos extends LogicConfPlatform {
   final _cf = CoreFoundation(DynamicLibrary.open('/System/Library/Frameworks/CoreFoundation.framework/Resources/BridgeSupport/CoreFoundation.dylib'));
@@ -25,9 +26,10 @@ class LogicConfMacos extends LogicConfPlatform {
   
   @override
   bool openDevice(String path) {
-    var nativeUtf8 = path.toNativeUtf8();
-    _entryPtr = _io.IORegistryEntryFromPath(kIOMasterPortDefault, nativeUtf8.cast());
-    malloc.free(nativeUtf8);
+    _entryPtr = using((Pool pool) {
+      var nativeUtf8 = path.toNativeUtf8(allocator: pool);
+      return _io.IORegistryEntryFromPath(kIOMasterPortDefault, nativeUtf8.cast());
+    });
 
     if (_entryPtr == nullptr) {
         print('IORegistryEntryFromPath error');

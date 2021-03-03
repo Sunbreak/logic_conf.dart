@@ -6,6 +6,7 @@ import 'package:ffi/ffi.dart';
 import 'package:win32/win32.dart';
 
 import 'logic_conf_interface.dart';
+import 'util/pool.dart';
 import 'windows/hidsdi.dart' as hid;
 import 'windows/setupapi.dart' as sp;
 
@@ -59,9 +60,10 @@ class LogicConfWindows extends LogicConfPlatform {
         // FIXME Utf16.decode
         var devicePath = utf8.decode(deviceInterfaceDetailDataPtr.getDevicePathData(requiredSizePtr.value));
     
-        var nativeUtf16 = devicePath.toNativeUtf16();
-        devHandle = CreateFile(nativeUtf16, 0, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, NULL);
-        malloc.free(nativeUtf16);
+        devHandle = using((Pool pool) {
+          var nativeUtf16 = devicePath.toNativeUtf16(allocator: pool);
+          return CreateFile(nativeUtf16, 0, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, NULL);
+        });
 
         if (devHandle == INVALID_HANDLE_VALUE) {
           print('CreateFile error ${GetLastError()}');
@@ -128,17 +130,18 @@ class LogicConfWindows extends LogicConfPlatform {
 
   @override
   bool openDevice(String path) {
-    var nativeUtf16 = path.toNativeUtf16();
-    _devHandle = CreateFile(
-      nativeUtf16,
-      GENERIC_READ | GENERIC_WRITE,
-      FILE_SHARE_READ | FILE_SHARE_WRITE,
-      nullptr,
-      OPEN_EXISTING,
-      0,
-      NULL,
-    );
-    malloc.free(nativeUtf16);
+    _devHandle = using((Pool pool) {
+      var nativeUtf16 = path.toNativeUtf16(allocator: pool);
+      return CreateFile(
+        nativeUtf16,
+        GENERIC_READ | GENERIC_WRITE,
+        FILE_SHARE_READ | FILE_SHARE_WRITE,
+        nullptr,
+        OPEN_EXISTING,
+        0,
+        NULL,
+      );
+    });
 
     return _devHandle != INVALID_HANDLE_VALUE;
   }
