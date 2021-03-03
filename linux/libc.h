@@ -13,4 +13,6 @@ extern int open2 (const char *__file, int __oflag) __nonnull ((1));
 
 extern int close (int __fd);
 
+extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
+
 extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur;

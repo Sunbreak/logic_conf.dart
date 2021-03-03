@@ -33,6 +33,20 @@ class LibC {
 
   _dart_close? _close;
 
+  int read(
+    int __fd,
+    ffi.Pointer<ffi.Void> __buf,
+    int __nbytes,
+  ) {
+    return (_read ??= _dylib.lookupFunction<_c_read, _dart_read>('read'))(
+      __fd,
+      __buf,
+      __nbytes,
+    );
+  }
+
+  _dart_read? _read;
+
   int write(
     int __fd,
     ffi.Pointer<ffi.Void> __buf,
@@ -72,6 +86,18 @@ typedef _c_close = ffi.Int32 Function(
 
 typedef _dart_close = int Function(
   int __fd,
+);
+
+typedef _c_read = ffi.Int64 Function(
+  ffi.Int32 __fd,
+  ffi.Pointer<ffi.Void> __buf,
+  ffi.Uint64 __nbytes,
+);
+
+typedef _dart_read = int Function(
+  int __fd,
+  ffi.Pointer<ffi.Void> __buf,
+  int __nbytes,
 );
 
 typedef _c_write = ffi.Int64 Function(
