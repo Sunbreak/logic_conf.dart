@@ -43,7 +43,7 @@ class LogicConfLinux extends LogicConfPlatform {
   }
 
   Iterable<Map<String, dynamic>> _interateDevice(Pointer<udev> udevContext, Pointer<udev_list_entry> deviceList) sync* {
-    for (var entry = deviceList; entry != nullptr; entry = _libudev.udev_list_entry_get_next(deviceList)) {
+    for (var entry = deviceList; entry != nullptr; entry = _libudev.udev_list_entry_get_next(entry)) {
       var sysfsPath = _libudev.udev_list_entry_get_name(entry);
       var rawDevice = _libudev.udev_device_new_from_syspath(udevContext, sysfsPath);
       var sysAttributes = _getSysAttributes(rawDevice);
@@ -81,7 +81,7 @@ class LogicConfLinux extends LogicConfPlatform {
       return null;
     }
 
-    var path = _libudev.udev_device_get_devnode(parentDevice);
+    var path = _libudev.udev_device_get_devnode(rawDevice).cast<Utf8>().toDartString();
     
     var sysAttributeValuesPtr = using((Pool pool) {
       var nativeUtf8 = 'uevent'.toNativeUtf8(allocator: pool);
@@ -99,8 +99,8 @@ class LogicConfLinux extends LogicConfPlatform {
         var split = value.split(':');
         return {
           'path': path,
-          'vendorId': split[1],
-          'productId': split[2],
+          'vendorId': int.parse(split[1], radix: 16),
+          'productId': int.parse(split[2], radix: 16),
         };
       }
     }
@@ -214,9 +214,9 @@ class LogicConfLinux extends LogicConfPlatform {
         case 1:
           return byteData.getInt8(0);
         case 2:
-          return byteData.getInt16(0, Endian.little);
+          return byteData.getUint16(0, Endian.little);
         case 4:
-          return byteData.getInt32(0, Endian.little);
+          return byteData.getUint32(0, Endian.little);
       }
     }
     return null;
