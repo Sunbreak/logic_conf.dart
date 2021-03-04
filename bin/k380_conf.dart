@@ -5,6 +5,9 @@ import 'package:logic_conf/logic_conf.dart';
 const VENDOR_LOGIC = 0x046D;
 
 const PRODUCT_K380 = 0xB342;
+const PRODUCT_K480_ALT2 = 0xB33D;
+
+const products = [PRODUCT_K380, PRODUCT_K480_ALT2];
 
 const USAGEPAGE_CUSTOM = 0xFF00;
 
@@ -28,7 +31,7 @@ void main(List<String> arguments) {
   }
 
   var k380 = logicDevices.cast<dynamic?>().firstWhere((e) {
-    return e['productId'] == PRODUCT_K380 &&
+    return products.contains(e['productId']) &&
         e['usagePage'] == USAGEPAGE_CUSTOM &&
         e['usage'] == 1;
   }, orElse: () => null);
