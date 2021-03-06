@@ -7,10 +7,6 @@ headers:
     - 'windows/SetupAPI_.h'
   include-directives: # include only these header files and necessary structs from other header files
     - '**SetupAPI_.h'
-structs:
-  rename:
-    'PSP_DEVICE_INTERFACE_DATA': 'SP_DEVICE_INTERFACE_DATA'
-    'PSP_DEVICE_INTERFACE_DETAIL_DATA_W': 'SP_DEVICE_INTERFACE_DETAIL_DATA_W'
 array-workaround: true
 size-map:
   long: 4
