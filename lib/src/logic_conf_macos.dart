@@ -6,7 +6,7 @@ import 'package:ffi/ffi.dart';
 import 'logic_conf_interface.dart';
 import 'macos/constants.dart';
 import 'macos/corefoundation.dart';
-import 'macos/iokit.dart';
+import 'macos/iokit.dart' hide CFSetRef, CFStringRef, CFDictionaryRef;
 import 'util/pool.dart';
 
 class LogicConfMacos extends LogicConfPlatform {
@@ -20,8 +20,107 @@ class LogicConfMacos extends LogicConfPlatform {
 
   @override
   List listDevices() {
-    // TODO: implement listDevices
-    throw UnimplementedError();
+    var managerPtr = _io.IOHIDManagerCreate(kCFAllocatorDefault, kIOHIDOptionsTypeNone);
+    _io.IOHIDManagerSetDeviceMatching(managerPtr, nullptr);
+    var deviceSetPtr = _io.IOHIDManagerCopyDevices(managerPtr);
+    try {
+      if (deviceSetPtr == nullptr) return [];
+
+      return _iterateDevice(deviceSetPtr.cast()).toList();
+    } finally {
+      _io.IOHIDManagerClose(managerPtr, kIOHIDOptionsTypeNone);
+      _cf.CFRelease(deviceSetPtr.cast());
+    }
+  }
+
+  Iterable<dynamic> _iterateDevice(Pointer<CFSetRef> deviceSetPtr) sync* {
+    var count = _cf.CFSetGetCount(deviceSetPtr.cast());
+    var deviceListRefPtr = calloc<Pointer<IOHIDDevice>>(count);
+    _cf.CFSetGetValues(deviceSetPtr, deviceListRefPtr.cast());
+
+    for (var i = 0; i < count; i++) {
+      var devicePtr = deviceListRefPtr.elementAt(i).value;
+      var path = using((Pool pool) {
+        var servicePtr = _io.IOHIDDeviceGetService(devicePtr);
+        var pathPtr = pool.allocate<Int8>(io_string_t_length);
+        var res = _io.IORegistryEntryGetPath(servicePtr, kIOServicePlane.toNativeUtf8(allocator: pool).cast(), pathPtr);
+        return res == KERN_SUCCESS ? pathPtr.cast<Utf8>().toDartString() : '';
+      });
+      var vendorId = _getInt32Property(devicePtr, kIOHIDVendorIDKey);
+      var productId = _getInt32Property(devicePtr, kIOHIDProductIDKey);
+
+      var usegePairsPtr = _getArrayProperty(devicePtr, kIOHIDDeviceUsagePairsKey);
+      var usegePairCount = _cf.CFArrayGetCount(usegePairsPtr);
+      for (var j = 0; j < usegePairCount; j++) {
+        var item = _cf.CFArrayGetValueAtIndex(usegePairsPtr, j);
+        if (_cf.CFGetTypeID(item) != _cf.CFDictionaryGetTypeID()) {
+          continue;
+        }
+        var usagePairDictPtr = item.cast<CFDictionaryRef>();
+        var usagePage = _getInt32Value(usagePairDictPtr, kIOHIDDeviceUsagePageKey);
+        var usage = _getInt32Value(usagePairDictPtr, kIOHIDDeviceUsageKey);
+        yield {
+          'path': path,
+          'vendorId': vendorId,
+          'productId': productId,
+          'usagePage': usagePage,
+          'usage': usage,
+        };
+      }
+    }
+
+    calloc.free(deviceListRefPtr);
+  }
+
+  T _usingCFString<T>(String string, T Function(Pointer<CFStringRef>) computation) {
+    return using((Pool pool) {
+      var keyPtr = string.toNativeUtf8(allocator: pool);
+      var keyCFPtr = _cf.CFStringCreateWithCString(kCFAllocatorDefault, keyPtr.cast(), kCFStringEncodingUTF8);
+      var result = computation(keyCFPtr);
+      _cf.CFRelease(keyCFPtr.cast());
+      return result;
+    });
+  }
+
+  int? _getInt32Property(Pointer<IOHIDDevice> devicePtr, String key) {
+    var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
+    if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFNumberGetTypeID()) {
+      return null;
+    }
+
+    var valuePtr = calloc<Int32>();
+    try {
+      _cf.CFNumberGetValue(property.cast(), kCFNumberSInt32Type, valuePtr.cast());
+      return valuePtr.value;
+    } finally {
+      calloc.free(valuePtr);      
+    }
+  }
+
+  Pointer<CFArrayRef> _getArrayProperty(Pointer<IOHIDDevice> devicePtr, String key) {
+    var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
+    if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFArrayGetTypeID()) {
+      return nullptr;
+    }
+    return property.cast();
+  }
+
+  int? _getInt32Value(Pointer<CFDictionaryRef> usagePairDictPtr, String key) {
+    return _usingCFString(key, (keyCFPtr) {
+      var usagePageRefPtr = calloc<Pointer<Void>>();
+      var valuePtr = calloc<Int32>();
+      try {
+        var getValue = _cf.CFDictionaryGetValueIfPresent(usagePairDictPtr, keyCFPtr.cast(), usagePageRefPtr);
+        if (getValue != True || _cf.CFGetTypeID(usagePageRefPtr.value) != _cf.CFNumberGetTypeID()) {
+          return null;
+        }
+        _cf.CFNumberGetValue(usagePageRefPtr.value.cast(), kCFNumberSInt32Type, valuePtr.cast());
+        return valuePtr.value;
+      } finally {
+        calloc.free(usagePageRefPtr);
+        calloc.free(valuePtr);
+      }
+    });
   }
   
   @override

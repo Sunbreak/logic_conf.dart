@@ -11,6 +11,17 @@ class CoreFoundation {
   /// The symbols are looked up in [dynamicLibrary].
   CoreFoundation(ffi.DynamicLibrary dynamicLibrary) : _dylib = dynamicLibrary;
 
+  int CFGetTypeID(
+    ffi.Pointer<ffi.Void> cf,
+  ) {
+    return (_CFGetTypeID ??= _dylib
+        .lookupFunction<_c_CFGetTypeID, _dart_CFGetTypeID>('CFGetTypeID'))(
+      cf,
+    );
+  }
+
+  _dart_CFGetTypeID? _CFGetTypeID;
+
   void CFRelease(
     ffi.Pointer<ffi.Void> cf,
   ) {
@@ -21,7 +32,151 @@ class CoreFoundation {
   }
 
   _dart_CFRelease? _CFRelease;
+
+  int CFNumberGetTypeID() {
+    return (_CFNumberGetTypeID ??=
+        _dylib.lookupFunction<_c_CFNumberGetTypeID, _dart_CFNumberGetTypeID>(
+            'CFNumberGetTypeID'))();
+  }
+
+  _dart_CFNumberGetTypeID? _CFNumberGetTypeID;
+
+  int CFNumberGetValue(
+    ffi.Pointer<CFNumberRef> number,
+    int theType,
+    ffi.Pointer<ffi.Void> valuePtr,
+  ) {
+    return (_CFNumberGetValue ??=
+        _dylib.lookupFunction<_c_CFNumberGetValue, _dart_CFNumberGetValue>(
+            'CFNumberGetValue'))(
+      number,
+      theType,
+      valuePtr,
+    );
+  }
+
+  _dart_CFNumberGetValue? _CFNumberGetValue;
+
+  int CFArrayGetTypeID() {
+    return (_CFArrayGetTypeID ??=
+        _dylib.lookupFunction<_c_CFArrayGetTypeID, _dart_CFArrayGetTypeID>(
+            'CFArrayGetTypeID'))();
+  }
+
+  _dart_CFArrayGetTypeID? _CFArrayGetTypeID;
+
+  int CFArrayGetCount(
+    ffi.Pointer<CFArrayRef> theArray,
+  ) {
+    return (_CFArrayGetCount ??=
+        _dylib.lookupFunction<_c_CFArrayGetCount, _dart_CFArrayGetCount>(
+            'CFArrayGetCount'))(
+      theArray,
+    );
+  }
+
+  _dart_CFArrayGetCount? _CFArrayGetCount;
+
+  ffi.Pointer<ffi.Void> CFArrayGetValueAtIndex(
+    ffi.Pointer<CFArrayRef> theArray,
+    int idx,
+  ) {
+    return (_CFArrayGetValueAtIndex ??= _dylib.lookupFunction<
+        _c_CFArrayGetValueAtIndex,
+        _dart_CFArrayGetValueAtIndex>('CFArrayGetValueAtIndex'))(
+      theArray,
+      idx,
+    );
+  }
+
+  _dart_CFArrayGetValueAtIndex? _CFArrayGetValueAtIndex;
+
+  int CFDictionaryGetTypeID() {
+    return (_CFDictionaryGetTypeID ??= _dylib.lookupFunction<
+        _c_CFDictionaryGetTypeID,
+        _dart_CFDictionaryGetTypeID>('CFDictionaryGetTypeID'))();
+  }
+
+  _dart_CFDictionaryGetTypeID? _CFDictionaryGetTypeID;
+
+  int CFDictionaryGetValueIfPresent(
+    ffi.Pointer<CFDictionaryRef> theDict,
+    ffi.Pointer<ffi.Void> key,
+    ffi.Pointer<ffi.Pointer<ffi.Void>> value,
+  ) {
+    return (_CFDictionaryGetValueIfPresent ??= _dylib.lookupFunction<
+        _c_CFDictionaryGetValueIfPresent,
+        _dart_CFDictionaryGetValueIfPresent>('CFDictionaryGetValueIfPresent'))(
+      theDict,
+      key,
+      value,
+    );
+  }
+
+  _dart_CFDictionaryGetValueIfPresent? _CFDictionaryGetValueIfPresent;
+
+  int CFSetGetCount(
+    ffi.Pointer<CFSetRef> theSet,
+  ) {
+    return (_CFSetGetCount ??=
+        _dylib.lookupFunction<_c_CFSetGetCount, _dart_CFSetGetCount>(
+            'CFSetGetCount'))(
+      theSet,
+    );
+  }
+
+  _dart_CFSetGetCount? _CFSetGetCount;
+
+  void CFSetGetValues(
+    ffi.Pointer<CFSetRef> theSet,
+    ffi.Pointer<ffi.Pointer<ffi.Void>> values,
+  ) {
+    return (_CFSetGetValues ??=
+        _dylib.lookupFunction<_c_CFSetGetValues, _dart_CFSetGetValues>(
+            'CFSetGetValues'))(
+      theSet,
+      values,
+    );
+  }
+
+  _dart_CFSetGetValues? _CFSetGetValues;
+
+  ffi.Pointer<CFStringRef> CFStringCreateWithCString(
+    ffi.Pointer<CFAllocator> alloc,
+    ffi.Pointer<ffi.Int8> cStr,
+    int encoding,
+  ) {
+    return (_CFStringCreateWithCString ??= _dylib.lookupFunction<
+        _c_CFStringCreateWithCString,
+        _dart_CFStringCreateWithCString>('CFStringCreateWithCString'))(
+      alloc,
+      cStr,
+      encoding,
+    );
+  }
+
+  _dart_CFStringCreateWithCString? _CFStringCreateWithCString;
 }
+
+class CFNumberRef extends ffi.Opaque {}
+
+class CFArrayRef extends ffi.Opaque {}
+
+class CFDictionaryRef extends ffi.Opaque {}
+
+class CFSetRef extends ffi.Opaque {}
+
+class CFStringRef extends ffi.Opaque {}
+
+class CFAllocator extends ffi.Opaque {}
+
+typedef _c_CFGetTypeID = ffi.Uint64 Function(
+  ffi.Pointer<ffi.Void> cf,
+);
+
+typedef _dart_CFGetTypeID = int Function(
+  ffi.Pointer<ffi.Void> cf,
+);
 
 typedef _c_CFRelease = ffi.Void Function(
   ffi.Pointer<ffi.Void> cf,
@@ -29,4 +184,88 @@ typedef _c_CFRelease = ffi.Void Function(
 
 typedef _dart_CFRelease = void Function(
   ffi.Pointer<ffi.Void> cf,
+);
+
+typedef _c_CFNumberGetTypeID = ffi.Uint64 Function();
+
+typedef _dart_CFNumberGetTypeID = int Function();
+
+typedef _c_CFNumberGetValue = ffi.Uint8 Function(
+  ffi.Pointer<CFNumberRef> number,
+  ffi.Int64 theType,
+  ffi.Pointer<ffi.Void> valuePtr,
+);
+
+typedef _dart_CFNumberGetValue = int Function(
+  ffi.Pointer<CFNumberRef> number,
+  int theType,
+  ffi.Pointer<ffi.Void> valuePtr,
+);
+
+typedef _c_CFArrayGetTypeID = ffi.Uint64 Function();
+
+typedef _dart_CFArrayGetTypeID = int Function();
+
+typedef _c_CFArrayGetCount = ffi.Int64 Function(
+  ffi.Pointer<CFArrayRef> theArray,
+);
+
+typedef _dart_CFArrayGetCount = int Function(
+  ffi.Pointer<CFArrayRef> theArray,
+);
+
+typedef _c_CFArrayGetValueAtIndex = ffi.Pointer<ffi.Void> Function(
+  ffi.Pointer<CFArrayRef> theArray,
+  ffi.Int64 idx,
+);
+
+typedef _dart_CFArrayGetValueAtIndex = ffi.Pointer<ffi.Void> Function(
+  ffi.Pointer<CFArrayRef> theArray,
+  int idx,
+);
+
+typedef _c_CFDictionaryGetTypeID = ffi.Uint64 Function();
+
+typedef _dart_CFDictionaryGetTypeID = int Function();
+
+typedef _c_CFDictionaryGetValueIfPresent = ffi.Uint8 Function(
+  ffi.Pointer<CFDictionaryRef> theDict,
+  ffi.Pointer<ffi.Void> key,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> value,
+);
+
+typedef _dart_CFDictionaryGetValueIfPresent = int Function(
+  ffi.Pointer<CFDictionaryRef> theDict,
+  ffi.Pointer<ffi.Void> key,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> value,
+);
+
+typedef _c_CFSetGetCount = ffi.Int64 Function(
+  ffi.Pointer<CFSetRef> theSet,
+);
+
+typedef _dart_CFSetGetCount = int Function(
+  ffi.Pointer<CFSetRef> theSet,
+);
+
+typedef _c_CFSetGetValues = ffi.Void Function(
+  ffi.Pointer<CFSetRef> theSet,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> values,
+);
+
+typedef _dart_CFSetGetValues = void Function(
+  ffi.Pointer<CFSetRef> theSet,
+  ffi.Pointer<ffi.Pointer<ffi.Void>> values,
+);
+
+typedef _c_CFStringCreateWithCString = ffi.Pointer<CFStringRef> Function(
+  ffi.Pointer<CFAllocator> alloc,
+  ffi.Pointer<ffi.Int8> cStr,
+  ffi.Uint32 encoding,
+);
+
+typedef _dart_CFStringCreateWithCString = ffi.Pointer<CFStringRef> Function(
+  ffi.Pointer<CFAllocator> alloc,
+  ffi.Pointer<ffi.Int8> cStr,
+  int encoding,
 );
