@@ -38,8 +38,8 @@ class LogicConfWindows extends LogicConfPlatform {
 
   Iterable<Map<String, dynamic>> _iterateDevice(Pointer<Void> deviceInfoSetPtr, Pointer<GUID> hidInterfaceClassGuid) sync* {
     var requiredSizePtr = calloc<Uint32>();
-    var devicInterfaceDataPtr = calloc<sp.SP_DEVICE_INTERFACE_DATA>();
-    devicInterfaceDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DATA>();
+    var devicInterfaceDataPtr = calloc<sp.PSP_DEVICE_INTERFACE_DATA>();
+    devicInterfaceDataPtr.ref.cbSize = sizeOf<sp.PSP_DEVICE_INTERFACE_DATA>();
     
     for (var index = 0; _setupapi.SetupDiEnumDeviceInterfaces(deviceInfoSetPtr, nullptr, hidInterfaceClassGuid.cast(), index, devicInterfaceDataPtr) == TRUE; index++) {
       // Get requiredSize
@@ -49,8 +49,8 @@ class LogicConfWindows extends LogicConfPlatform {
       var devHandle = INVALID_HANDLE_VALUE;
     
       try {
-        var deviceInterfaceDetailDataPtr = Pointer<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W>.fromAddress(detailDataMemoryPtr.address);
-        deviceInterfaceDetailDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W>();
+        var deviceInterfaceDetailDataPtr = Pointer<sp.PSP_DEVICE_INTERFACE_DETAIL_DATA_W>.fromAddress(detailDataMemoryPtr.address);
+        deviceInterfaceDetailDataPtr.ref.cbSize = sizeOf<sp.PSP_DEVICE_INTERFACE_DETAIL_DATA_W>();
     
         var getDeviceInterfaceDetail = _setupapi.SetupDiGetDeviceInterfaceDetailW(deviceInfoSetPtr, devicInterfaceDataPtr, deviceInterfaceDetailDataPtr, requiredSizePtr.value, nullptr, nullptr);
         if (getDeviceInterfaceDetail != TRUE) {
@@ -91,7 +91,7 @@ class LogicConfWindows extends LogicConfPlatform {
   Map<String, dynamic> _getAttributes(Pointer<Void> devHandlePtr) {
     var res = <String, dynamic>{};
 
-    var attributesPtr = calloc<hid.HIDD_ATTRIBUTES>();
+    var attributesPtr = calloc<hid.PHIDD_ATTRIBUTES>();
     if (_hidSdi.HidD_GetAttributes(devHandlePtr, attributesPtr) == TRUE) {
       res = {
         'vendorId': attributesPtr.ref.VendorID,
@@ -108,9 +108,9 @@ class LogicConfWindows extends LogicConfPlatform {
   Map<String, dynamic> _getPreparsedData(Pointer<Void> devHandlePtr) {
     var res = <String, dynamic>{};
 
-    var preparsedDataRefPtr = calloc<Pointer<hid.HIDP_PREPARSED_DATA>>();
+    var preparsedDataRefPtr = calloc<Pointer<hid.PHIDP_PREPARSED_DATA>>();
     if (_hidSdi.HidD_GetPreparsedData(devHandlePtr, preparsedDataRefPtr) == TRUE) {
-      var capsPtr = calloc<hid.HIDP_CAPS>();
+      var capsPtr = calloc<hid.PHIDP_CAPS>();
       var getCaps = _hidSdi.HidP_GetCaps(preparsedDataRefPtr.value, capsPtr);
       if (getCaps == hid.HIDP_STATUS_SUCCESS) {
         res = {
@@ -171,6 +171,6 @@ class LogicConfWindows extends LogicConfPlatform {
   }
 }
 
-extension Pointer_SP_DEVICE_INTERFACE_DETAIL_DATA_W on Pointer<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W> {
+extension Pointer_SP_DEVICE_INTERFACE_DETAIL_DATA_W on Pointer<sp.PSP_DEVICE_INTERFACE_DETAIL_DATA_W> {
   Uint16List getDevicePathData(int requiredSize) => Pointer<Uint16>.fromAddress(address).asTypedList(requiredSize).sublist(2);
 }

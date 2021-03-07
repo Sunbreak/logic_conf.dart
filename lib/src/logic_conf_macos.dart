@@ -16,7 +16,7 @@ class LogicConfMacos extends LogicConfPlatform {
 
   Pointer<io_service_t> _entryPtr = nullptr;
 
-  Pointer<IOHIDDevice> _devicePtr = nullptr;
+  Pointer<IOHIDDeviceRef> _devicePtr = nullptr;
 
   @override
   List listDevices() {
@@ -35,7 +35,7 @@ class LogicConfMacos extends LogicConfPlatform {
 
   Iterable<dynamic> _iterateDevice(Pointer<CFSetRef> deviceSetPtr) sync* {
     var count = _cf.CFSetGetCount(deviceSetPtr.cast());
-    var deviceListRefPtr = calloc<Pointer<IOHIDDevice>>(count);
+    var deviceListRefPtr = calloc<Pointer<IOHIDDeviceRef>>(count);
     _cf.CFSetGetValues(deviceSetPtr, deviceListRefPtr.cast());
 
     for (var i = 0; i < count; i++) {
@@ -82,7 +82,7 @@ class LogicConfMacos extends LogicConfPlatform {
     });
   }
 
-  int? _getInt32Property(Pointer<IOHIDDevice> devicePtr, String key) {
+  int? _getInt32Property(Pointer<IOHIDDeviceRef> devicePtr, String key) {
     var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
     if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFNumberGetTypeID()) {
       return null;
@@ -97,7 +97,7 @@ class LogicConfMacos extends LogicConfPlatform {
     }
   }
 
-  Pointer<CFArrayRef> _getArrayProperty(Pointer<IOHIDDevice> devicePtr, String key) {
+  Pointer<CFArrayRef> _getArrayProperty(Pointer<IOHIDDeviceRef> devicePtr, String key) {
     var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
     if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFArrayGetTypeID()) {
       return nullptr;

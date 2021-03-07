@@ -5,34 +5,42 @@ import 'dart:ffi' as ffi;
 
 /// Bindings to `SetupAPI.h`.
 class SetupAPI {
-  /// Holds the Dynamic library.
-  final ffi.DynamicLibrary _dylib;
+  /// Holds the symbol lookup function.
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+      _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  SetupAPI(ffi.DynamicLibrary dynamicLibrary) : _dylib = dynamicLibrary;
+  SetupAPI(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
+
+  /// The symbols are looked up with [lookup].
+  SetupAPI.fromLookup(
+      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+          lookup)
+      : _lookup = lookup;
 
   int SetupDiDestroyDeviceInfoList(
     ffi.Pointer<ffi.Void> DeviceInfoSet,
   ) {
-    return (_SetupDiDestroyDeviceInfoList ??= _dylib.lookupFunction<
-        _c_SetupDiDestroyDeviceInfoList,
-        _dart_SetupDiDestroyDeviceInfoList>('SetupDiDestroyDeviceInfoList'))(
+    return _SetupDiDestroyDeviceInfoList(
       DeviceInfoSet,
     );
   }
 
-  _dart_SetupDiDestroyDeviceInfoList? _SetupDiDestroyDeviceInfoList;
+  late final _SetupDiDestroyDeviceInfoList_ptr =
+      _lookup<ffi.NativeFunction<_c_SetupDiDestroyDeviceInfoList>>(
+          'SetupDiDestroyDeviceInfoList');
+  late final _dart_SetupDiDestroyDeviceInfoList _SetupDiDestroyDeviceInfoList =
+      _SetupDiDestroyDeviceInfoList_ptr.asFunction<
+          _dart_SetupDiDestroyDeviceInfoList>();
 
   int SetupDiEnumDeviceInterfaces(
     ffi.Pointer<ffi.Void> DeviceInfoSet,
     ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
     ffi.Pointer<GUID> InterfaceClassGuid,
     int MemberIndex,
-    ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+    ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
   ) {
-    return (_SetupDiEnumDeviceInterfaces ??= _dylib.lookupFunction<
-        _c_SetupDiEnumDeviceInterfaces,
-        _dart_SetupDiEnumDeviceInterfaces>('SetupDiEnumDeviceInterfaces'))(
+    return _SetupDiEnumDeviceInterfaces(
       DeviceInfoSet,
       DeviceInfoData,
       InterfaceClassGuid,
@@ -41,20 +49,22 @@ class SetupAPI {
     );
   }
 
-  _dart_SetupDiEnumDeviceInterfaces? _SetupDiEnumDeviceInterfaces;
+  late final _SetupDiEnumDeviceInterfaces_ptr =
+      _lookup<ffi.NativeFunction<_c_SetupDiEnumDeviceInterfaces>>(
+          'SetupDiEnumDeviceInterfaces');
+  late final _dart_SetupDiEnumDeviceInterfaces _SetupDiEnumDeviceInterfaces =
+      _SetupDiEnumDeviceInterfaces_ptr.asFunction<
+          _dart_SetupDiEnumDeviceInterfaces>();
 
   int SetupDiGetDeviceInterfaceDetailW(
     ffi.Pointer<ffi.Void> DeviceInfoSet,
-    ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-    ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
+    ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+    ffi.Pointer<PSP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
     int DeviceInterfaceDetailDataSize,
     ffi.Pointer<ffi.Uint32> RequiredSize,
     ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
   ) {
-    return (_SetupDiGetDeviceInterfaceDetailW ??= _dylib.lookupFunction<
-            _c_SetupDiGetDeviceInterfaceDetailW,
-            _dart_SetupDiGetDeviceInterfaceDetailW>(
-        'SetupDiGetDeviceInterfaceDetailW'))(
+    return _SetupDiGetDeviceInterfaceDetailW(
       DeviceInfoSet,
       DeviceInterfaceData,
       DeviceInterfaceDetailData,
@@ -64,7 +74,12 @@ class SetupAPI {
     );
   }
 
-  _dart_SetupDiGetDeviceInterfaceDetailW? _SetupDiGetDeviceInterfaceDetailW;
+  late final _SetupDiGetDeviceInterfaceDetailW_ptr =
+      _lookup<ffi.NativeFunction<_c_SetupDiGetDeviceInterfaceDetailW>>(
+          'SetupDiGetDeviceInterfaceDetailW');
+  late final _dart_SetupDiGetDeviceInterfaceDetailW
+      _SetupDiGetDeviceInterfaceDetailW = _SetupDiGetDeviceInterfaceDetailW_ptr
+          .asFunction<_dart_SetupDiGetDeviceInterfaceDetailW>();
 
   ffi.Pointer<ffi.Void> SetupDiGetClassDevsW(
     ffi.Pointer<GUID> ClassGuid,
@@ -72,9 +87,7 @@ class SetupAPI {
     ffi.Pointer<HWND> hwndParent,
     int Flags,
   ) {
-    return (_SetupDiGetClassDevsW ??= _dylib.lookupFunction<
-        _c_SetupDiGetClassDevsW,
-        _dart_SetupDiGetClassDevsW>('SetupDiGetClassDevsW'))(
+    return _SetupDiGetClassDevsW(
       ClassGuid,
       Enumerator,
       hwndParent,
@@ -82,7 +95,11 @@ class SetupAPI {
     );
   }
 
-  _dart_SetupDiGetClassDevsW? _SetupDiGetClassDevsW;
+  late final _SetupDiGetClassDevsW_ptr =
+      _lookup<ffi.NativeFunction<_c_SetupDiGetClassDevsW>>(
+          'SetupDiGetClassDevsW');
+  late final _dart_SetupDiGetClassDevsW _SetupDiGetClassDevsW =
+      _SetupDiGetClassDevsW_ptr.asFunction<_dart_SetupDiGetClassDevsW>();
 }
 
 class GUID extends ffi.Struct {
@@ -129,7 +146,7 @@ class ArrayHelper_GUID_Data4_level0 {
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
       throw RangeError(
-          'Dimension $level: index not in range 0..${length} exclusive.');
+          'Dimension $level: index not in range 0..$length exclusive.');
     }
   }
 
@@ -203,7 +220,7 @@ class PSP_DEVINFO_DATA extends ffi.Struct {
   external int Reserved;
 }
 
-class SP_DEVICE_INTERFACE_DATA extends ffi.Struct {
+class PSP_DEVICE_INTERFACE_DATA extends ffi.Struct {
   @ffi.Uint32()
   external int cbSize;
 
@@ -216,7 +233,7 @@ class SP_DEVICE_INTERFACE_DATA extends ffi.Struct {
   external int Reserved;
 }
 
-class SP_DEVICE_INTERFACE_DETAIL_DATA_W extends ffi.Struct {
+class PSP_DEVICE_INTERFACE_DETAIL_DATA_W extends ffi.Struct {
   @ffi.Uint32()
   external int cbSize;
 
@@ -224,25 +241,25 @@ class SP_DEVICE_INTERFACE_DETAIL_DATA_W extends ffi.Struct {
   external int _unique_DevicePath_item_0;
 
   /// Helper for array `DevicePath`.
-  ArrayHelper_SP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0
+  ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0
       get DevicePath =>
-          ArrayHelper_SP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0(
+          ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0(
               this, [1], 0, 0);
 }
 
-/// Helper for array `DevicePath` in struct `SP_DEVICE_INTERFACE_DETAIL_DATA_W`.
-class ArrayHelper_SP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0 {
-  final SP_DEVICE_INTERFACE_DETAIL_DATA_W _struct;
+/// Helper for array `DevicePath` in struct `PSP_DEVICE_INTERFACE_DETAIL_DATA_W`.
+class ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0 {
+  final PSP_DEVICE_INTERFACE_DETAIL_DATA_W _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  ArrayHelper_SP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0(
+  ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
       throw RangeError(
-          'Dimension $level: index not in range 0..${length} exclusive.');
+          'Dimension $level: index not in range 0..$length exclusive.');
     }
   }
 
@@ -296,7 +313,7 @@ typedef _c_SetupDiEnumDeviceInterfaces = ffi.Int32 Function(
   ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
   ffi.Pointer<GUID> InterfaceClassGuid,
   ffi.Uint32 MemberIndex,
-  ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
 );
 
 typedef _dart_SetupDiEnumDeviceInterfaces = int Function(
@@ -304,13 +321,13 @@ typedef _dart_SetupDiEnumDeviceInterfaces = int Function(
   ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
   ffi.Pointer<GUID> InterfaceClassGuid,
   int MemberIndex,
-  ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
 );
 
 typedef _c_SetupDiGetDeviceInterfaceDetailW = ffi.Int32 Function(
   ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-  ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
+  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+  ffi.Pointer<PSP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
   ffi.Uint32 DeviceInterfaceDetailDataSize,
   ffi.Pointer<ffi.Uint32> RequiredSize,
   ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
@@ -318,8 +335,8 @@ typedef _c_SetupDiGetDeviceInterfaceDetailW = ffi.Int32 Function(
 
 typedef _dart_SetupDiGetDeviceInterfaceDetailW = int Function(
   ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<SP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-  ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
+  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+  ffi.Pointer<PSP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
   int DeviceInterfaceDetailDataSize,
   ffi.Pointer<ffi.Uint32> RequiredSize,
   ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,

@@ -5,69 +5,83 @@ import 'dart:ffi' as ffi;
 
 /// Bindings to `hidsdi.h`.
 class HidSdi {
-  /// Holds the Dynamic library.
-  final ffi.DynamicLibrary _dylib;
+  /// Holds the symbol lookup function.
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+      _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  HidSdi(ffi.DynamicLibrary dynamicLibrary) : _dylib = dynamicLibrary;
+  HidSdi(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
+
+  /// The symbols are looked up with [lookup].
+  HidSdi.fromLookup(
+      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+          lookup)
+      : _lookup = lookup;
 
   int HidP_GetCaps(
-    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
-    ffi.Pointer<HIDP_CAPS> Capabilities,
+    ffi.Pointer<PHIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<PHIDP_CAPS> Capabilities,
   ) {
-    return (_HidP_GetCaps ??= _dylib
-        .lookupFunction<_c_HidP_GetCaps, _dart_HidP_GetCaps>('HidP_GetCaps'))(
+    return _HidP_GetCaps(
       PreparsedData,
       Capabilities,
     );
   }
 
-  _dart_HidP_GetCaps? _HidP_GetCaps;
+  late final _HidP_GetCaps_ptr =
+      _lookup<ffi.NativeFunction<_c_HidP_GetCaps>>('HidP_GetCaps');
+  late final _dart_HidP_GetCaps _HidP_GetCaps =
+      _HidP_GetCaps_ptr.asFunction<_dart_HidP_GetCaps>();
 
   int HidD_GetAttributes(
     ffi.Pointer<ffi.Void> HidDeviceObject,
-    ffi.Pointer<HIDD_ATTRIBUTES> Attributes,
+    ffi.Pointer<PHIDD_ATTRIBUTES> Attributes,
   ) {
-    return (_HidD_GetAttributes ??=
-        _dylib.lookupFunction<_c_HidD_GetAttributes, _dart_HidD_GetAttributes>(
-            'HidD_GetAttributes'))(
+    return _HidD_GetAttributes(
       HidDeviceObject,
       Attributes,
     );
   }
 
-  _dart_HidD_GetAttributes? _HidD_GetAttributes;
+  late final _HidD_GetAttributes_ptr =
+      _lookup<ffi.NativeFunction<_c_HidD_GetAttributes>>('HidD_GetAttributes');
+  late final _dart_HidD_GetAttributes _HidD_GetAttributes =
+      _HidD_GetAttributes_ptr.asFunction<_dart_HidD_GetAttributes>();
 
   int HidD_GetPreparsedData(
     ffi.Pointer<ffi.Void> HidDeviceObject,
-    ffi.Pointer<ffi.Pointer<HIDP_PREPARSED_DATA>> PreparsedData,
+    ffi.Pointer<ffi.Pointer<PHIDP_PREPARSED_DATA>> PreparsedData,
   ) {
-    return (_HidD_GetPreparsedData ??= _dylib.lookupFunction<
-        _c_HidD_GetPreparsedData,
-        _dart_HidD_GetPreparsedData>('HidD_GetPreparsedData'))(
+    return _HidD_GetPreparsedData(
       HidDeviceObject,
       PreparsedData,
     );
   }
 
-  _dart_HidD_GetPreparsedData? _HidD_GetPreparsedData;
+  late final _HidD_GetPreparsedData_ptr =
+      _lookup<ffi.NativeFunction<_c_HidD_GetPreparsedData>>(
+          'HidD_GetPreparsedData');
+  late final _dart_HidD_GetPreparsedData _HidD_GetPreparsedData =
+      _HidD_GetPreparsedData_ptr.asFunction<_dart_HidD_GetPreparsedData>();
 
   int HidD_FreePreparsedData(
-    ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+    ffi.Pointer<PHIDP_PREPARSED_DATA> PreparsedData,
   ) {
-    return (_HidD_FreePreparsedData ??= _dylib.lookupFunction<
-        _c_HidD_FreePreparsedData,
-        _dart_HidD_FreePreparsedData>('HidD_FreePreparsedData'))(
+    return _HidD_FreePreparsedData(
       PreparsedData,
     );
   }
 
-  _dart_HidD_FreePreparsedData? _HidD_FreePreparsedData;
+  late final _HidD_FreePreparsedData_ptr =
+      _lookup<ffi.NativeFunction<_c_HidD_FreePreparsedData>>(
+          'HidD_FreePreparsedData');
+  late final _dart_HidD_FreePreparsedData _HidD_FreePreparsedData =
+      _HidD_FreePreparsedData_ptr.asFunction<_dart_HidD_FreePreparsedData>();
 }
 
-class HIDP_PREPARSED_DATA extends ffi.Opaque {}
+class PHIDP_PREPARSED_DATA extends ffi.Opaque {}
 
-class HIDP_CAPS extends ffi.Struct {
+class PHIDP_CAPS extends ffi.Struct {
   @ffi.Uint16()
   external int Usage;
 
@@ -119,8 +133,8 @@ class HIDP_CAPS extends ffi.Struct {
   external int _unique_Reserved_item_16;
 
   /// Helper for array `Reserved`.
-  ArrayHelper_HIDP_CAPS_Reserved_level0 get Reserved =>
-      ArrayHelper_HIDP_CAPS_Reserved_level0(this, [17], 0, 0);
+  ArrayHelper_PHIDP_CAPS_Reserved_level0 get Reserved =>
+      ArrayHelper_PHIDP_CAPS_Reserved_level0(this, [17], 0, 0);
   @ffi.Uint16()
   external int NumberLinkCollectionNodes;
 
@@ -152,19 +166,19 @@ class HIDP_CAPS extends ffi.Struct {
   external int NumberFeatureDataIndices;
 }
 
-/// Helper for array `Reserved` in struct `HIDP_CAPS`.
-class ArrayHelper_HIDP_CAPS_Reserved_level0 {
-  final HIDP_CAPS _struct;
+/// Helper for array `Reserved` in struct `PHIDP_CAPS`.
+class ArrayHelper_PHIDP_CAPS_Reserved_level0 {
+  final PHIDP_CAPS _struct;
   final List<int> dimensions;
   final int level;
   final int _absoluteIndex;
   int get length => dimensions[level];
-  ArrayHelper_HIDP_CAPS_Reserved_level0(
+  ArrayHelper_PHIDP_CAPS_Reserved_level0(
       this._struct, this.dimensions, this.level, this._absoluteIndex);
   void _checkBounds(int index) {
     if (index >= length || index < 0) {
       throw RangeError(
-          'Dimension $level: index not in range 0..${length} exclusive.');
+          'Dimension $level: index not in range 0..$length exclusive.');
     }
   }
 
@@ -270,7 +284,7 @@ class ArrayHelper_HIDP_CAPS_Reserved_level0 {
   }
 }
 
-class HIDD_ATTRIBUTES extends ffi.Struct {
+class PHIDD_ATTRIBUTES extends ffi.Struct {
   @ffi.Uint32()
   external int Size;
 
@@ -287,39 +301,39 @@ class HIDD_ATTRIBUTES extends ffi.Struct {
 const int HIDP_STATUS_SUCCESS = 1114112;
 
 typedef _c_HidP_GetCaps = ffi.Int32 Function(
-  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
-  ffi.Pointer<HIDP_CAPS> Capabilities,
+  ffi.Pointer<PHIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<PHIDP_CAPS> Capabilities,
 );
 
 typedef _dart_HidP_GetCaps = int Function(
-  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
-  ffi.Pointer<HIDP_CAPS> Capabilities,
+  ffi.Pointer<PHIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<PHIDP_CAPS> Capabilities,
 );
 
 typedef _c_HidD_GetAttributes = ffi.Uint8 Function(
   ffi.Pointer<ffi.Void> HidDeviceObject,
-  ffi.Pointer<HIDD_ATTRIBUTES> Attributes,
+  ffi.Pointer<PHIDD_ATTRIBUTES> Attributes,
 );
 
 typedef _dart_HidD_GetAttributes = int Function(
   ffi.Pointer<ffi.Void> HidDeviceObject,
-  ffi.Pointer<HIDD_ATTRIBUTES> Attributes,
+  ffi.Pointer<PHIDD_ATTRIBUTES> Attributes,
 );
 
 typedef _c_HidD_GetPreparsedData = ffi.Uint8 Function(
   ffi.Pointer<ffi.Void> HidDeviceObject,
-  ffi.Pointer<ffi.Pointer<HIDP_PREPARSED_DATA>> PreparsedData,
+  ffi.Pointer<ffi.Pointer<PHIDP_PREPARSED_DATA>> PreparsedData,
 );
 
 typedef _dart_HidD_GetPreparsedData = int Function(
   ffi.Pointer<ffi.Void> HidDeviceObject,
-  ffi.Pointer<ffi.Pointer<HIDP_PREPARSED_DATA>> PreparsedData,
+  ffi.Pointer<ffi.Pointer<PHIDP_PREPARSED_DATA>> PreparsedData,
 );
 
 typedef _c_HidD_FreePreparsedData = ffi.Uint8 Function(
-  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<PHIDP_PREPARSED_DATA> PreparsedData,
 );
 
 typedef _dart_HidD_FreePreparsedData = int Function(
-  ffi.Pointer<HIDP_PREPARSED_DATA> PreparsedData,
+  ffi.Pointer<PHIDP_PREPARSED_DATA> PreparsedData,
 );
