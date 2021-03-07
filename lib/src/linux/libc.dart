@@ -5,61 +5,72 @@ import 'dart:ffi' as ffi;
 
 /// Bindings to `libc.h`.
 class LibC {
-  /// Holds the Dynamic library.
-  final ffi.DynamicLibrary _dylib;
+  /// Holds the symbol lookup function.
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+      _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  LibC(ffi.DynamicLibrary dynamicLibrary) : _dylib = dynamicLibrary;
+  LibC(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
+
+  /// The symbols are looked up with [lookup].
+  LibC.fromLookup(
+      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+          lookup)
+      : _lookup = lookup;
 
   int open2(
     ffi.Pointer<ffi.Int8> __file,
     int __oflag,
   ) {
-    return (_open2 ??= _dylib.lookupFunction<_c_open2, _dart_open2>('open'))(
+    return _open2(
       __file,
       __oflag,
     );
   }
 
-  _dart_open2? _open2;
+  late final _open2_ptr = _lookup<ffi.NativeFunction<_c_open2>>('open');
+  late final _dart_open2 _open2 = _open2_ptr.asFunction<_dart_open2>();
 
   int close(
     int __fd,
   ) {
-    return (_close ??= _dylib.lookupFunction<_c_close, _dart_close>('close'))(
+    return _close(
       __fd,
     );
   }
 
-  _dart_close? _close;
+  late final _close_ptr = _lookup<ffi.NativeFunction<_c_close>>('close');
+  late final _dart_close _close = _close_ptr.asFunction<_dart_close>();
 
   int read(
     int __fd,
     ffi.Pointer<ffi.Void> __buf,
     int __nbytes,
   ) {
-    return (_read ??= _dylib.lookupFunction<_c_read, _dart_read>('read'))(
+    return _read(
       __fd,
       __buf,
       __nbytes,
     );
   }
 
-  _dart_read? _read;
+  late final _read_ptr = _lookup<ffi.NativeFunction<_c_read>>('read');
+  late final _dart_read _read = _read_ptr.asFunction<_dart_read>();
 
   int write(
     int __fd,
     ffi.Pointer<ffi.Void> __buf,
     int __n,
   ) {
-    return (_write ??= _dylib.lookupFunction<_c_write, _dart_write>('write'))(
+    return _write(
       __fd,
       __buf,
       __n,
     );
   }
 
-  _dart_write? _write;
+  late final _write_ptr = _lookup<ffi.NativeFunction<_c_write>>('write');
+  late final _dart_write _write = _write_ptr.asFunction<_dart_write>();
 }
 
 const int O_ACCMODE = 3;

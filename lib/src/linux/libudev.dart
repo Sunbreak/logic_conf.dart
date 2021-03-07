@@ -5,186 +5,226 @@ import 'dart:ffi' as ffi;
 
 /// Bindings to `libudev.h`.
 class Libudev {
-  /// Holds the Dynamic library.
-  final ffi.DynamicLibrary _dylib;
+  /// Holds the symbol lookup function.
+  final ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+      _lookup;
 
   /// The symbols are looked up in [dynamicLibrary].
-  Libudev(ffi.DynamicLibrary dynamicLibrary) : _dylib = dynamicLibrary;
+  Libudev(ffi.DynamicLibrary dynamicLibrary) : _lookup = dynamicLibrary.lookup;
+
+  /// The symbols are looked up with [lookup].
+  Libudev.fromLookup(
+      ffi.Pointer<T> Function<T extends ffi.NativeType>(String symbolName)
+          lookup)
+      : _lookup = lookup;
 
   ffi.Pointer<udev> udev_unref(
     ffi.Pointer<udev> udev,
   ) {
-    return (_udev_unref ??=
-        _dylib.lookupFunction<_c_udev_unref, _dart_udev_unref>('udev_unref'))(
+    return _udev_unref(
       udev,
     );
   }
 
-  _dart_udev_unref? _udev_unref;
+  late final _udev_unref_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_unref>>('udev_unref');
+  late final _dart_udev_unref _udev_unref =
+      _udev_unref_ptr.asFunction<_dart_udev_unref>();
 
   ffi.Pointer<udev> udev_new() {
-    return (_udev_new ??=
-        _dylib.lookupFunction<_c_udev_new, _dart_udev_new>('udev_new'))();
+    return _udev_new();
   }
 
-  _dart_udev_new? _udev_new;
+  late final _udev_new_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_new>>('udev_new');
+  late final _dart_udev_new _udev_new =
+      _udev_new_ptr.asFunction<_dart_udev_new>();
 
   ffi.Pointer<udev_list_entry> udev_list_entry_get_next(
     ffi.Pointer<udev_list_entry> list_entry,
   ) {
-    return (_udev_list_entry_get_next ??= _dylib.lookupFunction<
-        _c_udev_list_entry_get_next,
-        _dart_udev_list_entry_get_next>('udev_list_entry_get_next'))(
+    return _udev_list_entry_get_next(
       list_entry,
     );
   }
 
-  _dart_udev_list_entry_get_next? _udev_list_entry_get_next;
+  late final _udev_list_entry_get_next_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_list_entry_get_next>>(
+          'udev_list_entry_get_next');
+  late final _dart_udev_list_entry_get_next _udev_list_entry_get_next =
+      _udev_list_entry_get_next_ptr
+          .asFunction<_dart_udev_list_entry_get_next>();
 
   ffi.Pointer<ffi.Int8> udev_list_entry_get_name(
     ffi.Pointer<udev_list_entry> list_entry,
   ) {
-    return (_udev_list_entry_get_name ??= _dylib.lookupFunction<
-        _c_udev_list_entry_get_name,
-        _dart_udev_list_entry_get_name>('udev_list_entry_get_name'))(
+    return _udev_list_entry_get_name(
       list_entry,
     );
   }
 
-  _dart_udev_list_entry_get_name? _udev_list_entry_get_name;
+  late final _udev_list_entry_get_name_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_list_entry_get_name>>(
+          'udev_list_entry_get_name');
+  late final _dart_udev_list_entry_get_name _udev_list_entry_get_name =
+      _udev_list_entry_get_name_ptr
+          .asFunction<_dart_udev_list_entry_get_name>();
 
   ffi.Pointer<udev_device> udev_device_unref(
     ffi.Pointer<udev_device> udev_device,
   ) {
-    return (_udev_device_unref ??=
-        _dylib.lookupFunction<_c_udev_device_unref, _dart_udev_device_unref>(
-            'udev_device_unref'))(
+    return _udev_device_unref(
       udev_device,
     );
   }
 
-  _dart_udev_device_unref? _udev_device_unref;
+  late final _udev_device_unref_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_device_unref>>('udev_device_unref');
+  late final _dart_udev_device_unref _udev_device_unref =
+      _udev_device_unref_ptr.asFunction<_dart_udev_device_unref>();
 
   ffi.Pointer<udev_device> udev_device_new_from_syspath(
     ffi.Pointer<udev> udev,
     ffi.Pointer<ffi.Int8> syspath,
   ) {
-    return (_udev_device_new_from_syspath ??= _dylib.lookupFunction<
-        _c_udev_device_new_from_syspath,
-        _dart_udev_device_new_from_syspath>('udev_device_new_from_syspath'))(
+    return _udev_device_new_from_syspath(
       udev,
       syspath,
     );
   }
 
-  _dart_udev_device_new_from_syspath? _udev_device_new_from_syspath;
+  late final _udev_device_new_from_syspath_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_device_new_from_syspath>>(
+          'udev_device_new_from_syspath');
+  late final _dart_udev_device_new_from_syspath _udev_device_new_from_syspath =
+      _udev_device_new_from_syspath_ptr
+          .asFunction<_dart_udev_device_new_from_syspath>();
 
   ffi.Pointer<udev_device> udev_device_get_parent_with_subsystem_devtype(
     ffi.Pointer<udev_device> udev_device,
     ffi.Pointer<ffi.Int8> subsystem,
     ffi.Pointer<ffi.Int8> devtype,
   ) {
-    return (_udev_device_get_parent_with_subsystem_devtype ??=
-        _dylib.lookupFunction<_c_udev_device_get_parent_with_subsystem_devtype,
-                _dart_udev_device_get_parent_with_subsystem_devtype>(
-            'udev_device_get_parent_with_subsystem_devtype'))(
+    return _udev_device_get_parent_with_subsystem_devtype(
       udev_device,
       subsystem,
       devtype,
     );
   }
 
-  _dart_udev_device_get_parent_with_subsystem_devtype?
-      _udev_device_get_parent_with_subsystem_devtype;
+  late final _udev_device_get_parent_with_subsystem_devtype_ptr = _lookup<
+          ffi.NativeFunction<_c_udev_device_get_parent_with_subsystem_devtype>>(
+      'udev_device_get_parent_with_subsystem_devtype');
+  late final _dart_udev_device_get_parent_with_subsystem_devtype
+      _udev_device_get_parent_with_subsystem_devtype =
+      _udev_device_get_parent_with_subsystem_devtype_ptr
+          .asFunction<_dart_udev_device_get_parent_with_subsystem_devtype>();
 
   ffi.Pointer<ffi.Int8> udev_device_get_devnode(
     ffi.Pointer<udev_device> udev_device,
   ) {
-    return (_udev_device_get_devnode ??= _dylib.lookupFunction<
-        _c_udev_device_get_devnode,
-        _dart_udev_device_get_devnode>('udev_device_get_devnode'))(
+    return _udev_device_get_devnode(
       udev_device,
     );
   }
 
-  _dart_udev_device_get_devnode? _udev_device_get_devnode;
+  late final _udev_device_get_devnode_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_device_get_devnode>>(
+          'udev_device_get_devnode');
+  late final _dart_udev_device_get_devnode _udev_device_get_devnode =
+      _udev_device_get_devnode_ptr.asFunction<_dart_udev_device_get_devnode>();
 
   ffi.Pointer<ffi.Int8> udev_device_get_sysattr_value(
     ffi.Pointer<udev_device> udev_device,
     ffi.Pointer<ffi.Int8> sysattr,
   ) {
-    return (_udev_device_get_sysattr_value ??= _dylib.lookupFunction<
-        _c_udev_device_get_sysattr_value,
-        _dart_udev_device_get_sysattr_value>('udev_device_get_sysattr_value'))(
+    return _udev_device_get_sysattr_value(
       udev_device,
       sysattr,
     );
   }
 
-  _dart_udev_device_get_sysattr_value? _udev_device_get_sysattr_value;
+  late final _udev_device_get_sysattr_value_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_device_get_sysattr_value>>(
+          'udev_device_get_sysattr_value');
+  late final _dart_udev_device_get_sysattr_value
+      _udev_device_get_sysattr_value = _udev_device_get_sysattr_value_ptr
+          .asFunction<_dart_udev_device_get_sysattr_value>();
 
   ffi.Pointer<udev_enumerate> udev_enumerate_unref(
     ffi.Pointer<udev_enumerate> udev_enumerate,
   ) {
-    return (_udev_enumerate_unref ??= _dylib.lookupFunction<
-        _c_udev_enumerate_unref,
-        _dart_udev_enumerate_unref>('udev_enumerate_unref'))(
+    return _udev_enumerate_unref(
       udev_enumerate,
     );
   }
 
-  _dart_udev_enumerate_unref? _udev_enumerate_unref;
+  late final _udev_enumerate_unref_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_enumerate_unref>>(
+          'udev_enumerate_unref');
+  late final _dart_udev_enumerate_unref _udev_enumerate_unref =
+      _udev_enumerate_unref_ptr.asFunction<_dart_udev_enumerate_unref>();
 
   ffi.Pointer<udev_enumerate> udev_enumerate_new(
     ffi.Pointer<udev> udev,
   ) {
-    return (_udev_enumerate_new ??=
-        _dylib.lookupFunction<_c_udev_enumerate_new, _dart_udev_enumerate_new>(
-            'udev_enumerate_new'))(
+    return _udev_enumerate_new(
       udev,
     );
   }
 
-  _dart_udev_enumerate_new? _udev_enumerate_new;
+  late final _udev_enumerate_new_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_enumerate_new>>('udev_enumerate_new');
+  late final _dart_udev_enumerate_new _udev_enumerate_new =
+      _udev_enumerate_new_ptr.asFunction<_dart_udev_enumerate_new>();
 
   int udev_enumerate_add_match_subsystem(
     ffi.Pointer<udev_enumerate> udev_enumerate,
     ffi.Pointer<ffi.Int8> subsystem,
   ) {
-    return (_udev_enumerate_add_match_subsystem ??= _dylib.lookupFunction<
-            _c_udev_enumerate_add_match_subsystem,
-            _dart_udev_enumerate_add_match_subsystem>(
-        'udev_enumerate_add_match_subsystem'))(
+    return _udev_enumerate_add_match_subsystem(
       udev_enumerate,
       subsystem,
     );
   }
 
-  _dart_udev_enumerate_add_match_subsystem? _udev_enumerate_add_match_subsystem;
+  late final _udev_enumerate_add_match_subsystem_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_enumerate_add_match_subsystem>>(
+          'udev_enumerate_add_match_subsystem');
+  late final _dart_udev_enumerate_add_match_subsystem
+      _udev_enumerate_add_match_subsystem =
+      _udev_enumerate_add_match_subsystem_ptr
+          .asFunction<_dart_udev_enumerate_add_match_subsystem>();
 
   int udev_enumerate_scan_devices(
     ffi.Pointer<udev_enumerate> udev_enumerate,
   ) {
-    return (_udev_enumerate_scan_devices ??= _dylib.lookupFunction<
-        _c_udev_enumerate_scan_devices,
-        _dart_udev_enumerate_scan_devices>('udev_enumerate_scan_devices'))(
+    return _udev_enumerate_scan_devices(
       udev_enumerate,
     );
   }
 
-  _dart_udev_enumerate_scan_devices? _udev_enumerate_scan_devices;
+  late final _udev_enumerate_scan_devices_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_enumerate_scan_devices>>(
+          'udev_enumerate_scan_devices');
+  late final _dart_udev_enumerate_scan_devices _udev_enumerate_scan_devices =
+      _udev_enumerate_scan_devices_ptr
+          .asFunction<_dart_udev_enumerate_scan_devices>();
 
   ffi.Pointer<udev_list_entry> udev_enumerate_get_list_entry(
     ffi.Pointer<udev_enumerate> udev_enumerate,
   ) {
-    return (_udev_enumerate_get_list_entry ??= _dylib.lookupFunction<
-        _c_udev_enumerate_get_list_entry,
-        _dart_udev_enumerate_get_list_entry>('udev_enumerate_get_list_entry'))(
+    return _udev_enumerate_get_list_entry(
       udev_enumerate,
     );
   }
 
-  _dart_udev_enumerate_get_list_entry? _udev_enumerate_get_list_entry;
+  late final _udev_enumerate_get_list_entry_ptr =
+      _lookup<ffi.NativeFunction<_c_udev_enumerate_get_list_entry>>(
+          'udev_enumerate_get_list_entry');
+  late final _dart_udev_enumerate_get_list_entry
+      _udev_enumerate_get_list_entry = _udev_enumerate_get_list_entry_ptr
+          .asFunction<_dart_udev_enumerate_get_list_entry>();
 }
 
 class udev extends ffi.Opaque {}
