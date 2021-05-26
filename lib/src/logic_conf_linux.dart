@@ -7,7 +7,6 @@ import 'linux/hidraw.dart';
 import 'linux/libudev.dart';
 import 'logic_conf_interface.dart';
 import 'linux/libc.dart';
-import 'util/pool.dart';
 
 class LogicConfLinux extends LogicConfPlatform {
   int _devDescriptor = -1;
@@ -27,8 +26,8 @@ class LogicConfLinux extends LogicConfPlatform {
 
     var enumerateContext = _libudev.udev_enumerate_new(udevContext);
     try {
-      using((Pool pool) {
-        var nativeUtf8 = 'hidraw'.toNativeUtf8(allocator: pool);
+      using((Arena arena) {
+        var nativeUtf8 = 'hidraw'.toNativeUtf8(allocator: arena);
         return _libudev.udev_enumerate_add_match_subsystem(enumerateContext, nativeUtf8.cast());
       });
       _libudev.udev_enumerate_scan_devices(enumerateContext);
@@ -73,8 +72,8 @@ class LogicConfLinux extends LogicConfPlatform {
 
   Map<String, dynamic>? _getSysAttributes(Pointer<udev_device> rawDevice) {
     // Do not unref parent
-    var parentDevice = using((Pool pool) {
-      var nativeUtf8 = 'hid'.toNativeUtf8(allocator: pool);
+    var parentDevice = using((Arena arena) {
+      var nativeUtf8 = 'hid'.toNativeUtf8(allocator: arena);
       return _libudev.udev_device_get_parent_with_subsystem_devtype(rawDevice, nativeUtf8.cast(), nullptr);
     });
     if (parentDevice == nullptr) {
@@ -83,8 +82,8 @@ class LogicConfLinux extends LogicConfPlatform {
 
     var path = _libudev.udev_device_get_devnode(rawDevice).cast<Utf8>().toDartString();
     
-    var sysAttributeValuesPtr = using((Pool pool) {
-      var nativeUtf8 = 'uevent'.toNativeUtf8(allocator: pool);
+    var sysAttributeValuesPtr = using((Arena arena) {
+      var nativeUtf8 = 'uevent'.toNativeUtf8(allocator: arena);
       return _libudev.udev_device_get_sysattr_value(parentDevice, nativeUtf8.cast());
     });
     var sysAttributeValues = sysAttributeValuesPtr.cast<Utf8>().toDartString();
@@ -109,8 +108,8 @@ class LogicConfLinux extends LogicConfPlatform {
   }
 
   Uint8List? _readReportDescriptor(String sysfsPath) {
-    var reportDescriptor = using((Pool pool) {
-      var nativeUtf8 = '$sysfsPath/device/report_descriptor'.toNativeUtf8(allocator: pool);
+    var reportDescriptor = using((Arena arena) {
+      var nativeUtf8 = '$sysfsPath/device/report_descriptor'.toNativeUtf8(allocator: arena);
       return _libc.open2(nativeUtf8.cast(), O_RDONLY);
     });
     if (reportDescriptor < 0) {
@@ -224,8 +223,8 @@ class LogicConfLinux extends LogicConfPlatform {
 
   @override
   bool openDevice(String path) {
-    var descriptor = using((Pool pool) {
-      var nativeUtf8 = path.toNativeUtf8(allocator: pool);
+    var descriptor = using((Arena arena) {
+      var nativeUtf8 = path.toNativeUtf8(allocator: arena);
       return _libc.open2(nativeUtf8.cast(), O_RDWR);
     });
 
