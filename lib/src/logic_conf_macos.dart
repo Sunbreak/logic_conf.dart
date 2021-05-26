@@ -7,7 +7,6 @@ import 'logic_conf_interface.dart';
 import 'macos/constants.dart';
 import 'macos/corefoundation.dart';
 import 'macos/iokit.dart' hide CFSetRef, CFStringRef, CFDictionaryRef;
-import 'util/pool.dart';
 
 class LogicConfMacos extends LogicConfPlatform {
   final _cf = CoreFoundation(DynamicLibrary.open('/System/Library/Frameworks/CoreFoundation.framework/Resources/BridgeSupport/CoreFoundation.dylib'));
@@ -40,10 +39,10 @@ class LogicConfMacos extends LogicConfPlatform {
 
     for (var i = 0; i < count; i++) {
       var devicePtr = deviceListRefPtr.elementAt(i).value;
-      var path = using((Pool pool) {
+      var path = using((Arena arena) {
         var servicePtr = _io.IOHIDDeviceGetService(devicePtr);
-        var pathPtr = pool.allocate<Int8>(io_string_t_length);
-        var res = _io.IORegistryEntryGetPath(servicePtr, kIOServicePlane.toNativeUtf8(allocator: pool).cast(), pathPtr);
+        var pathPtr = arena<Int8>(io_string_t_length);
+        var res = _io.IORegistryEntryGetPath(servicePtr, kIOServicePlane.toNativeUtf8(allocator: arena).cast(), pathPtr);
         return res == KERN_SUCCESS ? pathPtr.cast<Utf8>().toDartString() : '';
       });
       var vendorId = _getInt32Property(devicePtr, kIOHIDVendorIDKey);
@@ -73,8 +72,8 @@ class LogicConfMacos extends LogicConfPlatform {
   }
 
   T _usingCFString<T>(String string, T Function(Pointer<CFStringRef>) computation) {
-    return using((Pool pool) {
-      var keyPtr = string.toNativeUtf8(allocator: pool);
+    return using((Arena arena) {
+      var keyPtr = string.toNativeUtf8(allocator: arena);
       var keyCFPtr = _cf.CFStringCreateWithCString(kCFAllocatorDefault, keyPtr.cast(), kCFStringEncodingUTF8);
       var result = computation(keyCFPtr);
       _cf.CFRelease(keyCFPtr.cast());
@@ -125,8 +124,8 @@ class LogicConfMacos extends LogicConfPlatform {
   
   @override
   bool openDevice(String path) {
-    _entryPtr = using((Pool pool) {
-      var nativeUtf8 = path.toNativeUtf8(allocator: pool);
+    _entryPtr = using((Arena arena) {
+      var nativeUtf8 = path.toNativeUtf8(allocator: arena);
       return _io.IORegistryEntryFromPath(kIOMasterPortDefault, nativeUtf8.cast());
     });
 
