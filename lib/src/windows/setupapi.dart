@@ -19,26 +19,25 @@ class SetupAPI {
       : _lookup = lookup;
 
   int SetupDiDestroyDeviceInfoList(
-    ffi.Pointer<ffi.Void> DeviceInfoSet,
+    HDEVINFO DeviceInfoSet,
   ) {
     return _SetupDiDestroyDeviceInfoList(
       DeviceInfoSet,
     );
   }
 
-  late final _SetupDiDestroyDeviceInfoList_ptr =
-      _lookup<ffi.NativeFunction<_c_SetupDiDestroyDeviceInfoList>>(
+  late final _SetupDiDestroyDeviceInfoListPtr =
+      _lookup<ffi.NativeFunction<BOOL Function(HDEVINFO)>>(
           'SetupDiDestroyDeviceInfoList');
-  late final _dart_SetupDiDestroyDeviceInfoList _SetupDiDestroyDeviceInfoList =
-      _SetupDiDestroyDeviceInfoList_ptr.asFunction<
-          _dart_SetupDiDestroyDeviceInfoList>();
+  late final _SetupDiDestroyDeviceInfoList =
+      _SetupDiDestroyDeviceInfoListPtr.asFunction<int Function(HDEVINFO)>();
 
   int SetupDiEnumDeviceInterfaces(
-    ffi.Pointer<ffi.Void> DeviceInfoSet,
-    ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
+    HDEVINFO DeviceInfoSet,
+    PSP_DEVINFO_DATA DeviceInfoData,
     ffi.Pointer<GUID> InterfaceClassGuid,
     int MemberIndex,
-    ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
+    PSP_DEVICE_INTERFACE_DATA DeviceInterfaceData,
   ) {
     return _SetupDiEnumDeviceInterfaces(
       DeviceInfoSet,
@@ -49,20 +48,22 @@ class SetupAPI {
     );
   }
 
-  late final _SetupDiEnumDeviceInterfaces_ptr =
-      _lookup<ffi.NativeFunction<_c_SetupDiEnumDeviceInterfaces>>(
-          'SetupDiEnumDeviceInterfaces');
-  late final _dart_SetupDiEnumDeviceInterfaces _SetupDiEnumDeviceInterfaces =
-      _SetupDiEnumDeviceInterfaces_ptr.asFunction<
-          _dart_SetupDiEnumDeviceInterfaces>();
+  late final _SetupDiEnumDeviceInterfacesPtr = _lookup<
+      ffi.NativeFunction<
+          BOOL Function(HDEVINFO, PSP_DEVINFO_DATA, ffi.Pointer<GUID>, DWORD,
+              PSP_DEVICE_INTERFACE_DATA)>>('SetupDiEnumDeviceInterfaces');
+  late final _SetupDiEnumDeviceInterfaces =
+      _SetupDiEnumDeviceInterfacesPtr.asFunction<
+          int Function(HDEVINFO, PSP_DEVINFO_DATA, ffi.Pointer<GUID>, int,
+              PSP_DEVICE_INTERFACE_DATA)>();
 
   int SetupDiGetDeviceInterfaceDetailW(
-    ffi.Pointer<ffi.Void> DeviceInfoSet,
-    ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-    ffi.Pointer<PSP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
+    HDEVINFO DeviceInfoSet,
+    PSP_DEVICE_INTERFACE_DATA DeviceInterfaceData,
+    PSP_DEVICE_INTERFACE_DETAIL_DATA_W DeviceInterfaceDetailData,
     int DeviceInterfaceDetailDataSize,
-    ffi.Pointer<ffi.Uint32> RequiredSize,
-    ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
+    PDWORD RequiredSize,
+    PSP_DEVINFO_DATA DeviceInfoData,
   ) {
     return _SetupDiGetDeviceInterfaceDetailW(
       DeviceInfoSet,
@@ -74,17 +75,29 @@ class SetupAPI {
     );
   }
 
-  late final _SetupDiGetDeviceInterfaceDetailW_ptr =
-      _lookup<ffi.NativeFunction<_c_SetupDiGetDeviceInterfaceDetailW>>(
-          'SetupDiGetDeviceInterfaceDetailW');
-  late final _dart_SetupDiGetDeviceInterfaceDetailW
-      _SetupDiGetDeviceInterfaceDetailW = _SetupDiGetDeviceInterfaceDetailW_ptr
-          .asFunction<_dart_SetupDiGetDeviceInterfaceDetailW>();
+  late final _SetupDiGetDeviceInterfaceDetailWPtr = _lookup<
+      ffi.NativeFunction<
+          BOOL Function(
+              HDEVINFO,
+              PSP_DEVICE_INTERFACE_DATA,
+              PSP_DEVICE_INTERFACE_DETAIL_DATA_W,
+              DWORD,
+              PDWORD,
+              PSP_DEVINFO_DATA)>>('SetupDiGetDeviceInterfaceDetailW');
+  late final _SetupDiGetDeviceInterfaceDetailW =
+      _SetupDiGetDeviceInterfaceDetailWPtr.asFunction<
+          int Function(
+              HDEVINFO,
+              PSP_DEVICE_INTERFACE_DATA,
+              PSP_DEVICE_INTERFACE_DETAIL_DATA_W,
+              int,
+              PDWORD,
+              PSP_DEVINFO_DATA)>();
 
-  ffi.Pointer<ffi.Void> SetupDiGetClassDevsW(
+  HDEVINFO SetupDiGetClassDevsW(
     ffi.Pointer<GUID> ClassGuid,
-    ffi.Pointer<ffi.Uint16> Enumerator,
-    ffi.Pointer<HWND> hwndParent,
+    PCWSTR Enumerator,
+    HWND hwndParent,
     int Flags,
   ) {
     return _SetupDiGetClassDevsW(
@@ -95,14 +108,36 @@ class SetupAPI {
     );
   }
 
-  late final _SetupDiGetClassDevsW_ptr =
-      _lookup<ffi.NativeFunction<_c_SetupDiGetClassDevsW>>(
-          'SetupDiGetClassDevsW');
-  late final _dart_SetupDiGetClassDevsW _SetupDiGetClassDevsW =
-      _SetupDiGetClassDevsW_ptr.asFunction<_dart_SetupDiGetClassDevsW>();
+  late final _SetupDiGetClassDevsWPtr = _lookup<
+      ffi.NativeFunction<
+          HDEVINFO Function(
+              ffi.Pointer<GUID>, PCWSTR, HWND, DWORD)>>('SetupDiGetClassDevsW');
+  late final _SetupDiGetClassDevsW = _SetupDiGetClassDevsWPtr.asFunction<
+      HDEVINFO Function(ffi.Pointer<GUID>, PCWSTR, HWND, int)>();
 }
 
-class GUID extends ffi.Struct {
+typedef BOOL = ffi.Int32;
+typedef HDEVINFO = PVOID;
+typedef PVOID = ffi.Pointer<ffi.Void>;
+typedef PSP_DEVINFO_DATA = ffi.Pointer<_SP_DEVINFO_DATA>;
+
+class _SP_DEVINFO_DATA extends ffi.Struct {
+  @DWORD()
+  external int cbSize;
+
+  external GUID ClassGuid;
+
+  @DWORD()
+  external int DevInst;
+
+  @ULONG_PTR()
+  external int Reserved;
+}
+
+typedef DWORD = ffi.Uint32;
+typedef GUID = _GUID;
+
+class _GUID extends ffi.Struct {
   @ffi.Uint32()
   external int Data1;
 
@@ -116,41 +151,40 @@ class GUID extends ffi.Struct {
   external ffi.Array<ffi.Uint8> Data4;
 }
 
-class PSP_DEVINFO_DATA extends ffi.Struct {
-  @ffi.Uint32()
-  external int cbSize;
+typedef ULONG_PTR = ffi.Uint64;
+typedef PSP_DEVICE_INTERFACE_DATA = ffi.Pointer<SP_DEVICE_INTERFACE_DATA>;
 
-  external GUID ClassGuid;
-
-  @ffi.Uint32()
-  external int DevInst;
-
-  @ffi.Uint64()
-  external int Reserved;
-}
-
-class PSP_DEVICE_INTERFACE_DATA extends ffi.Struct {
-  @ffi.Uint32()
+class SP_DEVICE_INTERFACE_DATA extends ffi.Struct {
+  @DWORD()
   external int cbSize;
 
   external GUID InterfaceClassGuid;
 
-  @ffi.Uint32()
+  @DWORD()
   external int Flags;
 
-  @ffi.Uint64()
+  @ULONG_PTR()
   external int Reserved;
 }
 
-class PSP_DEVICE_INTERFACE_DETAIL_DATA_W extends ffi.Struct {
-  @ffi.Uint32()
+typedef PSP_DEVICE_INTERFACE_DETAIL_DATA_W
+    = ffi.Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_W>;
+
+class SP_DEVICE_INTERFACE_DETAIL_DATA_W extends ffi.Struct {
+  @DWORD()
   external int cbSize;
 
   @ffi.Array.multi([1])
-  external ffi.Array<ffi.Uint16> DevicePath;
+  external ffi.Array<WCHAR> DevicePath;
 }
 
-class HWND extends ffi.Struct {
+typedef WCHAR = wchar_t;
+typedef wchar_t = ffi.Uint16;
+typedef PDWORD = ffi.Pointer<DWORD>;
+typedef PCWSTR = ffi.Pointer<WCHAR>;
+typedef HWND = ffi.Pointer<HWND__>;
+
+class HWND__ extends ffi.Struct {
   @ffi.Int32()
   external int unused;
 }
@@ -164,59 +198,3 @@ const int DIGCF_ALLCLASSES = 4;
 const int DIGCF_PROFILE = 8;
 
 const int DIGCF_DEVICEINTERFACE = 16;
-
-typedef _c_SetupDiDestroyDeviceInfoList = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> DeviceInfoSet,
-);
-
-typedef _dart_SetupDiDestroyDeviceInfoList = int Function(
-  ffi.Pointer<ffi.Void> DeviceInfoSet,
-);
-
-typedef _c_SetupDiEnumDeviceInterfaces = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
-  ffi.Pointer<GUID> InterfaceClassGuid,
-  ffi.Uint32 MemberIndex,
-  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-);
-
-typedef _dart_SetupDiEnumDeviceInterfaces = int Function(
-  ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
-  ffi.Pointer<GUID> InterfaceClassGuid,
-  int MemberIndex,
-  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-);
-
-typedef _c_SetupDiGetDeviceInterfaceDetailW = ffi.Int32 Function(
-  ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-  ffi.Pointer<PSP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
-  ffi.Uint32 DeviceInterfaceDetailDataSize,
-  ffi.Pointer<ffi.Uint32> RequiredSize,
-  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
-);
-
-typedef _dart_SetupDiGetDeviceInterfaceDetailW = int Function(
-  ffi.Pointer<ffi.Void> DeviceInfoSet,
-  ffi.Pointer<PSP_DEVICE_INTERFACE_DATA> DeviceInterfaceData,
-  ffi.Pointer<PSP_DEVICE_INTERFACE_DETAIL_DATA_W> DeviceInterfaceDetailData,
-  int DeviceInterfaceDetailDataSize,
-  ffi.Pointer<ffi.Uint32> RequiredSize,
-  ffi.Pointer<PSP_DEVINFO_DATA> DeviceInfoData,
-);
-
-typedef _c_SetupDiGetClassDevsW = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<GUID> ClassGuid,
-  ffi.Pointer<ffi.Uint16> Enumerator,
-  ffi.Pointer<HWND> hwndParent,
-  ffi.Uint32 Flags,
-);
-
-typedef _dart_SetupDiGetClassDevsW = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<GUID> ClassGuid,
-  ffi.Pointer<ffi.Uint16> Enumerator,
-  ffi.Pointer<HWND> hwndParent,
-  int Flags,
-);

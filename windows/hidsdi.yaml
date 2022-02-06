@@ -9,3 +9,7 @@ headers:
 size-map:
   long: 4
   unsigned long: 4
+structs:
+  rename:
+    '_HIDP_CAPS': 'HIDP_CAPS'
+    '_HIDD_ATTRIBUTES': 'HIDD_ATTRIBUTES'
