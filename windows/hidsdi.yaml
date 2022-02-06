@@ -1,6 +1,5 @@
 name: HidSdi
 description: Bindings to `hidsdi.h`.
-llvm-lib: 'C:\Program Files\LLVM\bin'
 output: 'lib/src/windows/hidsdi.dart'
 headers:
   entry-points:

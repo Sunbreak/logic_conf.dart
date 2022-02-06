@@ -1,6 +1,5 @@
 name: SetupAPI
 description: Bindings to `SetupAPI.h`.
-llvm-lib: 'C:\Program Files\LLVM\bin'
 output: 'lib/src/windows/setupapi.dart'
 headers:
   entry-points:
