@@ -26,19 +26,20 @@ class Libudev {
     );
   }
 
-  late final _udev_unref_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_unref>>('udev_unref');
-  late final _dart_udev_unref _udev_unref =
-      _udev_unref_ptr.asFunction<_dart_udev_unref>();
+  late final _udev_unrefPtr = _lookup<
+          ffi.NativeFunction<ffi.Pointer<udev> Function(ffi.Pointer<udev>)>>(
+      'udev_unref');
+  late final _udev_unref = _udev_unrefPtr
+      .asFunction<ffi.Pointer<udev> Function(ffi.Pointer<udev>)>();
 
   ffi.Pointer<udev> udev_new() {
     return _udev_new();
   }
 
-  late final _udev_new_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_new>>('udev_new');
-  late final _dart_udev_new _udev_new =
-      _udev_new_ptr.asFunction<_dart_udev_new>();
+  late final _udev_newPtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<udev> Function()>>('udev_new');
+  late final _udev_new =
+      _udev_newPtr.asFunction<ffi.Pointer<udev> Function()>();
 
   ffi.Pointer<udev_list_entry> udev_list_entry_get_next(
     ffi.Pointer<udev_list_entry> list_entry,
@@ -48,12 +49,14 @@ class Libudev {
     );
   }
 
-  late final _udev_list_entry_get_next_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_list_entry_get_next>>(
-          'udev_list_entry_get_next');
-  late final _dart_udev_list_entry_get_next _udev_list_entry_get_next =
-      _udev_list_entry_get_next_ptr
-          .asFunction<_dart_udev_list_entry_get_next>();
+  late final _udev_list_entry_get_nextPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<udev_list_entry> Function(
+              ffi.Pointer<udev_list_entry>)>>('udev_list_entry_get_next');
+  late final _udev_list_entry_get_next =
+      _udev_list_entry_get_nextPtr.asFunction<
+          ffi.Pointer<udev_list_entry> Function(
+              ffi.Pointer<udev_list_entry>)>();
 
   ffi.Pointer<ffi.Int8> udev_list_entry_get_name(
     ffi.Pointer<udev_list_entry> list_entry,
@@ -63,12 +66,13 @@ class Libudev {
     );
   }
 
-  late final _udev_list_entry_get_name_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_list_entry_get_name>>(
-          'udev_list_entry_get_name');
-  late final _dart_udev_list_entry_get_name _udev_list_entry_get_name =
-      _udev_list_entry_get_name_ptr
-          .asFunction<_dart_udev_list_entry_get_name>();
+  late final _udev_list_entry_get_namePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<udev_list_entry>)>>('udev_list_entry_get_name');
+  late final _udev_list_entry_get_name =
+      _udev_list_entry_get_namePtr.asFunction<
+          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<udev_list_entry>)>();
 
   ffi.Pointer<udev_device> udev_device_unref(
     ffi.Pointer<udev_device> udev_device,
@@ -78,10 +82,12 @@ class Libudev {
     );
   }
 
-  late final _udev_device_unref_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_device_unref>>('udev_device_unref');
-  late final _dart_udev_device_unref _udev_device_unref =
-      _udev_device_unref_ptr.asFunction<_dart_udev_device_unref>();
+  late final _udev_device_unrefPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<udev_device> Function(
+              ffi.Pointer<udev_device>)>>('udev_device_unref');
+  late final _udev_device_unref = _udev_device_unrefPtr.asFunction<
+      ffi.Pointer<udev_device> Function(ffi.Pointer<udev_device>)>();
 
   ffi.Pointer<udev_device> udev_device_new_from_syspath(
     ffi.Pointer<udev> udev,
@@ -93,12 +99,14 @@ class Libudev {
     );
   }
 
-  late final _udev_device_new_from_syspath_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_device_new_from_syspath>>(
-          'udev_device_new_from_syspath');
-  late final _dart_udev_device_new_from_syspath _udev_device_new_from_syspath =
-      _udev_device_new_from_syspath_ptr
-          .asFunction<_dart_udev_device_new_from_syspath>();
+  late final _udev_device_new_from_syspathPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<udev_device> Function(ffi.Pointer<udev>,
+              ffi.Pointer<ffi.Int8>)>>('udev_device_new_from_syspath');
+  late final _udev_device_new_from_syspath =
+      _udev_device_new_from_syspathPtr.asFunction<
+          ffi.Pointer<udev_device> Function(
+              ffi.Pointer<udev>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<udev_device> udev_device_get_parent_with_subsystem_devtype(
     ffi.Pointer<udev_device> udev_device,
@@ -112,13 +120,15 @@ class Libudev {
     );
   }
 
-  late final _udev_device_get_parent_with_subsystem_devtype_ptr = _lookup<
-          ffi.NativeFunction<_c_udev_device_get_parent_with_subsystem_devtype>>(
+  late final _udev_device_get_parent_with_subsystem_devtypePtr = _lookup<
+          ffi.NativeFunction<
+              ffi.Pointer<udev_device> Function(ffi.Pointer<udev_device>,
+                  ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>>(
       'udev_device_get_parent_with_subsystem_devtype');
-  late final _dart_udev_device_get_parent_with_subsystem_devtype
-      _udev_device_get_parent_with_subsystem_devtype =
-      _udev_device_get_parent_with_subsystem_devtype_ptr
-          .asFunction<_dart_udev_device_get_parent_with_subsystem_devtype>();
+  late final _udev_device_get_parent_with_subsystem_devtype =
+      _udev_device_get_parent_with_subsystem_devtypePtr.asFunction<
+          ffi.Pointer<udev_device> Function(ffi.Pointer<udev_device>,
+              ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<ffi.Int8> udev_device_get_devnode(
     ffi.Pointer<udev_device> udev_device,
@@ -128,11 +138,12 @@ class Libudev {
     );
   }
 
-  late final _udev_device_get_devnode_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_device_get_devnode>>(
-          'udev_device_get_devnode');
-  late final _dart_udev_device_get_devnode _udev_device_get_devnode =
-      _udev_device_get_devnode_ptr.asFunction<_dart_udev_device_get_devnode>();
+  late final _udev_device_get_devnodePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<udev_device>)>>('udev_device_get_devnode');
+  late final _udev_device_get_devnode = _udev_device_get_devnodePtr
+      .asFunction<ffi.Pointer<ffi.Int8> Function(ffi.Pointer<udev_device>)>();
 
   ffi.Pointer<ffi.Int8> udev_device_get_sysattr_value(
     ffi.Pointer<udev_device> udev_device,
@@ -144,12 +155,14 @@ class Libudev {
     );
   }
 
-  late final _udev_device_get_sysattr_value_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_device_get_sysattr_value>>(
-          'udev_device_get_sysattr_value');
-  late final _dart_udev_device_get_sysattr_value
-      _udev_device_get_sysattr_value = _udev_device_get_sysattr_value_ptr
-          .asFunction<_dart_udev_device_get_sysattr_value>();
+  late final _udev_device_get_sysattr_valuePtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Int8> Function(ffi.Pointer<udev_device>,
+              ffi.Pointer<ffi.Int8>)>>('udev_device_get_sysattr_value');
+  late final _udev_device_get_sysattr_value =
+      _udev_device_get_sysattr_valuePtr.asFunction<
+          ffi.Pointer<ffi.Int8> Function(
+              ffi.Pointer<udev_device>, ffi.Pointer<ffi.Int8>)>();
 
   ffi.Pointer<udev_enumerate> udev_enumerate_unref(
     ffi.Pointer<udev_enumerate> udev_enumerate,
@@ -159,11 +172,12 @@ class Libudev {
     );
   }
 
-  late final _udev_enumerate_unref_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_enumerate_unref>>(
-          'udev_enumerate_unref');
-  late final _dart_udev_enumerate_unref _udev_enumerate_unref =
-      _udev_enumerate_unref_ptr.asFunction<_dart_udev_enumerate_unref>();
+  late final _udev_enumerate_unrefPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<udev_enumerate> Function(
+              ffi.Pointer<udev_enumerate>)>>('udev_enumerate_unref');
+  late final _udev_enumerate_unref = _udev_enumerate_unrefPtr.asFunction<
+      ffi.Pointer<udev_enumerate> Function(ffi.Pointer<udev_enumerate>)>();
 
   ffi.Pointer<udev_enumerate> udev_enumerate_new(
     ffi.Pointer<udev> udev,
@@ -173,10 +187,12 @@ class Libudev {
     );
   }
 
-  late final _udev_enumerate_new_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_enumerate_new>>('udev_enumerate_new');
-  late final _dart_udev_enumerate_new _udev_enumerate_new =
-      _udev_enumerate_new_ptr.asFunction<_dart_udev_enumerate_new>();
+  late final _udev_enumerate_newPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<udev_enumerate> Function(
+              ffi.Pointer<udev>)>>('udev_enumerate_new');
+  late final _udev_enumerate_new = _udev_enumerate_newPtr
+      .asFunction<ffi.Pointer<udev_enumerate> Function(ffi.Pointer<udev>)>();
 
   int udev_enumerate_add_match_subsystem(
     ffi.Pointer<udev_enumerate> udev_enumerate,
@@ -188,13 +204,13 @@ class Libudev {
     );
   }
 
-  late final _udev_enumerate_add_match_subsystem_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_enumerate_add_match_subsystem>>(
-          'udev_enumerate_add_match_subsystem');
-  late final _dart_udev_enumerate_add_match_subsystem
-      _udev_enumerate_add_match_subsystem =
-      _udev_enumerate_add_match_subsystem_ptr
-          .asFunction<_dart_udev_enumerate_add_match_subsystem>();
+  late final _udev_enumerate_add_match_subsystemPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<udev_enumerate>,
+              ffi.Pointer<ffi.Int8>)>>('udev_enumerate_add_match_subsystem');
+  late final _udev_enumerate_add_match_subsystem =
+      _udev_enumerate_add_match_subsystemPtr.asFunction<
+          int Function(ffi.Pointer<udev_enumerate>, ffi.Pointer<ffi.Int8>)>();
 
   int udev_enumerate_scan_devices(
     ffi.Pointer<udev_enumerate> udev_enumerate,
@@ -204,12 +220,11 @@ class Libudev {
     );
   }
 
-  late final _udev_enumerate_scan_devices_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_enumerate_scan_devices>>(
-          'udev_enumerate_scan_devices');
-  late final _dart_udev_enumerate_scan_devices _udev_enumerate_scan_devices =
-      _udev_enumerate_scan_devices_ptr
-          .asFunction<_dart_udev_enumerate_scan_devices>();
+  late final _udev_enumerate_scan_devicesPtr = _lookup<
+          ffi.NativeFunction<ffi.Int32 Function(ffi.Pointer<udev_enumerate>)>>(
+      'udev_enumerate_scan_devices');
+  late final _udev_enumerate_scan_devices = _udev_enumerate_scan_devicesPtr
+      .asFunction<int Function(ffi.Pointer<udev_enumerate>)>();
 
   ffi.Pointer<udev_list_entry> udev_enumerate_get_list_entry(
     ffi.Pointer<udev_enumerate> udev_enumerate,
@@ -219,12 +234,13 @@ class Libudev {
     );
   }
 
-  late final _udev_enumerate_get_list_entry_ptr =
-      _lookup<ffi.NativeFunction<_c_udev_enumerate_get_list_entry>>(
-          'udev_enumerate_get_list_entry');
-  late final _dart_udev_enumerate_get_list_entry
-      _udev_enumerate_get_list_entry = _udev_enumerate_get_list_entry_ptr
-          .asFunction<_dart_udev_enumerate_get_list_entry>();
+  late final _udev_enumerate_get_list_entryPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<udev_list_entry> Function(
+              ffi.Pointer<udev_enumerate>)>>('udev_enumerate_get_list_entry');
+  late final _udev_enumerate_get_list_entry =
+      _udev_enumerate_get_list_entryPtr.asFunction<
+          ffi.Pointer<udev_list_entry> Function(ffi.Pointer<udev_enumerate>)>();
 }
 
 class udev extends ffi.Opaque {}
@@ -234,125 +250,3 @@ class udev_list_entry extends ffi.Opaque {}
 class udev_device extends ffi.Opaque {}
 
 class udev_enumerate extends ffi.Opaque {}
-
-typedef _c_udev_unref = ffi.Pointer<udev> Function(
-  ffi.Pointer<udev> udev,
-);
-
-typedef _dart_udev_unref = ffi.Pointer<udev> Function(
-  ffi.Pointer<udev> udev,
-);
-
-typedef _c_udev_new = ffi.Pointer<udev> Function();
-
-typedef _dart_udev_new = ffi.Pointer<udev> Function();
-
-typedef _c_udev_list_entry_get_next = ffi.Pointer<udev_list_entry> Function(
-  ffi.Pointer<udev_list_entry> list_entry,
-);
-
-typedef _dart_udev_list_entry_get_next = ffi.Pointer<udev_list_entry> Function(
-  ffi.Pointer<udev_list_entry> list_entry,
-);
-
-typedef _c_udev_list_entry_get_name = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<udev_list_entry> list_entry,
-);
-
-typedef _dart_udev_list_entry_get_name = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<udev_list_entry> list_entry,
-);
-
-typedef _c_udev_device_unref = ffi.Pointer<udev_device> Function(
-  ffi.Pointer<udev_device> udev_device,
-);
-
-typedef _dart_udev_device_unref = ffi.Pointer<udev_device> Function(
-  ffi.Pointer<udev_device> udev_device,
-);
-
-typedef _c_udev_device_new_from_syspath = ffi.Pointer<udev_device> Function(
-  ffi.Pointer<udev> udev,
-  ffi.Pointer<ffi.Int8> syspath,
-);
-
-typedef _dart_udev_device_new_from_syspath = ffi.Pointer<udev_device> Function(
-  ffi.Pointer<udev> udev,
-  ffi.Pointer<ffi.Int8> syspath,
-);
-
-typedef _c_udev_device_get_parent_with_subsystem_devtype
-    = ffi.Pointer<udev_device> Function(
-  ffi.Pointer<udev_device> udev_device,
-  ffi.Pointer<ffi.Int8> subsystem,
-  ffi.Pointer<ffi.Int8> devtype,
-);
-
-typedef _dart_udev_device_get_parent_with_subsystem_devtype
-    = ffi.Pointer<udev_device> Function(
-  ffi.Pointer<udev_device> udev_device,
-  ffi.Pointer<ffi.Int8> subsystem,
-  ffi.Pointer<ffi.Int8> devtype,
-);
-
-typedef _c_udev_device_get_devnode = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<udev_device> udev_device,
-);
-
-typedef _dart_udev_device_get_devnode = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<udev_device> udev_device,
-);
-
-typedef _c_udev_device_get_sysattr_value = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<udev_device> udev_device,
-  ffi.Pointer<ffi.Int8> sysattr,
-);
-
-typedef _dart_udev_device_get_sysattr_value = ffi.Pointer<ffi.Int8> Function(
-  ffi.Pointer<udev_device> udev_device,
-  ffi.Pointer<ffi.Int8> sysattr,
-);
-
-typedef _c_udev_enumerate_unref = ffi.Pointer<udev_enumerate> Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-);
-
-typedef _dart_udev_enumerate_unref = ffi.Pointer<udev_enumerate> Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-);
-
-typedef _c_udev_enumerate_new = ffi.Pointer<udev_enumerate> Function(
-  ffi.Pointer<udev> udev,
-);
-
-typedef _dart_udev_enumerate_new = ffi.Pointer<udev_enumerate> Function(
-  ffi.Pointer<udev> udev,
-);
-
-typedef _c_udev_enumerate_add_match_subsystem = ffi.Int32 Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-  ffi.Pointer<ffi.Int8> subsystem,
-);
-
-typedef _dart_udev_enumerate_add_match_subsystem = int Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-  ffi.Pointer<ffi.Int8> subsystem,
-);
-
-typedef _c_udev_enumerate_scan_devices = ffi.Int32 Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-);
-
-typedef _dart_udev_enumerate_scan_devices = int Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-);
-
-typedef _c_udev_enumerate_get_list_entry = ffi.Pointer<udev_list_entry>
-    Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-);
-
-typedef _dart_udev_enumerate_get_list_entry = ffi.Pointer<udev_list_entry>
-    Function(
-  ffi.Pointer<udev_enumerate> udev_enumerate,
-);
