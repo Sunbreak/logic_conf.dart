@@ -6,3 +6,10 @@ headers:
     - 'linux/libc.h'
   include-directives: # include only these header files and necessary structs from other header files
     - '**libc.h'
+# FIXME https://github.com/dart-lang/ffigen/issues/272
+type-map:
+  'typedefs':
+    'size_t':
+      'lib': 'pkg_ffi'
+      'c-type': 'Size'
+      'dart-type': 'int'
