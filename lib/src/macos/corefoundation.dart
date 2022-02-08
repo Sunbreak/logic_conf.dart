@@ -20,42 +20,41 @@ class CoreFoundation {
       : _lookup = lookup;
 
   int CFGetTypeID(
-    ffi.Pointer<ffi.Void> cf,
+    CFTypeRef cf,
   ) {
     return _CFGetTypeID(
       cf,
     );
   }
 
-  late final _CFGetTypeID_ptr =
-      _lookup<ffi.NativeFunction<_c_CFGetTypeID>>('CFGetTypeID');
-  late final _dart_CFGetTypeID _CFGetTypeID =
-      _CFGetTypeID_ptr.asFunction<_dart_CFGetTypeID>();
+  late final _CFGetTypeIDPtr =
+      _lookup<ffi.NativeFunction<CFTypeID Function(CFTypeRef)>>('CFGetTypeID');
+  late final _CFGetTypeID =
+      _CFGetTypeIDPtr.asFunction<int Function(CFTypeRef)>();
 
   void CFRelease(
-    ffi.Pointer<ffi.Void> cf,
+    CFTypeRef cf,
   ) {
     return _CFRelease(
       cf,
     );
   }
 
-  late final _CFRelease_ptr =
-      _lookup<ffi.NativeFunction<_c_CFRelease>>('CFRelease');
-  late final _dart_CFRelease _CFRelease =
-      _CFRelease_ptr.asFunction<_dart_CFRelease>();
+  late final _CFReleasePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(CFTypeRef)>>('CFRelease');
+  late final _CFRelease = _CFReleasePtr.asFunction<void Function(CFTypeRef)>();
 
   int CFNumberGetTypeID() {
     return _CFNumberGetTypeID();
   }
 
-  late final _CFNumberGetTypeID_ptr =
-      _lookup<ffi.NativeFunction<_c_CFNumberGetTypeID>>('CFNumberGetTypeID');
-  late final _dart_CFNumberGetTypeID _CFNumberGetTypeID =
-      _CFNumberGetTypeID_ptr.asFunction<_dart_CFNumberGetTypeID>();
+  late final _CFNumberGetTypeIDPtr =
+      _lookup<ffi.NativeFunction<CFTypeID Function()>>('CFNumberGetTypeID');
+  late final _CFNumberGetTypeID =
+      _CFNumberGetTypeIDPtr.asFunction<int Function()>();
 
   int CFNumberGetValue(
-    ffi.Pointer<CFNumberRef> number,
+    CFNumberRef number,
     int theType,
     ffi.Pointer<ffi.Void> valuePtr,
   ) {
@@ -66,35 +65,38 @@ class CoreFoundation {
     );
   }
 
-  late final _CFNumberGetValue_ptr =
-      _lookup<ffi.NativeFunction<_c_CFNumberGetValue>>('CFNumberGetValue');
-  late final _dart_CFNumberGetValue _CFNumberGetValue =
-      _CFNumberGetValue_ptr.asFunction<_dart_CFNumberGetValue>();
+  late final _CFNumberGetValuePtr = _lookup<
+      ffi.NativeFunction<
+          Boolean Function(CFNumberRef, CFNumberType,
+              ffi.Pointer<ffi.Void>)>>('CFNumberGetValue');
+  late final _CFNumberGetValue = _CFNumberGetValuePtr.asFunction<
+      int Function(CFNumberRef, int, ffi.Pointer<ffi.Void>)>();
 
   int CFArrayGetTypeID() {
     return _CFArrayGetTypeID();
   }
 
-  late final _CFArrayGetTypeID_ptr =
-      _lookup<ffi.NativeFunction<_c_CFArrayGetTypeID>>('CFArrayGetTypeID');
-  late final _dart_CFArrayGetTypeID _CFArrayGetTypeID =
-      _CFArrayGetTypeID_ptr.asFunction<_dart_CFArrayGetTypeID>();
+  late final _CFArrayGetTypeIDPtr =
+      _lookup<ffi.NativeFunction<CFTypeID Function()>>('CFArrayGetTypeID');
+  late final _CFArrayGetTypeID =
+      _CFArrayGetTypeIDPtr.asFunction<int Function()>();
 
   int CFArrayGetCount(
-    ffi.Pointer<CFArrayRef> theArray,
+    CFArrayRef theArray,
   ) {
     return _CFArrayGetCount(
       theArray,
     );
   }
 
-  late final _CFArrayGetCount_ptr =
-      _lookup<ffi.NativeFunction<_c_CFArrayGetCount>>('CFArrayGetCount');
-  late final _dart_CFArrayGetCount _CFArrayGetCount =
-      _CFArrayGetCount_ptr.asFunction<_dart_CFArrayGetCount>();
+  late final _CFArrayGetCountPtr =
+      _lookup<ffi.NativeFunction<CFIndex Function(CFArrayRef)>>(
+          'CFArrayGetCount');
+  late final _CFArrayGetCount =
+      _CFArrayGetCountPtr.asFunction<int Function(CFArrayRef)>();
 
   ffi.Pointer<ffi.Void> CFArrayGetValueAtIndex(
-    ffi.Pointer<CFArrayRef> theArray,
+    CFArrayRef theArray,
     int idx,
   ) {
     return _CFArrayGetValueAtIndex(
@@ -103,24 +105,24 @@ class CoreFoundation {
     );
   }
 
-  late final _CFArrayGetValueAtIndex_ptr =
-      _lookup<ffi.NativeFunction<_c_CFArrayGetValueAtIndex>>(
-          'CFArrayGetValueAtIndex');
-  late final _dart_CFArrayGetValueAtIndex _CFArrayGetValueAtIndex =
-      _CFArrayGetValueAtIndex_ptr.asFunction<_dart_CFArrayGetValueAtIndex>();
+  late final _CFArrayGetValueAtIndexPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Pointer<ffi.Void> Function(
+              CFArrayRef, CFIndex)>>('CFArrayGetValueAtIndex');
+  late final _CFArrayGetValueAtIndex = _CFArrayGetValueAtIndexPtr.asFunction<
+      ffi.Pointer<ffi.Void> Function(CFArrayRef, int)>();
 
   int CFDictionaryGetTypeID() {
     return _CFDictionaryGetTypeID();
   }
 
-  late final _CFDictionaryGetTypeID_ptr =
-      _lookup<ffi.NativeFunction<_c_CFDictionaryGetTypeID>>(
-          'CFDictionaryGetTypeID');
-  late final _dart_CFDictionaryGetTypeID _CFDictionaryGetTypeID =
-      _CFDictionaryGetTypeID_ptr.asFunction<_dart_CFDictionaryGetTypeID>();
+  late final _CFDictionaryGetTypeIDPtr =
+      _lookup<ffi.NativeFunction<CFTypeID Function()>>('CFDictionaryGetTypeID');
+  late final _CFDictionaryGetTypeID =
+      _CFDictionaryGetTypeIDPtr.asFunction<int Function()>();
 
   int CFDictionaryGetValueIfPresent(
-    ffi.Pointer<CFDictionaryRef> theDict,
+    CFDictionaryRef theDict,
     ffi.Pointer<ffi.Void> key,
     ffi.Pointer<ffi.Pointer<ffi.Void>> value,
   ) {
@@ -131,28 +133,31 @@ class CoreFoundation {
     );
   }
 
-  late final _CFDictionaryGetValueIfPresent_ptr =
-      _lookup<ffi.NativeFunction<_c_CFDictionaryGetValueIfPresent>>(
-          'CFDictionaryGetValueIfPresent');
-  late final _dart_CFDictionaryGetValueIfPresent
-      _CFDictionaryGetValueIfPresent = _CFDictionaryGetValueIfPresent_ptr
-          .asFunction<_dart_CFDictionaryGetValueIfPresent>();
+  late final _CFDictionaryGetValueIfPresentPtr = _lookup<
+          ffi.NativeFunction<
+              Boolean Function(CFDictionaryRef, ffi.Pointer<ffi.Void>,
+                  ffi.Pointer<ffi.Pointer<ffi.Void>>)>>(
+      'CFDictionaryGetValueIfPresent');
+  late final _CFDictionaryGetValueIfPresent =
+      _CFDictionaryGetValueIfPresentPtr.asFunction<
+          int Function(CFDictionaryRef, ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Pointer<ffi.Void>>)>();
 
   int CFSetGetCount(
-    ffi.Pointer<CFSetRef> theSet,
+    CFSetRef theSet,
   ) {
     return _CFSetGetCount(
       theSet,
     );
   }
 
-  late final _CFSetGetCount_ptr =
-      _lookup<ffi.NativeFunction<_c_CFSetGetCount>>('CFSetGetCount');
-  late final _dart_CFSetGetCount _CFSetGetCount =
-      _CFSetGetCount_ptr.asFunction<_dart_CFSetGetCount>();
+  late final _CFSetGetCountPtr =
+      _lookup<ffi.NativeFunction<CFIndex Function(CFSetRef)>>('CFSetGetCount');
+  late final _CFSetGetCount =
+      _CFSetGetCountPtr.asFunction<int Function(CFSetRef)>();
 
   void CFSetGetValues(
-    ffi.Pointer<CFSetRef> theSet,
+    CFSetRef theSet,
     ffi.Pointer<ffi.Pointer<ffi.Void>> values,
   ) {
     return _CFSetGetValues(
@@ -161,13 +166,15 @@ class CoreFoundation {
     );
   }
 
-  late final _CFSetGetValues_ptr =
-      _lookup<ffi.NativeFunction<_c_CFSetGetValues>>('CFSetGetValues');
-  late final _dart_CFSetGetValues _CFSetGetValues =
-      _CFSetGetValues_ptr.asFunction<_dart_CFSetGetValues>();
+  late final _CFSetGetValuesPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(
+              CFSetRef, ffi.Pointer<ffi.Pointer<ffi.Void>>)>>('CFSetGetValues');
+  late final _CFSetGetValues = _CFSetGetValuesPtr.asFunction<
+      void Function(CFSetRef, ffi.Pointer<ffi.Pointer<ffi.Void>>)>();
 
-  ffi.Pointer<CFStringRef> CFStringCreateWithCString(
-    ffi.Pointer<CFAllocatorRef> alloc,
+  CFStringRef CFStringCreateWithCString(
+    CFAllocatorRef alloc,
     ffi.Pointer<ffi.Int8> cStr,
     int encoding,
   ) {
@@ -178,122 +185,43 @@ class CoreFoundation {
     );
   }
 
-  late final _CFStringCreateWithCString_ptr =
-      _lookup<ffi.NativeFunction<_c_CFStringCreateWithCString>>(
-          'CFStringCreateWithCString');
-  late final _dart_CFStringCreateWithCString _CFStringCreateWithCString =
-      _CFStringCreateWithCString_ptr.asFunction<
-          _dart_CFStringCreateWithCString>();
+  late final _CFStringCreateWithCStringPtr = _lookup<
+      ffi.NativeFunction<
+          CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.Int8>,
+              CFStringEncoding)>>('CFStringCreateWithCString');
+  late final _CFStringCreateWithCString =
+      _CFStringCreateWithCStringPtr.asFunction<
+          CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.Int8>, int)>();
 }
 
-class CFNumberRef extends ffi.Opaque {}
+typedef CFTypeID = ffi.Uint64;
+typedef CFTypeRef = ffi.Pointer<ffi.Void>;
+typedef Boolean = ffi.Uint8;
+typedef CFNumberRef = ffi.Pointer<__CFNumber>;
 
-class CFArrayRef extends ffi.Opaque {}
+class __CFNumber extends ffi.Opaque {}
 
-class CFDictionaryRef extends ffi.Opaque {}
+typedef CFNumberType = CFIndex;
+typedef CFIndex = ffi.Int64;
+typedef CFArrayRef = ffi.Pointer<__CFArray>;
 
-class CFSetRef extends ffi.Opaque {}
+class __CFArray extends ffi.Opaque {}
 
-class CFStringRef extends ffi.Opaque {}
+typedef CFDictionaryRef = ffi.Pointer<__CFDictionary>;
 
-class CFAllocatorRef extends ffi.Opaque {}
+class __CFDictionary extends ffi.Opaque {}
 
-typedef _c_CFGetTypeID = ffi.Uint64 Function(
-  ffi.Pointer<ffi.Void> cf,
-);
+typedef CFSetRef = ffi.Pointer<__CFSet>;
 
-typedef _dart_CFGetTypeID = int Function(
-  ffi.Pointer<ffi.Void> cf,
-);
+class __CFSet extends ffi.Opaque {}
 
-typedef _c_CFRelease = ffi.Void Function(
-  ffi.Pointer<ffi.Void> cf,
-);
+typedef CFStringRef = ffi.Pointer<__CFString>;
 
-typedef _dart_CFRelease = void Function(
-  ffi.Pointer<ffi.Void> cf,
-);
+class __CFString extends ffi.Opaque {}
 
-typedef _c_CFNumberGetTypeID = ffi.Uint64 Function();
+typedef CFAllocatorRef = ffi.Pointer<__CFAllocator>;
 
-typedef _dart_CFNumberGetTypeID = int Function();
+class __CFAllocator extends ffi.Opaque {}
 
-typedef _c_CFNumberGetValue = ffi.Uint8 Function(
-  ffi.Pointer<CFNumberRef> number,
-  ffi.Int64 theType,
-  ffi.Pointer<ffi.Void> valuePtr,
-);
-
-typedef _dart_CFNumberGetValue = int Function(
-  ffi.Pointer<CFNumberRef> number,
-  int theType,
-  ffi.Pointer<ffi.Void> valuePtr,
-);
-
-typedef _c_CFArrayGetTypeID = ffi.Uint64 Function();
-
-typedef _dart_CFArrayGetTypeID = int Function();
-
-typedef _c_CFArrayGetCount = ffi.Int64 Function(
-  ffi.Pointer<CFArrayRef> theArray,
-);
-
-typedef _dart_CFArrayGetCount = int Function(
-  ffi.Pointer<CFArrayRef> theArray,
-);
-
-typedef _c_CFArrayGetValueAtIndex = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<CFArrayRef> theArray,
-  ffi.Int64 idx,
-);
-
-typedef _dart_CFArrayGetValueAtIndex = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<CFArrayRef> theArray,
-  int idx,
-);
-
-typedef _c_CFDictionaryGetTypeID = ffi.Uint64 Function();
-
-typedef _dart_CFDictionaryGetTypeID = int Function();
-
-typedef _c_CFDictionaryGetValueIfPresent = ffi.Uint8 Function(
-  ffi.Pointer<CFDictionaryRef> theDict,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> value,
-);
-
-typedef _dart_CFDictionaryGetValueIfPresent = int Function(
-  ffi.Pointer<CFDictionaryRef> theDict,
-  ffi.Pointer<ffi.Void> key,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> value,
-);
-
-typedef _c_CFSetGetCount = ffi.Int64 Function(
-  ffi.Pointer<CFSetRef> theSet,
-);
-
-typedef _dart_CFSetGetCount = int Function(
-  ffi.Pointer<CFSetRef> theSet,
-);
-
-typedef _c_CFSetGetValues = ffi.Void Function(
-  ffi.Pointer<CFSetRef> theSet,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> values,
-);
-
-typedef _dart_CFSetGetValues = void Function(
-  ffi.Pointer<CFSetRef> theSet,
-  ffi.Pointer<ffi.Pointer<ffi.Void>> values,
-);
-
-typedef _c_CFStringCreateWithCString = ffi.Pointer<CFStringRef> Function(
-  ffi.Pointer<CFAllocatorRef> alloc,
-  ffi.Pointer<ffi.Int8> cStr,
-  ffi.Uint32 encoding,
-);
-
-typedef _dart_CFStringCreateWithCString = ffi.Pointer<CFStringRef> Function(
-  ffi.Pointer<CFAllocatorRef> alloc,
-  ffi.Pointer<ffi.Int8> cStr,
-  int encoding,
-);
+typedef CFStringEncoding = UInt32;
+typedef UInt32 = ffi.Uint32;

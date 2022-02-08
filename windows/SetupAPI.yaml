@@ -9,3 +9,7 @@ headers:
 size-map:
   long: 4
   unsigned long: 4
+structs:
+  rename:
+    '_SP_DEVICE_INTERFACE_DATA': 'SP_DEVICE_INTERFACE_DATA'
+    '_SP_DEVICE_INTERFACE_DETAIL_DATA_W': 'SP_DEVICE_INTERFACE_DETAIL_DATA_W'

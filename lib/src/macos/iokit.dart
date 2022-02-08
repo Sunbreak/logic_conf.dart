@@ -18,9 +18,9 @@ class IOKit {
           lookup)
       : _lookup = lookup;
 
-  ffi.Pointer<IOHIDDeviceRef> IOHIDDeviceCreate(
-    ffi.Pointer<CFAllocatorRef> allocator,
-    ffi.Pointer<io_service_t> service,
+  IOHIDDeviceRef IOHIDDeviceCreate(
+    CFAllocatorRef allocator,
+    io_service_t service,
   ) {
     return _IOHIDDeviceCreate(
       allocator,
@@ -28,27 +28,29 @@ class IOKit {
     );
   }
 
-  late final _IOHIDDeviceCreate_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDDeviceCreate>>('IOHIDDeviceCreate');
-  late final _dart_IOHIDDeviceCreate _IOHIDDeviceCreate =
-      _IOHIDDeviceCreate_ptr.asFunction<_dart_IOHIDDeviceCreate>();
+  late final _IOHIDDeviceCreatePtr = _lookup<
+      ffi.NativeFunction<
+          IOHIDDeviceRef Function(
+              CFAllocatorRef, io_service_t)>>('IOHIDDeviceCreate');
+  late final _IOHIDDeviceCreate = _IOHIDDeviceCreatePtr.asFunction<
+      IOHIDDeviceRef Function(CFAllocatorRef, io_service_t)>();
 
-  ffi.Pointer<io_service_t> IOHIDDeviceGetService(
-    ffi.Pointer<IOHIDDeviceRef> device,
+  io_service_t IOHIDDeviceGetService(
+    IOHIDDeviceRef device,
   ) {
     return _IOHIDDeviceGetService(
       device,
     );
   }
 
-  late final _IOHIDDeviceGetService_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDDeviceGetService>>(
+  late final _IOHIDDeviceGetServicePtr =
+      _lookup<ffi.NativeFunction<io_service_t Function(IOHIDDeviceRef)>>(
           'IOHIDDeviceGetService');
-  late final _dart_IOHIDDeviceGetService _IOHIDDeviceGetService =
-      _IOHIDDeviceGetService_ptr.asFunction<_dart_IOHIDDeviceGetService>();
+  late final _IOHIDDeviceGetService = _IOHIDDeviceGetServicePtr.asFunction<
+      io_service_t Function(IOHIDDeviceRef)>();
 
   int IOHIDDeviceOpen(
-    ffi.Pointer<IOHIDDeviceRef> device,
+    IOHIDDeviceRef device,
     int options,
   ) {
     return _IOHIDDeviceOpen(
@@ -57,13 +59,14 @@ class IOKit {
     );
   }
 
-  late final _IOHIDDeviceOpen_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDDeviceOpen>>('IOHIDDeviceOpen');
-  late final _dart_IOHIDDeviceOpen _IOHIDDeviceOpen =
-      _IOHIDDeviceOpen_ptr.asFunction<_dart_IOHIDDeviceOpen>();
+  late final _IOHIDDeviceOpenPtr = _lookup<
+          ffi.NativeFunction<IOReturn Function(IOHIDDeviceRef, IOOptionBits)>>(
+      'IOHIDDeviceOpen');
+  late final _IOHIDDeviceOpen =
+      _IOHIDDeviceOpenPtr.asFunction<int Function(IOHIDDeviceRef, int)>();
 
   int IOHIDDeviceClose(
-    ffi.Pointer<IOHIDDeviceRef> device,
+    IOHIDDeviceRef device,
     int options,
   ) {
     return _IOHIDDeviceClose(
@@ -72,14 +75,15 @@ class IOKit {
     );
   }
 
-  late final _IOHIDDeviceClose_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDDeviceClose>>('IOHIDDeviceClose');
-  late final _dart_IOHIDDeviceClose _IOHIDDeviceClose =
-      _IOHIDDeviceClose_ptr.asFunction<_dart_IOHIDDeviceClose>();
+  late final _IOHIDDeviceClosePtr = _lookup<
+          ffi.NativeFunction<IOReturn Function(IOHIDDeviceRef, IOOptionBits)>>(
+      'IOHIDDeviceClose');
+  late final _IOHIDDeviceClose =
+      _IOHIDDeviceClosePtr.asFunction<int Function(IOHIDDeviceRef, int)>();
 
-  ffi.Pointer<ffi.Void> IOHIDDeviceGetProperty(
-    ffi.Pointer<IOHIDDeviceRef> device,
-    ffi.Pointer<CFStringRef> key,
+  CFTypeRef IOHIDDeviceGetProperty(
+    IOHIDDeviceRef device,
+    CFStringRef key,
   ) {
     return _IOHIDDeviceGetProperty(
       device,
@@ -87,14 +91,14 @@ class IOKit {
     );
   }
 
-  late final _IOHIDDeviceGetProperty_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDDeviceGetProperty>>(
-          'IOHIDDeviceGetProperty');
-  late final _dart_IOHIDDeviceGetProperty _IOHIDDeviceGetProperty =
-      _IOHIDDeviceGetProperty_ptr.asFunction<_dart_IOHIDDeviceGetProperty>();
+  late final _IOHIDDeviceGetPropertyPtr = _lookup<
+          ffi.NativeFunction<CFTypeRef Function(IOHIDDeviceRef, CFStringRef)>>(
+      'IOHIDDeviceGetProperty');
+  late final _IOHIDDeviceGetProperty = _IOHIDDeviceGetPropertyPtr.asFunction<
+      CFTypeRef Function(IOHIDDeviceRef, CFStringRef)>();
 
   int IOHIDDeviceSetReport(
-    ffi.Pointer<IOHIDDeviceRef> device,
+    IOHIDDeviceRef device,
     int reportType,
     int reportID,
     ffi.Pointer<ffi.Uint8> report,
@@ -109,14 +113,15 @@ class IOKit {
     );
   }
 
-  late final _IOHIDDeviceSetReport_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDDeviceSetReport>>(
-          'IOHIDDeviceSetReport');
-  late final _dart_IOHIDDeviceSetReport _IOHIDDeviceSetReport =
-      _IOHIDDeviceSetReport_ptr.asFunction<_dart_IOHIDDeviceSetReport>();
+  late final _IOHIDDeviceSetReportPtr = _lookup<
+      ffi.NativeFunction<
+          IOReturn Function(IOHIDDeviceRef, ffi.Int32, CFIndex,
+              ffi.Pointer<ffi.Uint8>, CFIndex)>>('IOHIDDeviceSetReport');
+  late final _IOHIDDeviceSetReport = _IOHIDDeviceSetReportPtr.asFunction<
+      int Function(IOHIDDeviceRef, int, int, ffi.Pointer<ffi.Uint8>, int)>();
 
-  ffi.Pointer<IOHIDManagerRef> IOHIDManagerCreate(
-    ffi.Pointer<CFAllocatorRef> allocator,
+  IOHIDManagerRef IOHIDManagerCreate(
+    CFAllocatorRef allocator,
     int options,
   ) {
     return _IOHIDManagerCreate(
@@ -125,13 +130,15 @@ class IOKit {
     );
   }
 
-  late final _IOHIDManagerCreate_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDManagerCreate>>('IOHIDManagerCreate');
-  late final _dart_IOHIDManagerCreate _IOHIDManagerCreate =
-      _IOHIDManagerCreate_ptr.asFunction<_dart_IOHIDManagerCreate>();
+  late final _IOHIDManagerCreatePtr = _lookup<
+      ffi.NativeFunction<
+          IOHIDManagerRef Function(
+              CFAllocatorRef, IOOptionBits)>>('IOHIDManagerCreate');
+  late final _IOHIDManagerCreate = _IOHIDManagerCreatePtr.asFunction<
+      IOHIDManagerRef Function(CFAllocatorRef, int)>();
 
   int IOHIDManagerClose(
-    ffi.Pointer<IOHIDManagerRef> manager,
+    IOHIDManagerRef manager,
     int options,
   ) {
     return _IOHIDManagerClose(
@@ -140,14 +147,15 @@ class IOKit {
     );
   }
 
-  late final _IOHIDManagerClose_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDManagerClose>>('IOHIDManagerClose');
-  late final _dart_IOHIDManagerClose _IOHIDManagerClose =
-      _IOHIDManagerClose_ptr.asFunction<_dart_IOHIDManagerClose>();
+  late final _IOHIDManagerClosePtr = _lookup<
+          ffi.NativeFunction<IOReturn Function(IOHIDManagerRef, IOOptionBits)>>(
+      'IOHIDManagerClose');
+  late final _IOHIDManagerClose =
+      _IOHIDManagerClosePtr.asFunction<int Function(IOHIDManagerRef, int)>();
 
   void IOHIDManagerSetDeviceMatching(
-    ffi.Pointer<IOHIDManagerRef> manager,
-    ffi.Pointer<CFDictionaryRef> matching,
+    IOHIDManagerRef manager,
+    CFDictionaryRef matching,
   ) {
     return _IOHIDManagerSetDeviceMatching(
       manager,
@@ -155,42 +163,43 @@ class IOKit {
     );
   }
 
-  late final _IOHIDManagerSetDeviceMatching_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDManagerSetDeviceMatching>>(
-          'IOHIDManagerSetDeviceMatching');
-  late final _dart_IOHIDManagerSetDeviceMatching
-      _IOHIDManagerSetDeviceMatching = _IOHIDManagerSetDeviceMatching_ptr
-          .asFunction<_dart_IOHIDManagerSetDeviceMatching>();
+  late final _IOHIDManagerSetDeviceMatchingPtr = _lookup<
+      ffi.NativeFunction<
+          ffi.Void Function(IOHIDManagerRef,
+              CFDictionaryRef)>>('IOHIDManagerSetDeviceMatching');
+  late final _IOHIDManagerSetDeviceMatching = _IOHIDManagerSetDeviceMatchingPtr
+      .asFunction<void Function(IOHIDManagerRef, CFDictionaryRef)>();
 
-  ffi.Pointer<CFSetRef> IOHIDManagerCopyDevices(
-    ffi.Pointer<IOHIDManagerRef> manager,
+  CFSetRef IOHIDManagerCopyDevices(
+    IOHIDManagerRef manager,
   ) {
     return _IOHIDManagerCopyDevices(
       manager,
     );
   }
 
-  late final _IOHIDManagerCopyDevices_ptr =
-      _lookup<ffi.NativeFunction<_c_IOHIDManagerCopyDevices>>(
+  late final _IOHIDManagerCopyDevicesPtr =
+      _lookup<ffi.NativeFunction<CFSetRef Function(IOHIDManagerRef)>>(
           'IOHIDManagerCopyDevices');
-  late final _dart_IOHIDManagerCopyDevices _IOHIDManagerCopyDevices =
-      _IOHIDManagerCopyDevices_ptr.asFunction<_dart_IOHIDManagerCopyDevices>();
+  late final _IOHIDManagerCopyDevices = _IOHIDManagerCopyDevicesPtr.asFunction<
+      CFSetRef Function(IOHIDManagerRef)>();
 
   int IOObjectRelease(
-    ffi.Pointer<io_service_t> object,
+    io_object_t object,
   ) {
     return _IOObjectRelease(
       object,
     );
   }
 
-  late final _IOObjectRelease_ptr =
-      _lookup<ffi.NativeFunction<_c_IOObjectRelease>>('IOObjectRelease');
-  late final _dart_IOObjectRelease _IOObjectRelease =
-      _IOObjectRelease_ptr.asFunction<_dart_IOObjectRelease>();
+  late final _IOObjectReleasePtr =
+      _lookup<ffi.NativeFunction<kern_return_t Function(io_object_t)>>(
+          'IOObjectRelease');
+  late final _IOObjectRelease =
+      _IOObjectReleasePtr.asFunction<int Function(io_object_t)>();
 
-  ffi.Pointer<io_service_t> IORegistryEntryFromPath(
-    ffi.Pointer<mach_port_t> masterPort,
+  io_registry_entry_t IORegistryEntryFromPath(
+    mach_port_t masterPort,
     ffi.Pointer<ffi.Int8> path,
   ) {
     return _IORegistryEntryFromPath(
@@ -199,14 +208,15 @@ class IOKit {
     );
   }
 
-  late final _IORegistryEntryFromPath_ptr =
-      _lookup<ffi.NativeFunction<_c_IORegistryEntryFromPath>>(
-          'IORegistryEntryFromPath');
-  late final _dart_IORegistryEntryFromPath _IORegistryEntryFromPath =
-      _IORegistryEntryFromPath_ptr.asFunction<_dart_IORegistryEntryFromPath>();
+  late final _IORegistryEntryFromPathPtr = _lookup<
+      ffi.NativeFunction<
+          io_registry_entry_t Function(
+              mach_port_t, ffi.Pointer<ffi.Int8>)>>('IORegistryEntryFromPath');
+  late final _IORegistryEntryFromPath = _IORegistryEntryFromPathPtr.asFunction<
+      io_registry_entry_t Function(mach_port_t, ffi.Pointer<ffi.Int8>)>();
 
   int IORegistryEntryGetPath(
-    ffi.Pointer<io_service_t> entry,
+    io_registry_entry_t entry,
     ffi.Pointer<ffi.Int8> plane,
     ffi.Pointer<ffi.Int8> path,
   ) {
@@ -217,28 +227,62 @@ class IOKit {
     );
   }
 
-  late final _IORegistryEntryGetPath_ptr =
-      _lookup<ffi.NativeFunction<_c_IORegistryEntryGetPath>>(
-          'IORegistryEntryGetPath');
-  late final _dart_IORegistryEntryGetPath _IORegistryEntryGetPath =
-      _IORegistryEntryGetPath_ptr.asFunction<_dart_IORegistryEntryGetPath>();
+  late final _IORegistryEntryGetPathPtr = _lookup<
+      ffi.NativeFunction<
+          kern_return_t Function(io_registry_entry_t, ffi.Pointer<ffi.Int8>,
+              ffi.Pointer<ffi.Int8>)>>('IORegistryEntryGetPath');
+  late final _IORegistryEntryGetPath = _IORegistryEntryGetPathPtr.asFunction<
+      int Function(
+          io_registry_entry_t, ffi.Pointer<ffi.Int8>, ffi.Pointer<ffi.Int8>)>();
 }
 
-class IOHIDDeviceRef extends ffi.Opaque {}
+typedef IOHIDDeviceRef = ffi.Pointer<__IOHIDDevice>;
 
-class CFAllocatorRef extends ffi.Opaque {}
+class __IOHIDDevice extends ffi.Opaque {}
 
-class io_service_t extends ffi.Opaque {}
+typedef CFAllocatorRef = ffi.Pointer<__CFAllocator>;
 
-class CFStringRef extends ffi.Opaque {}
+class __CFAllocator extends ffi.Opaque {}
 
-class IOHIDManagerRef extends ffi.Opaque {}
+typedef io_service_t = io_object_t;
+typedef io_object_t = ffi.Pointer<OSObject>;
 
-class CFDictionaryRef extends ffi.Opaque {}
+class OSObject extends ffi.Opaque {}
 
-class CFSetRef extends ffi.Opaque {}
+typedef IOReturn = kern_return_t;
+typedef kern_return_t = ffi.Int32;
+typedef IOOptionBits = UInt32;
+typedef UInt32 = ffi.Uint32;
+typedef CFTypeRef = ffi.Pointer<ffi.Void>;
+typedef CFStringRef = ffi.Pointer<__CFString>;
 
-class mach_port_t extends ffi.Opaque {}
+class __CFString extends ffi.Opaque {}
+
+abstract class IOHIDReportType {
+  static const int kIOHIDReportTypeInput = 0;
+  static const int kIOHIDReportTypeOutput = 1;
+  static const int kIOHIDReportTypeFeature = 2;
+  static const int kIOHIDReportTypeCount = 3;
+}
+
+typedef CFIndex = ffi.Int64;
+typedef IOHIDManagerRef = ffi.Pointer<__IOHIDManager>;
+
+class __IOHIDManager extends ffi.Opaque {}
+
+typedef CFDictionaryRef = ffi.Pointer<__CFDictionary>;
+
+class __CFDictionary extends ffi.Opaque {}
+
+typedef CFSetRef = ffi.Pointer<__CFSet>;
+
+class __CFSet extends ffi.Opaque {}
+
+typedef io_registry_entry_t = io_object_t;
+typedef mach_port_t = ipc_port_t;
+typedef ipc_port_t = ffi.Pointer<ipc_port>;
+
+class ipc_port extends ffi.Opaque {}
 
 const int kIOReturnSuccess = 0;
 
@@ -253,135 +297,3 @@ const String kIOHIDDeviceUsagePairsKey = 'DeviceUsagePairs';
 const String kIOHIDDeviceUsageKey = 'DeviceUsage';
 
 const String kIOHIDDeviceUsagePageKey = 'DeviceUsagePage';
-
-typedef _c_IOHIDDeviceCreate = ffi.Pointer<IOHIDDeviceRef> Function(
-  ffi.Pointer<CFAllocatorRef> allocator,
-  ffi.Pointer<io_service_t> service,
-);
-
-typedef _dart_IOHIDDeviceCreate = ffi.Pointer<IOHIDDeviceRef> Function(
-  ffi.Pointer<CFAllocatorRef> allocator,
-  ffi.Pointer<io_service_t> service,
-);
-
-typedef _c_IOHIDDeviceGetService = ffi.Pointer<io_service_t> Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-);
-
-typedef _dart_IOHIDDeviceGetService = ffi.Pointer<io_service_t> Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-);
-
-typedef _c_IOHIDDeviceOpen = ffi.Int32 Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  ffi.Uint32 options,
-);
-
-typedef _dart_IOHIDDeviceOpen = int Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  int options,
-);
-
-typedef _c_IOHIDDeviceClose = ffi.Int32 Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  ffi.Uint32 options,
-);
-
-typedef _dart_IOHIDDeviceClose = int Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  int options,
-);
-
-typedef _c_IOHIDDeviceGetProperty = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  ffi.Pointer<CFStringRef> key,
-);
-
-typedef _dart_IOHIDDeviceGetProperty = ffi.Pointer<ffi.Void> Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  ffi.Pointer<CFStringRef> key,
-);
-
-typedef _c_IOHIDDeviceSetReport = ffi.Int32 Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  ffi.Int32 reportType,
-  ffi.Int64 reportID,
-  ffi.Pointer<ffi.Uint8> report,
-  ffi.Int64 reportLength,
-);
-
-typedef _dart_IOHIDDeviceSetReport = int Function(
-  ffi.Pointer<IOHIDDeviceRef> device,
-  int reportType,
-  int reportID,
-  ffi.Pointer<ffi.Uint8> report,
-  int reportLength,
-);
-
-typedef _c_IOHIDManagerCreate = ffi.Pointer<IOHIDManagerRef> Function(
-  ffi.Pointer<CFAllocatorRef> allocator,
-  ffi.Uint32 options,
-);
-
-typedef _dart_IOHIDManagerCreate = ffi.Pointer<IOHIDManagerRef> Function(
-  ffi.Pointer<CFAllocatorRef> allocator,
-  int options,
-);
-
-typedef _c_IOHIDManagerClose = ffi.Int32 Function(
-  ffi.Pointer<IOHIDManagerRef> manager,
-  ffi.Uint32 options,
-);
-
-typedef _dart_IOHIDManagerClose = int Function(
-  ffi.Pointer<IOHIDManagerRef> manager,
-  int options,
-);
-
-typedef _c_IOHIDManagerSetDeviceMatching = ffi.Void Function(
-  ffi.Pointer<IOHIDManagerRef> manager,
-  ffi.Pointer<CFDictionaryRef> matching,
-);
-
-typedef _dart_IOHIDManagerSetDeviceMatching = void Function(
-  ffi.Pointer<IOHIDManagerRef> manager,
-  ffi.Pointer<CFDictionaryRef> matching,
-);
-
-typedef _c_IOHIDManagerCopyDevices = ffi.Pointer<CFSetRef> Function(
-  ffi.Pointer<IOHIDManagerRef> manager,
-);
-
-typedef _dart_IOHIDManagerCopyDevices = ffi.Pointer<CFSetRef> Function(
-  ffi.Pointer<IOHIDManagerRef> manager,
-);
-
-typedef _c_IOObjectRelease = ffi.Int32 Function(
-  ffi.Pointer<io_service_t> object,
-);
-
-typedef _dart_IOObjectRelease = int Function(
-  ffi.Pointer<io_service_t> object,
-);
-
-typedef _c_IORegistryEntryFromPath = ffi.Pointer<io_service_t> Function(
-  ffi.Pointer<mach_port_t> masterPort,
-  ffi.Pointer<ffi.Int8> path,
-);
-
-typedef _dart_IORegistryEntryFromPath = ffi.Pointer<io_service_t> Function(
-  ffi.Pointer<mach_port_t> masterPort,
-  ffi.Pointer<ffi.Int8> path,
-);
-
-typedef _c_IORegistryEntryGetPath = ffi.Int32 Function(
-  ffi.Pointer<io_service_t> entry,
-  ffi.Pointer<ffi.Int8> plane,
-  ffi.Pointer<ffi.Int8> path,
-);
-
-typedef _dart_IORegistryEntryGetPath = int Function(
-  ffi.Pointer<io_service_t> entry,
-  ffi.Pointer<ffi.Int8> plane,
-  ffi.Pointer<ffi.Int8> path,
-);

@@ -28,8 +28,11 @@ class LibC {
     );
   }
 
-  late final _open2_ptr = _lookup<ffi.NativeFunction<_c_open2>>('open');
-  late final _dart_open2 _open2 = _open2_ptr.asFunction<_dart_open2>();
+  late final _open2Ptr = _lookup<
+      ffi.NativeFunction<
+          ffi.Int32 Function(ffi.Pointer<ffi.Int8>, ffi.Int32)>>('open');
+  late final _open2 =
+      _open2Ptr.asFunction<int Function(ffi.Pointer<ffi.Int8>, int)>();
 
   int close(
     int __fd,
@@ -39,8 +42,9 @@ class LibC {
     );
   }
 
-  late final _close_ptr = _lookup<ffi.NativeFunction<_c_close>>('close');
-  late final _dart_close _close = _close_ptr.asFunction<_dart_close>();
+  late final _closePtr =
+      _lookup<ffi.NativeFunction<ffi.Int32 Function(ffi.Int32)>>('close');
+  late final _close = _closePtr.asFunction<int Function(int)>();
 
   int read(
     int __fd,
@@ -54,8 +58,11 @@ class LibC {
     );
   }
 
-  late final _read_ptr = _lookup<ffi.NativeFunction<_c_read>>('read');
-  late final _dart_read _read = _read_ptr.asFunction<_dart_read>();
+  late final _readPtr = _lookup<
+      ffi.NativeFunction<
+          ssize_t Function(ffi.Int32, ffi.Pointer<ffi.Void>, size_t)>>('read');
+  late final _read =
+      _readPtr.asFunction<int Function(int, ffi.Pointer<ffi.Void>, int)>();
 
   int write(
     int __fd,
@@ -69,9 +76,16 @@ class LibC {
     );
   }
 
-  late final _write_ptr = _lookup<ffi.NativeFunction<_c_write>>('write');
-  late final _dart_write _write = _write_ptr.asFunction<_dart_write>();
+  late final _writePtr = _lookup<
+      ffi.NativeFunction<
+          ssize_t Function(ffi.Int32, ffi.Pointer<ffi.Void>, size_t)>>('write');
+  late final _write =
+      _writePtr.asFunction<int Function(int, ffi.Pointer<ffi.Void>, int)>();
 }
+
+typedef ssize_t = __ssize_t;
+typedef __ssize_t = ffi.Int64;
+typedef size_t = ffi.Uint64;
 
 const int O_ACCMODE = 3;
 
@@ -80,45 +94,3 @@ const int O_RDONLY = 0;
 const int O_WRONLY = 1;
 
 const int O_RDWR = 2;
-
-typedef _c_open2 = ffi.Int32 Function(
-  ffi.Pointer<ffi.Int8> __file,
-  ffi.Int32 __oflag,
-);
-
-typedef _dart_open2 = int Function(
-  ffi.Pointer<ffi.Int8> __file,
-  int __oflag,
-);
-
-typedef _c_close = ffi.Int32 Function(
-  ffi.Int32 __fd,
-);
-
-typedef _dart_close = int Function(
-  int __fd,
-);
-
-typedef _c_read = ffi.Int64 Function(
-  ffi.Int32 __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  ffi.Uint64 __nbytes,
-);
-
-typedef _dart_read = int Function(
-  int __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  int __nbytes,
-);
-
-typedef _c_write = ffi.Int64 Function(
-  ffi.Int32 __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  ffi.Uint64 __n,
-);
-
-typedef _dart_write = int Function(
-  int __fd,
-  ffi.Pointer<ffi.Void> __buf,
-  int __n,
-);
