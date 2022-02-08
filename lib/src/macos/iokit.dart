@@ -4,6 +4,7 @@
 import 'dart:ffi' as ffi;
 import 'package:ffi/ffi.dart' as pkg_ffi;
 import 'package:logic_conf/src/macos/corefoundation.dart' as pkg_corefoundation;
+import 'package:logic_conf/src/macos/iokit_base.dart' as pkg_iokit;
 
 /// Bindings to `IOKit.h`.
 class IOKit {
@@ -22,7 +23,7 @@ class IOKit {
 
   IOHIDDeviceRef IOHIDDeviceCreate(
     pkg_corefoundation.CFAllocatorRef allocator,
-    io_service_t service,
+    pkg_iokit.io_service_t service,
   ) {
     return _IOHIDDeviceCreate(
       allocator,
@@ -33,12 +34,12 @@ class IOKit {
   late final _IOHIDDeviceCreatePtr = _lookup<
       ffi.NativeFunction<
           IOHIDDeviceRef Function(pkg_corefoundation.CFAllocatorRef,
-              io_service_t)>>('IOHIDDeviceCreate');
+              pkg_iokit.io_service_t)>>('IOHIDDeviceCreate');
   late final _IOHIDDeviceCreate = _IOHIDDeviceCreatePtr.asFunction<
       IOHIDDeviceRef Function(
-          pkg_corefoundation.CFAllocatorRef, io_service_t)>();
+          pkg_corefoundation.CFAllocatorRef, pkg_iokit.io_service_t)>();
 
-  io_service_t IOHIDDeviceGetService(
+  pkg_iokit.io_service_t IOHIDDeviceGetService(
     IOHIDDeviceRef device,
   ) {
     return _IOHIDDeviceGetService(
@@ -46,11 +47,11 @@ class IOKit {
     );
   }
 
-  late final _IOHIDDeviceGetServicePtr =
-      _lookup<ffi.NativeFunction<io_service_t Function(IOHIDDeviceRef)>>(
-          'IOHIDDeviceGetService');
+  late final _IOHIDDeviceGetServicePtr = _lookup<
+          ffi.NativeFunction<pkg_iokit.io_service_t Function(IOHIDDeviceRef)>>(
+      'IOHIDDeviceGetService');
   late final _IOHIDDeviceGetService = _IOHIDDeviceGetServicePtr.asFunction<
-      io_service_t Function(IOHIDDeviceRef)>();
+      pkg_iokit.io_service_t Function(IOHIDDeviceRef)>();
 
   int IOHIDDeviceOpen(
     IOHIDDeviceRef device,
@@ -192,21 +193,21 @@ class IOKit {
       pkg_corefoundation.CFSetRef Function(IOHIDManagerRef)>();
 
   int IOObjectRelease(
-    io_object_t object,
+    pkg_iokit.io_object_t object,
   ) {
     return _IOObjectRelease(
       object,
     );
   }
 
-  late final _IOObjectReleasePtr =
-      _lookup<ffi.NativeFunction<kern_return_t Function(io_object_t)>>(
-          'IOObjectRelease');
+  late final _IOObjectReleasePtr = _lookup<
+          ffi.NativeFunction<kern_return_t Function(pkg_iokit.io_object_t)>>(
+      'IOObjectRelease');
   late final _IOObjectRelease =
-      _IOObjectReleasePtr.asFunction<int Function(io_object_t)>();
+      _IOObjectReleasePtr.asFunction<int Function(pkg_iokit.io_object_t)>();
 
   io_registry_entry_t IORegistryEntryFromPath(
-    mach_port_t masterPort,
+    pkg_iokit.mach_port_t masterPort,
     ffi.Pointer<pkg_ffi.Char> path,
   ) {
     return _IORegistryEntryFromPath(
@@ -217,10 +218,11 @@ class IOKit {
 
   late final _IORegistryEntryFromPathPtr = _lookup<
       ffi.NativeFunction<
-          io_registry_entry_t Function(mach_port_t,
+          io_registry_entry_t Function(pkg_iokit.mach_port_t,
               ffi.Pointer<pkg_ffi.Char>)>>('IORegistryEntryFromPath');
   late final _IORegistryEntryFromPath = _IORegistryEntryFromPathPtr.asFunction<
-      io_registry_entry_t Function(mach_port_t, ffi.Pointer<pkg_ffi.Char>)>();
+      io_registry_entry_t Function(
+          pkg_iokit.mach_port_t, ffi.Pointer<pkg_ffi.Char>)>();
 
   int IORegistryEntryGetPath(
     io_registry_entry_t entry,
@@ -247,11 +249,6 @@ typedef IOHIDDeviceRef = ffi.Pointer<__IOHIDDevice>;
 
 class __IOHIDDevice extends ffi.Opaque {}
 
-typedef io_service_t = io_object_t;
-typedef io_object_t = ffi.Pointer<OSObject>;
-
-class OSObject extends ffi.Opaque {}
-
 typedef IOReturn = kern_return_t;
 typedef kern_return_t = pkg_ffi.Int;
 typedef IOOptionBits = UInt32;
@@ -270,11 +267,7 @@ typedef IOHIDManagerRef = ffi.Pointer<__IOHIDManager>;
 
 class __IOHIDManager extends ffi.Opaque {}
 
-typedef io_registry_entry_t = io_object_t;
-typedef mach_port_t = ipc_port_t;
-typedef ipc_port_t = ffi.Pointer<ipc_port>;
-
-class ipc_port extends ffi.Opaque {}
+typedef io_registry_entry_t = pkg_iokit.io_object_t;
 
 const int kIOReturnSuccess = 0;
 

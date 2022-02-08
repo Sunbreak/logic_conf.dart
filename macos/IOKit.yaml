@@ -1,7 +1,6 @@
 name: IOKit
 description: Bindings to `IOKit.h`.
 output: 'lib/src/macos/iokit.dart'
-compiler-opts: '-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Kernel.framework/Headers/'
 headers:
   entry-points:
     - 'macos/IOKit_.h'
@@ -9,8 +8,21 @@ headers:
     - '**IOKit_.h'
 library-imports:
   pkg_corefoundation: 'package:logic_conf/src/macos/corefoundation.dart'
+  pkg_iokit: 'package:logic_conf/src/macos/iokit_base.dart'
 type-map:
   'typedefs':
+    'io_service_t':
+      'lib': 'pkg_iokit'
+      'c-type': 'io_service_t'
+      'dart-type': 'io_service_t'
+    'io_object_t':
+      'lib': 'pkg_iokit'
+      'c-type': 'io_object_t'
+      'dart-type': 'io_object_t'
+    'mach_port_t':
+      'lib': 'pkg_iokit'
+      'c-type': 'mach_port_t'
+      'dart-type': 'mach_port_t'
     'CFAllocatorRef':
       'lib': 'pkg_corefoundation'
       'c-type': 'CFAllocatorRef'

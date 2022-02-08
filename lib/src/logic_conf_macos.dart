@@ -7,6 +7,7 @@ import 'logic_conf_interface.dart';
 import 'macos/constants.dart';
 import 'macos/corefoundation.dart';
 import 'macos/iokit.dart';
+import 'macos/iokit_base.dart';
 
 class LogicConfMacos extends LogicConfPlatform {
   final _cf = CoreFoundation(DynamicLibrary.open('/System/Library/Frameworks/CoreFoundation.framework/Resources/BridgeSupport/CoreFoundation.dylib'));
