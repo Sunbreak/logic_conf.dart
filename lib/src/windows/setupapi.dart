@@ -112,99 +112,8 @@ class GUID extends ffi.Struct {
   @ffi.Uint16()
   external int Data3;
 
-  @ffi.Uint8()
-  external int _unique_Data4_item_0;
-  @ffi.Uint8()
-  external int _unique_Data4_item_1;
-  @ffi.Uint8()
-  external int _unique_Data4_item_2;
-  @ffi.Uint8()
-  external int _unique_Data4_item_3;
-  @ffi.Uint8()
-  external int _unique_Data4_item_4;
-  @ffi.Uint8()
-  external int _unique_Data4_item_5;
-  @ffi.Uint8()
-  external int _unique_Data4_item_6;
-  @ffi.Uint8()
-  external int _unique_Data4_item_7;
-
-  /// Helper for array `Data4`.
-  ArrayHelper_GUID_Data4_level0 get Data4 =>
-      ArrayHelper_GUID_Data4_level0(this, [8], 0, 0);
-}
-
-/// Helper for array `Data4` in struct `GUID`.
-class ArrayHelper_GUID_Data4_level0 {
-  final GUID _struct;
-  final List<int> dimensions;
-  final int level;
-  final int _absoluteIndex;
-  int get length => dimensions[level];
-  ArrayHelper_GUID_Data4_level0(
-      this._struct, this.dimensions, this.level, this._absoluteIndex);
-  void _checkBounds(int index) {
-    if (index >= length || index < 0) {
-      throw RangeError(
-          'Dimension $level: index not in range 0..$length exclusive.');
-    }
-  }
-
-  int operator [](int index) {
-    _checkBounds(index);
-    switch (_absoluteIndex + index) {
-      case 0:
-        return _struct._unique_Data4_item_0;
-      case 1:
-        return _struct._unique_Data4_item_1;
-      case 2:
-        return _struct._unique_Data4_item_2;
-      case 3:
-        return _struct._unique_Data4_item_3;
-      case 4:
-        return _struct._unique_Data4_item_4;
-      case 5:
-        return _struct._unique_Data4_item_5;
-      case 6:
-        return _struct._unique_Data4_item_6;
-      case 7:
-        return _struct._unique_Data4_item_7;
-      default:
-        throw Exception('Invalid Array Helper generated.');
-    }
-  }
-
-  void operator []=(int index, int value) {
-    _checkBounds(index);
-    switch (_absoluteIndex + index) {
-      case 0:
-        _struct._unique_Data4_item_0 = value;
-        break;
-      case 1:
-        _struct._unique_Data4_item_1 = value;
-        break;
-      case 2:
-        _struct._unique_Data4_item_2 = value;
-        break;
-      case 3:
-        _struct._unique_Data4_item_3 = value;
-        break;
-      case 4:
-        _struct._unique_Data4_item_4 = value;
-        break;
-      case 5:
-        _struct._unique_Data4_item_5 = value;
-        break;
-      case 6:
-        _struct._unique_Data4_item_6 = value;
-        break;
-      case 7:
-        _struct._unique_Data4_item_7 = value;
-        break;
-      default:
-        throw Exception('Invalid Array Helper generated.');
-    }
-  }
+  @ffi.Array.multi([8])
+  external ffi.Array<ffi.Uint8> Data4;
 }
 
 class PSP_DEVINFO_DATA extends ffi.Struct {
@@ -237,52 +146,8 @@ class PSP_DEVICE_INTERFACE_DETAIL_DATA_W extends ffi.Struct {
   @ffi.Uint32()
   external int cbSize;
 
-  @ffi.Uint16()
-  external int _unique_DevicePath_item_0;
-
-  /// Helper for array `DevicePath`.
-  ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0
-      get DevicePath =>
-          ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0(
-              this, [1], 0, 0);
-}
-
-/// Helper for array `DevicePath` in struct `PSP_DEVICE_INTERFACE_DETAIL_DATA_W`.
-class ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0 {
-  final PSP_DEVICE_INTERFACE_DETAIL_DATA_W _struct;
-  final List<int> dimensions;
-  final int level;
-  final int _absoluteIndex;
-  int get length => dimensions[level];
-  ArrayHelper_PSP_DEVICE_INTERFACE_DETAIL_DATA_W_DevicePath_level0(
-      this._struct, this.dimensions, this.level, this._absoluteIndex);
-  void _checkBounds(int index) {
-    if (index >= length || index < 0) {
-      throw RangeError(
-          'Dimension $level: index not in range 0..$length exclusive.');
-    }
-  }
-
-  int operator [](int index) {
-    _checkBounds(index);
-    switch (_absoluteIndex + index) {
-      case 0:
-        return _struct._unique_DevicePath_item_0;
-      default:
-        throw Exception('Invalid Array Helper generated.');
-    }
-  }
-
-  void operator []=(int index, int value) {
-    _checkBounds(index);
-    switch (_absoluteIndex + index) {
-      case 0:
-        _struct._unique_DevicePath_item_0 = value;
-        break;
-      default:
-        throw Exception('Invalid Array Helper generated.');
-    }
-  }
+  @ffi.Array.multi([1])
+  external ffi.Array<ffi.Uint16> DevicePath;
 }
 
 class HWND extends ffi.Struct {

@@ -4,7 +4,7 @@ description: A simple command-line application.
 # homepage: https://www.example.com
 
 environment:
-  sdk: '>=2.12.0-259.9.beta <3.0.0' # ffi: ^1.0.0 required
+  sdk: '>=2.13.0 <3.0.0'
 
 dependencies:
   win32: ^2.0.0
@@ -12,4 +12,4 @@ dependencies:
 
 dev_dependencies:
   pedantic: ^1.10.0
-  ffigen: ^2.0.3
+  ffigen: ^3.0.0
