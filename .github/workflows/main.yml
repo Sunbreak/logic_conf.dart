@@ -11,8 +11,8 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1.4.0
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
       - run: |
           flutter pub get
           flutter pub run bin/k380_conf.dart
@@ -20,8 +20,8 @@ jobs:
   build-windows:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1.4.0
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
       - run: |
           flutter pub get
           flutter pub run bin/k380_conf.dart
@@ -29,8 +29,8 @@ jobs:
   build-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1.4.0
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
       - run: |
           flutter pub get
           flutter pub run bin/k380_conf.dart
