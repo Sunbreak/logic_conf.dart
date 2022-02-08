@@ -7,3 +7,23 @@ headers:
     - 'macos/IOKit_.h'
   include-directives: # include only these header files and necessary structs from other header files
     - '**IOKit_.h'
+library-imports:
+  pkg_corefoundation: 'package:logic_conf/src/macos/corefoundation.dart'
+type-map:
+  'typedefs':
+    'CFAllocatorRef':
+      'lib': 'pkg_corefoundation'
+      'c-type': 'CFAllocatorRef'
+      'dart-type': 'CFAllocatorRef'
+    'CFStringRef':
+      'lib': 'pkg_corefoundation'
+      'c-type': 'CFStringRef'
+      'dart-type': 'CFStringRef'
+    'CFDictionaryRef':
+      'lib': 'pkg_corefoundation'
+      'c-type': 'CFDictionaryRef'
+      'dart-type': 'CFDictionaryRef'
+    'CFSetRef':
+      'lib': 'pkg_corefoundation'
+      'c-type': 'CFSetRef'
+      'dart-type': 'CFSetRef'

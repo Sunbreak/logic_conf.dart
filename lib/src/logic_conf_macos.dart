@@ -6,7 +6,7 @@ import 'package:ffi/ffi.dart';
 import 'logic_conf_interface.dart';
 import 'macos/constants.dart';
 import 'macos/corefoundation.dart';
-import 'macos/iokit.dart' hide CFSetRef, CFStringRef, CFDictionaryRef;
+import 'macos/iokit.dart';
 
 class LogicConfMacos extends LogicConfPlatform {
   final _cf = CoreFoundation(DynamicLibrary.open('/System/Library/Frameworks/CoreFoundation.framework/Resources/BridgeSupport/CoreFoundation.dylib'));
@@ -25,7 +25,7 @@ class LogicConfMacos extends LogicConfPlatform {
     try {
       if (deviceSetPtr == nullptr) return [];
 
-      return _iterateDevice(deviceSetPtr.cast()).toList();
+      return _iterateDevice(deviceSetPtr).toList();
     } finally {
       _io.IOHIDManagerClose(managerPtr, kIOHIDOptionsTypeNone);
       _cf.CFRelease(deviceSetPtr.cast());
@@ -33,7 +33,7 @@ class LogicConfMacos extends LogicConfPlatform {
   }
 
   Iterable<dynamic> _iterateDevice(CFSetRef deviceSetPtr) sync* {
-    var count = _cf.CFSetGetCount(deviceSetPtr.cast());
+    var count = _cf.CFSetGetCount(deviceSetPtr);
     var deviceListRefPtr = calloc<IOHIDDeviceRef>(count);
     _cf.CFSetGetValues(deviceSetPtr, deviceListRefPtr.cast());
 
@@ -41,7 +41,7 @@ class LogicConfMacos extends LogicConfPlatform {
       var devicePtr = deviceListRefPtr.elementAt(i).value;
       var path = using((Arena arena) {
         var servicePtr = _io.IOHIDDeviceGetService(devicePtr);
-        var pathPtr = arena<Int8>(io_string_t_length);
+        var pathPtr = arena<Char>(io_string_t_length);
         var res = _io.IORegistryEntryGetPath(servicePtr, kIOServicePlane.toNativeUtf8(allocator: arena).cast(), pathPtr);
         return res == KERN_SUCCESS ? pathPtr.cast<Utf8>().toDartString() : '';
       });
@@ -96,7 +96,7 @@ class LogicConfMacos extends LogicConfPlatform {
   }
 
   CFArrayRef _getArrayProperty(IOHIDDeviceRef devicePtr, String key) {
-    var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
+    var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr));
     if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFArrayGetTypeID()) {
       return nullptr;
     }
