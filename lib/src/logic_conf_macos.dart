@@ -13,9 +13,9 @@ class LogicConfMacos extends LogicConfPlatform {
 
   final _io = IOKit(DynamicLibrary.open('/System/Library/Frameworks/IOKit.framework/Resources/BridgeSupport/IOKit.dylib'));
 
-  Pointer<io_service_t> _entryPtr = nullptr;
+  io_service_t _entryPtr = nullptr;
 
-  Pointer<IOHIDDeviceRef> _devicePtr = nullptr;
+  IOHIDDeviceRef _devicePtr = nullptr;
 
   @override
   List listDevices() {
@@ -32,9 +32,9 @@ class LogicConfMacos extends LogicConfPlatform {
     }
   }
 
-  Iterable<dynamic> _iterateDevice(Pointer<CFSetRef> deviceSetPtr) sync* {
+  Iterable<dynamic> _iterateDevice(CFSetRef deviceSetPtr) sync* {
     var count = _cf.CFSetGetCount(deviceSetPtr.cast());
-    var deviceListRefPtr = calloc<Pointer<IOHIDDeviceRef>>(count);
+    var deviceListRefPtr = calloc<IOHIDDeviceRef>(count);
     _cf.CFSetGetValues(deviceSetPtr, deviceListRefPtr.cast());
 
     for (var i = 0; i < count; i++) {
@@ -55,9 +55,8 @@ class LogicConfMacos extends LogicConfPlatform {
         if (_cf.CFGetTypeID(item) != _cf.CFDictionaryGetTypeID()) {
           continue;
         }
-        var usagePairDictPtr = item.cast<CFDictionaryRef>();
-        var usagePage = _getInt32Value(usagePairDictPtr, kIOHIDDeviceUsagePageKey);
-        var usage = _getInt32Value(usagePairDictPtr, kIOHIDDeviceUsageKey);
+        var usagePage = _getInt32Value(item.cast(), kIOHIDDeviceUsagePageKey);
+        var usage = _getInt32Value(item.cast(), kIOHIDDeviceUsageKey);
         yield {
           'path': path,
           'vendorId': vendorId,
@@ -71,7 +70,7 @@ class LogicConfMacos extends LogicConfPlatform {
     calloc.free(deviceListRefPtr);
   }
 
-  T _usingCFString<T>(String string, T Function(Pointer<CFStringRef>) computation) {
+  T _usingCFString<T>(String string, T Function(CFStringRef) computation) {
     return using((Arena arena) {
       var keyPtr = string.toNativeUtf8(allocator: arena);
       var keyCFPtr = _cf.CFStringCreateWithCString(kCFAllocatorDefault, keyPtr.cast(), kCFStringEncodingUTF8);
@@ -81,7 +80,7 @@ class LogicConfMacos extends LogicConfPlatform {
     });
   }
 
-  int? _getInt32Property(Pointer<IOHIDDeviceRef> devicePtr, String key) {
+  int? _getInt32Property(IOHIDDeviceRef devicePtr, String key) {
     var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
     if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFNumberGetTypeID()) {
       return null;
@@ -96,7 +95,7 @@ class LogicConfMacos extends LogicConfPlatform {
     }
   }
 
-  Pointer<CFArrayRef> _getArrayProperty(Pointer<IOHIDDeviceRef> devicePtr, String key) {
+  CFArrayRef _getArrayProperty(IOHIDDeviceRef devicePtr, String key) {
     var property = _usingCFString(key, (keyCFPtr) => _io.IOHIDDeviceGetProperty(devicePtr, keyCFPtr.cast()));
     if (property == nullptr || _cf.CFGetTypeID(property) != _cf.CFArrayGetTypeID()) {
       return nullptr;
@@ -104,7 +103,7 @@ class LogicConfMacos extends LogicConfPlatform {
     return property.cast();
   }
 
-  int? _getInt32Value(Pointer<CFDictionaryRef> usagePairDictPtr, String key) {
+  int? _getInt32Value(CFDictionaryRef usagePairDictPtr, String key) {
     return _usingCFString(key, (keyCFPtr) {
       var usagePageRefPtr = calloc<Pointer<Void>>();
       var valuePtr = calloc<Int32>();
