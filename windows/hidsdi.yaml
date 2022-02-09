@@ -6,9 +6,6 @@ headers:
     - 'windows/hidsdi_.h'
   include-directives: # include only these header files and necessary structs from other header files
     - '**hidsdi_.h'
-size-map:
-  long: 4
-  unsigned long: 4
 structs:
   rename:
     '_HIDP_CAPS': 'HIDP_CAPS'

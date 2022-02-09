@@ -36,7 +36,7 @@ class LogicConfWindows extends LogicConfPlatform {
   }
 
   Iterable<Map<String, dynamic>> _iterateDevice(Pointer<Void> deviceInfoSetPtr, Pointer<GUID> hidInterfaceClassGuid) sync* {
-    var requiredSizePtr = calloc<Uint32>();
+    var requiredSizePtr = calloc<UnsignedLong>();
     var devicInterfaceDataPtr = calloc<sp.SP_DEVICE_INTERFACE_DATA>();
     devicInterfaceDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DATA>();
     
