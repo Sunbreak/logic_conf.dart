@@ -22,7 +22,7 @@ class LogicConfWindows extends LogicConfPlatform {
       ..ref.setGUID('{4D1E55B2-F16F-11CF-88CB-001111000030}');
 
     var deviceInfoSetPtr = _setupapi.SetupDiGetClassDevsW(
-      hidInterfaceClassGuid.cast(),
+      hidInterfaceClassGuid,
       nullptr,
       nullptr,
       sp.DIGCF_PRESENT | sp.DIGCF_DEVICEINTERFACE,
@@ -40,7 +40,7 @@ class LogicConfWindows extends LogicConfPlatform {
     var devicInterfaceDataPtr = calloc<sp.SP_DEVICE_INTERFACE_DATA>();
     devicInterfaceDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DATA>();
     
-    for (var index = 0; _setupapi.SetupDiEnumDeviceInterfaces(deviceInfoSetPtr, nullptr, hidInterfaceClassGuid.cast(), index, devicInterfaceDataPtr) == TRUE; index++) {
+    for (var index = 0; _setupapi.SetupDiEnumDeviceInterfaces(deviceInfoSetPtr, nullptr, hidInterfaceClassGuid, index, devicInterfaceDataPtr) == TRUE; index++) {
       // Get requiredSize
       _setupapi.SetupDiGetDeviceInterfaceDetailW(deviceInfoSetPtr, devicInterfaceDataPtr, nullptr, 0, requiredSizePtr, nullptr);
     
