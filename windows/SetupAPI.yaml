@@ -11,10 +11,16 @@ structs:
     '_SP_DEVICE_INTERFACE_DATA': 'SP_DEVICE_INTERFACE_DATA'
     '_SP_DEVICE_INTERFACE_DETAIL_DATA_W': 'SP_DEVICE_INTERFACE_DETAIL_DATA_W'
 library-imports:
-  pkg_guid: 'package:win32/src/guid.dart'
+  win32_guid: 'package:win32/src/guid.dart'
+  win32_types: 'package:win32/src/types.dart'
 type-map:
+  'typedefs':
+    'HWND':
+      'lib': 'win32_types'
+      'c-type': 'HWND'
+      'dart-type': 'int'
   'structs':
     '_GUID':
-      'lib': 'pkg_guid'
+      'lib': 'win32_guid'
       'c-type': 'GUID'
       'dart-type': 'GUID'

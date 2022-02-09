@@ -10,3 +10,11 @@ structs:
   rename:
     '_HIDP_CAPS': 'HIDP_CAPS'
     '_HIDD_ATTRIBUTES': 'HIDD_ATTRIBUTES'
+library-imports:
+  win32_types: 'package:win32/src/types.dart'
+type-map:
+  'typedefs':
+    'HANDLE':
+      'lib': 'win32_types'
+      'c-type': 'HANDLE'
+      'dart-type': 'int'

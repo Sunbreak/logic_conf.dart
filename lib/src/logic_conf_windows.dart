@@ -24,7 +24,7 @@ class LogicConfWindows extends LogicConfPlatform {
     var deviceInfoSetPtr = _setupapi.SetupDiGetClassDevsW(
       hidInterfaceClassGuid,
       nullptr,
-      nullptr,
+      0,
       sp.DIGCF_PRESENT | sp.DIGCF_DEVICEINTERFACE,
     );
 
@@ -68,12 +68,11 @@ class LogicConfWindows extends LogicConfPlatform {
           print('CreateFile error ${GetLastError()}');
           continue;
         }
-        var devHandlePtr = Pointer<Void>.fromAddress(devHandle);
     
         yield {
           'path': devicePath,
-          ..._getAttributes(devHandlePtr),
-          ..._getPreparsedData(devHandlePtr),
+          ..._getAttributes(devHandle),
+          ..._getPreparsedData(devHandle),
         };
       } finally {
         calloc.free(detailDataMemoryPtr);
@@ -87,11 +86,11 @@ class LogicConfWindows extends LogicConfPlatform {
     calloc.free(devicInterfaceDataPtr);
   }
 
-  Map<String, dynamic> _getAttributes(Pointer<Void> devHandlePtr) {
+  Map<String, dynamic> _getAttributes(int devHandle) {
     var res = <String, dynamic>{};
 
     var attributesPtr = calloc<hid.HIDD_ATTRIBUTES>();
-    if (_hidSdi.HidD_GetAttributes(devHandlePtr, attributesPtr) == TRUE) {
+    if (_hidSdi.HidD_GetAttributes(devHandle, attributesPtr) == TRUE) {
       res = {
         'vendorId': attributesPtr.ref.VendorID,
         'productId': attributesPtr.ref.ProductID,
@@ -104,11 +103,11 @@ class LogicConfWindows extends LogicConfPlatform {
     return res;
   }
 
-  Map<String, dynamic> _getPreparsedData(Pointer<Void> devHandlePtr) {
+  Map<String, dynamic> _getPreparsedData(int devHandle) {
     var res = <String, dynamic>{};
 
     var preparsedDataRefPtr = calloc<hid.PHIDP_PREPARSED_DATA>();
-    if (_hidSdi.HidD_GetPreparsedData(devHandlePtr, preparsedDataRefPtr) == TRUE) {
+    if (_hidSdi.HidD_GetPreparsedData(devHandle, preparsedDataRefPtr) == TRUE) {
       var capsPtr = calloc<hid.HIDP_CAPS>();
       var getCaps = _hidSdi.HidP_GetCaps(preparsedDataRefPtr.value, capsPtr);
       if (getCaps == hid.HIDP_STATUS_SUCCESS) {
