@@ -36,3 +36,5 @@ BOOLEAN __stdcall
 HidD_FreePreparsedData (
    _In_ __drv_freesMem(Mem) PHIDP_PREPARSED_DATA PreparsedData
    );
+
+HIDP_CAPS foo();

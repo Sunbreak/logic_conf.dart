@@ -80,6 +80,13 @@ class HidSdi {
           'HidD_FreePreparsedData');
   late final _HidD_FreePreparsedData = _HidD_FreePreparsedDataPtr.asFunction<
       int Function(PHIDP_PREPARSED_DATA)>();
+
+  HIDP_CAPS foo() {
+    return _foo();
+  }
+
+  late final _fooPtr = _lookup<ffi.NativeFunction<HIDP_CAPS Function()>>('foo');
+  late final _foo = _fooPtr.asFunction<HIDP_CAPS Function()>();
 }
 
 typedef NTSTATUS = LONG;
@@ -163,5 +170,6 @@ class HIDD_ATTRIBUTES extends ffi.Struct {
 
 typedef ULONG = DWORD;
 typedef DWORD = ffi.Uint32;
+typedef HIDP_CAPS = _HIDP_CAPS;
 
 const int HIDP_STATUS_SUCCESS = 1114112;
