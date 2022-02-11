@@ -11,5 +11,5 @@ size-map:
   unsigned long: 4
 structs:
   rename:
-    '_HIDP_CAPS': 'HIDP_CAPS'
+    # '_HIDP_CAPS': 'HIDP_CAPS'
     '_HIDD_ATTRIBUTES': 'HIDD_ATTRIBUTES'

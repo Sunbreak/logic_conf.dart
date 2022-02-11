@@ -88,9 +88,9 @@ typedef PHIDP_PREPARSED_DATA = ffi.Pointer<_HIDP_PREPARSED_DATA>;
 
 class _HIDP_PREPARSED_DATA extends ffi.Opaque {}
 
-typedef PHIDP_CAPS = ffi.Pointer<HIDP_CAPS>;
+typedef PHIDP_CAPS = ffi.Pointer<_HIDP_CAPS>;
 
-class HIDP_CAPS extends ffi.Struct {
+class _HIDP_CAPS extends ffi.Struct {
   @USAGE()
   external int Usage;
 
