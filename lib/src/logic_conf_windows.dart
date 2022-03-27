@@ -18,24 +18,42 @@ class LogicConfWindows extends LogicConfPlatform {
 
   @override
   List<dynamic> listDevices() {
-    var hidInterfaceClassGuid = calloc<GUID>()
-      ..ref.setGUID('{4D1E55B2-F16F-11CF-88CB-001111000030}');
+    var deviceIterable = using((Arena arena) {
+      var guid = calloc<GUID>()
+        ..ref.setGUID('{4D1E55B2-F16F-11CF-88CB-001111000030}');
+      var deviceInfoSetPtr = _setupapi.SetupDiGetClassDevsW(
+          guid, nullptr, 0, sp.DIGCF_PRESENT | sp.DIGCF_DEVICEINTERFACE);
+      try {
+        return _iterateDevice(deviceInfoSetPtr, guid).toList();
+      } finally {
+        _setupapi.SetupDiDestroyDeviceInfoList(deviceInfoSetPtr);
+      }
+    });
 
-    var deviceInfoSetPtr = _setupapi.SetupDiGetClassDevsW(
-      hidInterfaceClassGuid,
-      nullptr,
-      0,
-      sp.DIGCF_PRESENT | sp.DIGCF_DEVICEINTERFACE,
-    );
+    return deviceIterable.map((path) {
+      var devHandle = using((Arena arena) {
+        var nativeUtf16 = path.toNativeUtf16(allocator: arena);
+        return CreateFile(nativeUtf16, 0, FILE_SHARE_READ | FILE_SHARE_WRITE,
+            nullptr, OPEN_EXISTING, 0, NULL);
+      });
 
-    var deviceList = _iterateDevice(deviceInfoSetPtr, hidInterfaceClassGuid).toList();
+      if (devHandle == INVALID_HANDLE_VALUE) {
+        throw WindowsException(GetLastError());
+      }
 
-    _setupapi.SetupDiDestroyDeviceInfoList(deviceInfoSetPtr);
-    calloc.free(hidInterfaceClassGuid);
-    return deviceList;
+      try {
+        return {
+          'path': path,
+          ..._getAttributes(devHandle),
+          ..._getPreparsedData(devHandle),
+        };
+      } finally {
+        CloseHandle(devHandle);
+      }
+    }).toList();
   }
 
-  Iterable<Map<String, dynamic>> _iterateDevice(Pointer<Void> deviceInfoSetPtr, Pointer<GUID> hidInterfaceClassGuid) sync* {
+  Iterable<String> _iterateDevice(Pointer<Void> deviceInfoSetPtr, Pointer<GUID> hidInterfaceClassGuid) sync* {
     var requiredSizePtr = calloc<UnsignedLong>();
     var devicInterfaceDataPtr = calloc<sp.SP_DEVICE_INTERFACE_DATA>();
     devicInterfaceDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DATA>();
@@ -45,7 +63,6 @@ class LogicConfWindows extends LogicConfPlatform {
       _setupapi.SetupDiGetDeviceInterfaceDetailW(deviceInfoSetPtr, devicInterfaceDataPtr, nullptr, 0, requiredSizePtr, nullptr);
     
       var detailDataMemoryPtr = calloc<Uint16>(requiredSizePtr.value);
-      var devHandle = INVALID_HANDLE_VALUE;
     
       try {
         var deviceInterfaceDetailDataPtr = Pointer<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W>.fromAddress(detailDataMemoryPtr.address);
@@ -56,29 +73,9 @@ class LogicConfWindows extends LogicConfPlatform {
           print('SetupDiGetDeviceInterfaceDetailW error ${GetLastError()}');
           continue;
         }
-        // FIXME Utf16.decode
-        var devicePath = utf8.decode(deviceInterfaceDetailDataPtr.getDevicePathData(requiredSizePtr.value));
-    
-        devHandle = using((Arena arena) {
-          var nativeUtf16 = devicePath.toNativeUtf16(allocator: arena);
-          return CreateFile(nativeUtf16, 0, FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, NULL);
-        });
-
-        if (devHandle == INVALID_HANDLE_VALUE) {
-          print('CreateFile error ${GetLastError()}');
-          continue;
-        }
-    
-        yield {
-          'path': devicePath,
-          ..._getAttributes(devHandle),
-          ..._getPreparsedData(devHandle),
-        };
+        yield utf8.decode(deviceInterfaceDetailDataPtr.getDevicePathData(requiredSizePtr.value));
       } finally {
         calloc.free(detailDataMemoryPtr);
-        if (devHandle != INVALID_HANDLE_VALUE) {
-          CloseHandle(devHandle);
-        }
       }
     }
     
