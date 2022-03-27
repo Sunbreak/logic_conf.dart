@@ -6,81 +6,108 @@ import 'package:ffi/ffi.dart';
 import 'package:win32/win32.dart';
 
 import 'logic_conf_interface.dart';
+import 'windows/constants.dart';
 import 'windows/hidsdi.dart' as hid;
-import 'windows/setupapi.dart' as sp;
 
 class LogicConfWindows extends LogicConfPlatform {
   var _devHandle = INVALID_HANDLE_VALUE;
-
-  final _setupapi = sp.SetupAPI(DynamicLibrary.open('setupapi.dll'));
 
   final _hidSdi = hid.HidSdi(DynamicLibrary.open('hid.dll'));
 
   @override
   List<dynamic> listDevices() {
-    var deviceIterable = using((Arena arena) {
-      var guid = calloc<GUID>()
-        ..ref.setGUID('{4D1E55B2-F16F-11CF-88CB-001111000030}');
-      var deviceInfoSetPtr = _setupapi.SetupDiGetClassDevsW(
-          guid, nullptr, 0, sp.DIGCF_PRESENT | sp.DIGCF_DEVICEINTERFACE);
+    var devicePathList = using((Arena arena) {
+      final interfaceGuid = arena<GUID>()..ref.setGUID(GUID_DEVINTERFACE_HID);
+
+      final deviceInfoSetPtr = SetupDiGetClassDevs(
+          interfaceGuid, nullptr, NULL, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
       try {
-        return _iterateDevice(deviceInfoSetPtr, guid).toList();
+        return _iterateInterfacePath(deviceInfoSetPtr, interfaceGuid).toList();
       } finally {
-        _setupapi.SetupDiDestroyDeviceInfoList(deviceInfoSetPtr);
+        SetupDiDestroyDeviceInfoList(deviceInfoSetPtr);
       }
     });
 
-    return deviceIterable.map((path) {
-      var devHandle = using((Arena arena) {
-        var nativeUtf16 = path.toNativeUtf16(allocator: arena);
-        return CreateFile(nativeUtf16, 0, FILE_SHARE_READ | FILE_SHARE_WRITE,
-            nullptr, OPEN_EXISTING, 0, NULL);
-      });
-
-      if (devHandle == INVALID_HANDLE_VALUE) {
-        throw WindowsException(GetLastError());
-      }
-
+    return devicePathList.map((path) {
+      var pathPtr = calloc<Uint16>(path.length);
+      pathPtr.asTypedList(path.length).setRange(0, path.length, path);
+      var devHandle = CreateFile(pathPtr.cast(), 0,
+          FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, OPEN_EXISTING, 0, NULL);
       try {
         return {
-          'path': path,
+          'path': utf8.decode(path),
           ..._getAttributes(devHandle),
           ..._getPreparsedData(devHandle),
         };
       } finally {
+        calloc.free(pathPtr);
         CloseHandle(devHandle);
       }
     }).toList();
   }
 
-  Iterable<String> _iterateDevice(Pointer<Void> deviceInfoSetPtr, Pointer<GUID> hidInterfaceClassGuid) sync* {
-    var requiredSizePtr = calloc<UnsignedLong>();
-    var devicInterfaceDataPtr = calloc<sp.SP_DEVICE_INTERFACE_DATA>();
-    devicInterfaceDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DATA>();
-    
-    for (var index = 0; _setupapi.SetupDiEnumDeviceInterfaces(deviceInfoSetPtr, nullptr, hidInterfaceClassGuid, index, devicInterfaceDataPtr) == TRUE; index++) {
-      // Get requiredSize
-      _setupapi.SetupDiGetDeviceInterfaceDetailW(deviceInfoSetPtr, devicInterfaceDataPtr, nullptr, 0, requiredSizePtr, nullptr);
-    
-      var detailDataMemoryPtr = calloc<Uint16>(requiredSizePtr.value);
-    
-      try {
-        var deviceInterfaceDetailDataPtr = Pointer<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W>.fromAddress(detailDataMemoryPtr.address);
-        deviceInterfaceDetailDataPtr.ref.cbSize = sizeOf<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W>();
-    
-        var getDeviceInterfaceDetail = _setupapi.SetupDiGetDeviceInterfaceDetailW(deviceInfoSetPtr, devicInterfaceDataPtr, deviceInterfaceDetailDataPtr, requiredSizePtr.value, nullptr, nullptr);
-        if (getDeviceInterfaceDetail != TRUE) {
-          print('SetupDiGetDeviceInterfaceDetailW error ${GetLastError()}');
-          continue;
+  Iterable<Uint16List> _iterateInterfacePath(
+      Pointer deviceInfoSetPtr, Pointer<GUID> interfaceGuid) sync* {
+    final requiredSizePtr = calloc<Uint32>();
+    final devicInterfaceDataPtr = calloc<SP_DEVICE_INTERFACE_DATA>()
+      ..ref.cbSize = sizeOf<SP_DEVICE_INTERFACE_DATA>();
+    try {
+      for (var index = 0;
+          SetupDiEnumDeviceInterfaces(deviceInfoSetPtr, nullptr,
+                  interfaceGuid.cast(), index, devicInterfaceDataPtr) ==
+              TRUE;
+          index++) {
+        final hr = SetupDiGetDeviceInterfaceDetail(deviceInfoSetPtr,
+            devicInterfaceDataPtr, nullptr, 0, requiredSizePtr, nullptr);
+        // FIXME https://github.com/timsneath/win32/issues/384
+        // if (hr != TRUE) {
+        //   final error = GetLastError();
+        //   if (error != ERROR_INSUFFICIENT_BUFFER) {
+        //     print('SetupDiGetDeviceInterfaceDetail - Get Data Size error: $error');
+        //     throw WindowsException(error);
+        //   }
+        // }
+
+        final detailDataMemoryPtr = calloc<Uint16>(requiredSizePtr.value);
+
+        try {
+          final deviceInterfaceDetailDataPtr =
+              Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_>.fromAddress(
+                  detailDataMemoryPtr.address);
+          deviceInterfaceDetailDataPtr.ref.cbSize =
+              sizeOf<SP_DEVICE_INTERFACE_DETAIL_DATA_>();
+
+          final hr = SetupDiGetDeviceInterfaceDetail(
+              deviceInfoSetPtr,
+              devicInterfaceDataPtr,
+              deviceInterfaceDetailDataPtr,
+              requiredSizePtr.value,
+              nullptr,
+              nullptr);
+          if (hr != TRUE) {
+            print(
+                'SetupDiGetDeviceInterfaceDetail - Get Data error ${GetLastError()}');
+            continue;
+          }
+
+          // rawPathData would be freed with detailDataMemoryPtr
+          final rawPathData = deviceInterfaceDetailDataPtr
+              .getDevicePathData(requiredSizePtr.value);
+          yield Uint16List.fromList(rawPathData);
+        } finally {
+          calloc.free(detailDataMemoryPtr);
         }
-        yield utf8.decode(deviceInterfaceDetailDataPtr.getDevicePathData(requiredSizePtr.value));
-      } finally {
-        calloc.free(detailDataMemoryPtr);
       }
+
+      final error = GetLastError();
+      if (error != S_OK && error != ERROR_NO_MORE_ITEMS) {
+        throw WindowsException(error);
+      }
+    } finally {
+      calloc
+        ..free(requiredSizePtr)
+        ..free(devicInterfaceDataPtr);
     }
-    
-    calloc.free(requiredSizePtr);
-    calloc.free(devicInterfaceDataPtr);
   }
 
   Map<String, dynamic> _getAttributes(int devHandle) {
@@ -166,6 +193,9 @@ class LogicConfWindows extends LogicConfPlatform {
   }
 }
 
-extension Pointer_SP_DEVICE_INTERFACE_DETAIL_DATA_W on Pointer<sp.SP_DEVICE_INTERFACE_DETAIL_DATA_W> {
-  Uint16List getDevicePathData(int requiredSize) => Pointer<Uint16>.fromAddress(address).asTypedList(requiredSize).sublist(2);
+extension Pointer_SP_DEVICE_INTERFACE_DETAIL_DATA_
+    on Pointer<SP_DEVICE_INTERFACE_DETAIL_DATA_> {
+  /// FIXME [SP_DEVICE_INTERFACE_DETAIL_DATA_.DevicePath]
+  Uint16List getDevicePathData(int requiredSize) =>
+      Pointer<Uint16>.fromAddress(address).asTypedList(requiredSize).sublist(2);
 }

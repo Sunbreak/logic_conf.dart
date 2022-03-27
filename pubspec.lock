@@ -137,10 +137,12 @@ packages:
   win32:
     dependency: "direct main"
     description:
-      name: win32
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.3.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: "69eb7319b4eb423ac0fb049521bfef99ebad6d90"
+      url: "https://github.com/timsneath/win32"
+    source: git
+    version: "2.4.4"
   yaml:
     dependency: transitive
     description:
