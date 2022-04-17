@@ -7,8 +7,7 @@ environment:
   sdk: '>=2.16.0 <3.0.0'
 
 dependencies:
-  win32:
-    git: https://github.com/timsneath/win32
+  win32: ^2.5.1
   ffi: ^1.2.0-dev.0
 
 dev_dependencies:

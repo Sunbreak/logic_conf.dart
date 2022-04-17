@@ -6,7 +6,6 @@ import 'package:ffi/ffi.dart';
 import 'package:win32/win32.dart';
 
 import 'logic_conf_interface.dart';
-import 'windows/constants.dart';
 import 'windows/hidsdi.dart' as hid;
 
 class LogicConfWindows extends LogicConfPlatform {
@@ -19,12 +18,12 @@ class LogicConfWindows extends LogicConfPlatform {
     var devicePathList = using((Arena arena) {
       final interfaceGuid = arena<GUID>()..ref.setGUID(GUID_DEVINTERFACE_HID);
 
-      final deviceInfoSetPtr = SetupDiGetClassDevs(
+      final hDevInfo = SetupDiGetClassDevs(
           interfaceGuid, nullptr, NULL, DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
       try {
-        return _iterateInterfacePath(deviceInfoSetPtr, interfaceGuid).toList();
+        return _deviceByInterface(hDevInfo, interfaceGuid).toList();
       } finally {
-        SetupDiDestroyDeviceInfoList(deviceInfoSetPtr);
+        SetupDiDestroyDeviceInfoList(hDevInfo);
       }
     });
 
@@ -46,18 +45,18 @@ class LogicConfWindows extends LogicConfPlatform {
     }).toList();
   }
 
-  Iterable<Uint16List> _iterateInterfacePath(
-      Pointer deviceInfoSetPtr, Pointer<GUID> interfaceGuid) sync* {
+  Iterable<Uint16List> _deviceByInterface(
+      int hDevInfo, Pointer<GUID> interfaceGuid) sync* {
     final requiredSizePtr = calloc<Uint32>();
     final devicInterfaceDataPtr = calloc<SP_DEVICE_INTERFACE_DATA>()
       ..ref.cbSize = sizeOf<SP_DEVICE_INTERFACE_DATA>();
     try {
       for (var index = 0;
-          SetupDiEnumDeviceInterfaces(deviceInfoSetPtr, nullptr,
+          SetupDiEnumDeviceInterfaces(hDevInfo, nullptr,
                   interfaceGuid.cast(), index, devicInterfaceDataPtr) ==
               TRUE;
           index++) {
-        final hr = SetupDiGetDeviceInterfaceDetail(deviceInfoSetPtr,
+        final hr = SetupDiGetDeviceInterfaceDetail(hDevInfo,
             devicInterfaceDataPtr, nullptr, 0, requiredSizePtr, nullptr);
         // FIXME https://github.com/timsneath/win32/issues/384
         // if (hr != TRUE) {
@@ -78,7 +77,7 @@ class LogicConfWindows extends LogicConfPlatform {
               sizeOf<SP_DEVICE_INTERFACE_DETAIL_DATA_>();
 
           final hr = SetupDiGetDeviceInterfaceDetail(
-              deviceInfoSetPtr,
+              hDevInfo,
               devicInterfaceDataPtr,
               deviceInterfaceDetailDataPtr,
               requiredSizePtr.value,
