@@ -22,7 +22,7 @@ class IOKit {
 
   IOHIDDeviceRef IOHIDDeviceCreate(
     pkg_corefoundation.CFAllocatorRef allocator,
-    io_service_t service,
+    int service,
   ) {
     return _IOHIDDeviceCreate(
       allocator,
@@ -35,10 +35,9 @@ class IOKit {
           IOHIDDeviceRef Function(pkg_corefoundation.CFAllocatorRef,
               io_service_t)>>('IOHIDDeviceCreate');
   late final _IOHIDDeviceCreate = _IOHIDDeviceCreatePtr.asFunction<
-      IOHIDDeviceRef Function(
-          pkg_corefoundation.CFAllocatorRef, io_service_t)>();
+      IOHIDDeviceRef Function(pkg_corefoundation.CFAllocatorRef, int)>();
 
-  io_service_t IOHIDDeviceGetService(
+  int IOHIDDeviceGetService(
     IOHIDDeviceRef device,
   ) {
     return _IOHIDDeviceGetService(
@@ -49,8 +48,8 @@ class IOKit {
   late final _IOHIDDeviceGetServicePtr =
       _lookup<ffi.NativeFunction<io_service_t Function(IOHIDDeviceRef)>>(
           'IOHIDDeviceGetService');
-  late final _IOHIDDeviceGetService = _IOHIDDeviceGetServicePtr.asFunction<
-      io_service_t Function(IOHIDDeviceRef)>();
+  late final _IOHIDDeviceGetService =
+      _IOHIDDeviceGetServicePtr.asFunction<int Function(IOHIDDeviceRef)>();
 
   int IOHIDDeviceOpen(
     IOHIDDeviceRef device,
@@ -192,7 +191,7 @@ class IOKit {
       pkg_corefoundation.CFSetRef Function(IOHIDManagerRef)>();
 
   int IOObjectRelease(
-    io_object_t object,
+    int object,
   ) {
     return _IOObjectRelease(
       object,
@@ -203,10 +202,10 @@ class IOKit {
       _lookup<ffi.NativeFunction<kern_return_t Function(io_object_t)>>(
           'IOObjectRelease');
   late final _IOObjectRelease =
-      _IOObjectReleasePtr.asFunction<int Function(io_object_t)>();
+      _IOObjectReleasePtr.asFunction<int Function(int)>();
 
-  io_registry_entry_t IORegistryEntryFromPath(
-    mach_port_t masterPort,
+  int IORegistryEntryFromPath(
+    int masterPort,
     ffi.Pointer<pkg_ffi.Char> path,
   ) {
     return _IORegistryEntryFromPath(
@@ -220,10 +219,10 @@ class IOKit {
           io_registry_entry_t Function(mach_port_t,
               ffi.Pointer<pkg_ffi.Char>)>>('IORegistryEntryFromPath');
   late final _IORegistryEntryFromPath = _IORegistryEntryFromPathPtr.asFunction<
-      io_registry_entry_t Function(mach_port_t, ffi.Pointer<pkg_ffi.Char>)>();
+      int Function(int, ffi.Pointer<pkg_ffi.Char>)>();
 
   int IORegistryEntryGetPath(
-    io_registry_entry_t entry,
+    int entry,
     ffi.Pointer<pkg_ffi.Char> plane,
     ffi.Pointer<pkg_ffi.Char> path,
   ) {
@@ -239,8 +238,8 @@ class IOKit {
           kern_return_t Function(io_registry_entry_t, ffi.Pointer<pkg_ffi.Char>,
               ffi.Pointer<pkg_ffi.Char>)>>('IORegistryEntryGetPath');
   late final _IORegistryEntryGetPath = _IORegistryEntryGetPathPtr.asFunction<
-      int Function(io_registry_entry_t, ffi.Pointer<pkg_ffi.Char>,
-          ffi.Pointer<pkg_ffi.Char>)>();
+      int Function(
+          int, ffi.Pointer<pkg_ffi.Char>, ffi.Pointer<pkg_ffi.Char>)>();
 }
 
 typedef IOHIDDeviceRef = ffi.Pointer<__IOHIDDevice>;
@@ -248,10 +247,11 @@ typedef IOHIDDeviceRef = ffi.Pointer<__IOHIDDevice>;
 class __IOHIDDevice extends ffi.Opaque {}
 
 typedef io_service_t = io_object_t;
-typedef io_object_t = ffi.Pointer<OSObject>;
-
-class OSObject extends ffi.Opaque {}
-
+typedef io_object_t = mach_port_t;
+typedef mach_port_t = __darwin_mach_port_t;
+typedef __darwin_mach_port_t = __darwin_mach_port_name_t;
+typedef __darwin_mach_port_name_t = __darwin_natural_t;
+typedef __darwin_natural_t = pkg_ffi.UnsignedInt;
 typedef IOReturn = kern_return_t;
 typedef kern_return_t = pkg_ffi.Int;
 typedef IOOptionBits = UInt32;
@@ -271,12 +271,10 @@ typedef IOHIDManagerRef = ffi.Pointer<__IOHIDManager>;
 class __IOHIDManager extends ffi.Opaque {}
 
 typedef io_registry_entry_t = io_object_t;
-typedef mach_port_t = ipc_port_t;
-typedef ipc_port_t = ffi.Pointer<ipc_port>;
-
-class ipc_port extends ffi.Opaque {}
 
 const int kIOReturnSuccess = 0;
+
+const int MACH_PORT_NULL = 0;
 
 const String kIOServicePlane = 'IOService';
 

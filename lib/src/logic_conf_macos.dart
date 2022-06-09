@@ -13,7 +13,7 @@ class LogicConfMacos extends LogicConfPlatform {
 
   final _io = IOKit(DynamicLibrary.open('/System/Library/Frameworks/IOKit.framework/Resources/BridgeSupport/IOKit.dylib'));
 
-  io_service_t _entryPtr = nullptr;
+  Pointer<io_service_t> _entryPtr = nullptr;
 
   IOHIDDeviceRef _devicePtr = nullptr;
 
@@ -125,7 +125,8 @@ class LogicConfMacos extends LogicConfPlatform {
   bool openDevice(String path) {
     _entryPtr = using((Arena arena) {
       var nativeUtf8 = path.toNativeUtf8(allocator: arena);
-      return _io.IORegistryEntryFromPath(kIOMasterPortDefault, nativeUtf8.cast());
+      return calloc<io_service_t>()
+        ..value = _io.IORegistryEntryFromPath(kIOMasterPortDefault, nativeUtf8.cast());
     });
 
     if (_entryPtr == nullptr) {
@@ -133,7 +134,7 @@ class LogicConfMacos extends LogicConfPlatform {
         return false;
     }
 
-    _devicePtr = _io.IOHIDDeviceCreate(kCFAllocatorDefault, _entryPtr);
+    _devicePtr = _io.IOHIDDeviceCreate(kCFAllocatorDefault, _entryPtr.value);
     if (_devicePtr == nullptr) {
       print('IOHIDDeviceCreate error');
       return false;
@@ -154,7 +155,8 @@ class LogicConfMacos extends LogicConfPlatform {
       _cf.CFRelease(_devicePtr.cast());
     }
     if (_entryPtr != nullptr) {
-      _io.IOObjectRelease(_entryPtr);
+      _io.IOObjectRelease(_entryPtr.value);
+      calloc.free(_entryPtr);
     }
   }
   

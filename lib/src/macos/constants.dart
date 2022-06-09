@@ -1,5 +1,7 @@
 import 'dart:ffi';
 
+import 'iokit.dart';
+
 /* stdbool.h */
 const True = 1;
 const False = 0;
@@ -24,7 +26,7 @@ const kCFStringEncodingUTF8 = 0x08000100;
 
 
 /* IOKit */
-final kIOMasterPortDefault = nullptr;
+final kIOMasterPortDefault = MACH_PORT_NULL;
 
 // TODO enum
 const kIOHIDOptionsTypeNone         = 0x00;

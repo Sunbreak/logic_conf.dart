@@ -5,6 +5,8 @@
 
 #define kIOReturnSuccess         KERN_SUCCESS            // OK
 
+#define MACH_PORT_NULL          0
+
 /* IOKit/hid/IOHIDDevice.h */
 CF_EXPORT
 IOHIDDeviceRef _Nullable IOHIDDeviceCreate(
