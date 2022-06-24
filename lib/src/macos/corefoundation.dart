@@ -191,8 +191,7 @@ class CoreFoundation {
               CFStringEncoding)>>('CFStringCreateWithCString');
   late final _CFStringCreateWithCString =
       _CFStringCreateWithCStringPtr.asFunction<
-          CFStringRef Function(
-              CFAllocatorRef, ffi.Pointer<ffi.Char>, int)>();
+          CFStringRef Function(CFAllocatorRef, ffi.Pointer<ffi.Char>, int)>();
 }
 
 typedef CFTypeID = ffi.UnsignedLong;

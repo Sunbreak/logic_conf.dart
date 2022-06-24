@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:ffi/ffi.dart';
 import 'package:udev/udev.dart';
 
-import 'linux/hidraw.dart';
+import 'linux/constants.dart';
 import 'logic_conf_interface.dart';
 import 'linux/libc.dart';
 

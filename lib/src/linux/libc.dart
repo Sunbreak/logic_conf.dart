@@ -29,9 +29,8 @@ class LibC {
   }
 
   late final _open2Ptr = _lookup<
-      ffi.NativeFunction<
-          ffi.Int Function(
-              ffi.Pointer<ffi.Char>, ffi.Int)>>('open');
+          ffi.NativeFunction<ffi.Int Function(ffi.Pointer<ffi.Char>, ffi.Int)>>(
+      'open');
   late final _open2 =
       _open2Ptr.asFunction<int Function(ffi.Pointer<ffi.Char>, int)>();
 
@@ -61,8 +60,7 @@ class LibC {
 
   late final _readPtr = _lookup<
       ffi.NativeFunction<
-          ssize_t Function(
-              ffi.Int, ffi.Pointer<ffi.Void>, ffi.Size)>>('read');
+          ssize_t Function(ffi.Int, ffi.Pointer<ffi.Void>, ffi.Size)>>('read');
   late final _read =
       _readPtr.asFunction<int Function(int, ffi.Pointer<ffi.Void>, int)>();
 
@@ -80,8 +78,7 @@ class LibC {
 
   late final _writePtr = _lookup<
       ffi.NativeFunction<
-          ssize_t Function(
-              ffi.Int, ffi.Pointer<ffi.Void>, ffi.Size)>>('write');
+          ssize_t Function(ffi.Int, ffi.Pointer<ffi.Void>, ffi.Size)>>('write');
   late final _write =
       _writePtr.asFunction<int Function(int, ffi.Pointer<ffi.Void>, int)>();
 }

@@ -216,8 +216,8 @@ class IOKit {
 
   late final _IORegistryEntryFromPathPtr = _lookup<
       ffi.NativeFunction<
-          io_registry_entry_t Function(mach_port_t,
-              ffi.Pointer<ffi.Char>)>>('IORegistryEntryFromPath');
+          io_registry_entry_t Function(
+              mach_port_t, ffi.Pointer<ffi.Char>)>>('IORegistryEntryFromPath');
   late final _IORegistryEntryFromPath = _IORegistryEntryFromPathPtr.asFunction<
       io_registry_entry_t Function(mach_port_t, ffi.Pointer<ffi.Char>)>();
 
@@ -238,8 +238,8 @@ class IOKit {
           kern_return_t Function(io_registry_entry_t, ffi.Pointer<ffi.Char>,
               ffi.Pointer<ffi.Char>)>>('IORegistryEntryGetPath');
   late final _IORegistryEntryGetPath = _IORegistryEntryGetPathPtr.asFunction<
-      int Function(io_registry_entry_t, ffi.Pointer<ffi.Char>,
-          ffi.Pointer<ffi.Char>)>();
+      int Function(
+          io_registry_entry_t, ffi.Pointer<ffi.Char>, ffi.Pointer<ffi.Char>)>();
 }
 
 typedef IOHIDDeviceRef = ffi.Pointer<__IOHIDDevice>;
