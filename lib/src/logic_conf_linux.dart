@@ -2,9 +2,9 @@ import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:ffi/ffi.dart';
+import 'package:udev/udev.dart';
 
 import 'linux/hidraw.dart';
-import 'linux/libudev.dart';
 import 'logic_conf_interface.dart';
 import 'linux/libc.dart';
 
@@ -13,45 +13,33 @@ class LogicConfLinux extends LogicConfPlatform {
 
   final _libc = LibC(DynamicLibrary.open('libc.so.6'));
 
-  final _libudev = Libudev(DynamicLibrary.open('libudev.so.1'));
 
   @override
   List<dynamic> listDevices() {
-    var udevContext = _libudev.udev_new();
-    if (udevContext == nullptr) {
-      // TODO strerror()
-      print('Create udev context error');
-      return [];
-    }
-
-    var enumerateContext = _libudev.udev_enumerate_new(udevContext);
+    var udevContext = UdevContext();
     try {
-      using((Arena arena) {
-        var nativeUtf8 = 'hidraw'.toNativeUtf8(allocator: arena);
-        return _libudev.udev_enumerate_add_match_subsystem(enumerateContext, nativeUtf8.cast());
-      });
-      _libudev.udev_enumerate_scan_devices(enumerateContext);
+      if (udevContext.toPointer() == nullptr) {
+        // TODO strerror()
+        print('Create udev context error');
+        return [];
+      }
 
-      var deviceList = _libudev.udev_enumerate_get_list_entry(enumerateContext);
-
-      return _interateDevice(udevContext, deviceList).toList();
+      var syspaths = udevContext.scanDevices(subsystems: ['hidraw']);
+      return _interateDevice(udevContext, syspaths).toList();
     } finally {
-      _libudev.udev_enumerate_unref(enumerateContext);
-      _libudev.udev_unref(udevContext);
+      udevContext.dispose();
     }
   }
 
-  Iterable<Map<String, dynamic>> _interateDevice(Pointer<udev> udevContext, Pointer<udev_list_entry> deviceList) sync* {
-    for (var entry = deviceList; entry != nullptr; entry = _libudev.udev_list_entry_get_next(entry)) {
-      var sysfsPath = _libudev.udev_list_entry_get_name(entry);
-      var rawDevice = _libudev.udev_device_new_from_syspath(udevContext, sysfsPath);
-      var sysAttributes = _getSysAttributes(rawDevice);
-      _libudev.udev_device_unref(rawDevice);
+  Iterable<Map<String, dynamic>> _interateDevice(UdevContext udevContext, List<String> syspaths) sync* {
+    for (var path in syspaths) {
+      var udevDevice = UdevDevice.fromSyspath(path, context: udevContext);
+      var sysAttributes = _getSysAttributes(udevDevice, context: udevContext);
       if (sysAttributes == null) {
         continue;
       }
     
-      var reportDescriptorValue = _readReportDescriptor(sysfsPath.cast<Utf8>().toDartString());
+      var reportDescriptorValue = _readReportDescriptor(path);
       if (reportDescriptorValue == null) {
         continue;
       }
@@ -70,23 +58,10 @@ class LogicConfLinux extends LogicConfPlatform {
     }
   }
 
-  Map<String, dynamic>? _getSysAttributes(Pointer<udev_device> rawDevice) {
-    // Do not unref parent
-    var parentDevice = using((Arena arena) {
-      var nativeUtf8 = 'hid'.toNativeUtf8(allocator: arena);
-      return _libudev.udev_device_get_parent_with_subsystem_devtype(rawDevice, nativeUtf8.cast(), nullptr);
-    });
-    if (parentDevice == nullptr) {
-      return null;
-    }
+  Map<String, dynamic>? _getSysAttributes(UdevDevice udevDevice, {UdevContext? context}) {
+    var parentDevice = udevDevice.getParentWithSubsystemDevtype('hid', context: context);
+    var sysAttributeValues = parentDevice?.getSysattrValue('uevent') ?? '';
 
-    var path = _libudev.udev_device_get_devnode(rawDevice).cast<Utf8>().toDartString();
-    
-    var sysAttributeValuesPtr = using((Arena arena) {
-      var nativeUtf8 = 'uevent'.toNativeUtf8(allocator: arena);
-      return _libudev.udev_device_get_sysattr_value(parentDevice, nativeUtf8.cast());
-    });
-    var sysAttributeValues = sysAttributeValuesPtr.cast<Utf8>().toDartString();
     for (var attributeValue in sysAttributeValues.split('\n')) {
       if (!attributeValue.contains('=')) continue;
 
@@ -97,7 +72,7 @@ class LogicConfLinux extends LogicConfPlatform {
       if (key == 'HID_ID') { // HID_ID=0003:000005AC:00008242
         var split = value.split(':');
         return {
-          'path': path,
+          'path': udevDevice.devnode,
           'vendorId': int.parse(split[1], radix: 16),
           'productId': int.parse(split[2], radix: 16),
         };
