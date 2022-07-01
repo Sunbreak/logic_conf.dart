@@ -17,23 +17,19 @@ class LogicConfLinux extends LogicConfPlatform {
   @override
   List<dynamic> listDevices() {
     var udevContext = UdevContext();
-    try {
-      if (udevContext.toPointer() == nullptr) {
-        // TODO strerror()
-        print('Create udev context error');
-        return [];
-      }
-
-      var syspaths = udevContext.scanDevices(subsystems: ['hidraw']);
-      return _interateDevice(udevContext, syspaths).toList();
-    } finally {
-      udevContext.dispose();
+    if (udevContext.toPointer() == nullptr) {
+      // TODO strerror()
+      print('Create udev context error');
+      return [];
     }
+
+    var syspaths = udevContext.scanDevices(subsystems: ['hidraw']);
+    return _interateDevice(udevContext, syspaths).toList();
   }
 
-  Iterable<Map<String, dynamic>> _interateDevice(UdevContext udevContext, List<String> syspaths) sync* {
+  Iterable<Map<String, dynamic>> _interateDevice(UdevContext udevContext, Iterable<String> syspaths) sync* {
     for (var path in syspaths) {
-      var udevDevice = UdevDevice.fromSyspath(path, context: udevContext);
+      var udevDevice = UdevDevices.fromSyspath(path, context: udevContext);
       var sysAttributes = _getSysAttributes(udevDevice, context: udevContext);
       if (sysAttributes == null) {
         continue;
@@ -59,7 +55,7 @@ class LogicConfLinux extends LogicConfPlatform {
   }
 
   Map<String, dynamic>? _getSysAttributes(UdevDevice udevDevice, {UdevContext? context}) {
-    var parentDevice = udevDevice.getParentWithSubsystemDevtype('hid', context: context);
+    var parentDevice = udevDevice.getParentWithSubsystemDevtype('hid');
     var sysAttributeValues = parentDevice?.getSysattrValue('uevent') ?? '';
 
     for (var attributeValue in sysAttributeValues.split('\n')) {
