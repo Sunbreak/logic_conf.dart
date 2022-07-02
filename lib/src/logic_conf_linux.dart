@@ -56,7 +56,7 @@ class LogicConfLinux extends LogicConfPlatform {
 
   Map<String, dynamic>? _getSysAttributes(UdevDevice udevDevice, {UdevContext? context}) {
     var parentDevice = udevDevice.getParentWithSubsystemDevtype('hid');
-    var sysAttributeValues = parentDevice?.getSysattrValue('uevent') ?? '';
+    var sysAttributeValues = parentDevice?.sysattrs['uevent'] ?? '';
 
     for (var attributeValue in sysAttributeValues.split('\n')) {
       if (!attributeValue.contains('=')) continue;
