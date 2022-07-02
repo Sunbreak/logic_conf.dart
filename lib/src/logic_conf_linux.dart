@@ -1,18 +1,14 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
-import 'package:ffi/ffi.dart';
+import 'package:stdlibc/stdlibc.dart';
 import 'package:udev/udev.dart';
 
 import 'linux/constants.dart';
 import 'logic_conf_interface.dart';
-import 'linux/libc.dart';
 
 class LogicConfLinux extends LogicConfPlatform {
   int _devDescriptor = -1;
-
-  final _libc = LibC(DynamicLibrary.open('libc.so.6'));
-
 
   @override
   List<dynamic> listDevices() {
@@ -79,28 +75,12 @@ class LogicConfLinux extends LogicConfPlatform {
   }
 
   Uint8List? _readReportDescriptor(String sysfsPath) {
-    var reportDescriptor = using((Arena arena) {
-      var nativeUtf8 = '$sysfsPath/device/report_descriptor'.toNativeUtf8(allocator: arena);
-      return _libc.open2(nativeUtf8.cast(), O_RDONLY);
-    });
-    if (reportDescriptor < 0) {
-      // TODO strerror()
-      print('open error');
-      return null;
-    }
-    
-    var buffer = calloc<Uint8>(HID_MAX_DESCRIPTOR_SIZE);
+    var reportDescriptor = open('$sysfsPath/device/report_descriptor');
     try {
-      var readLength = _libc.read(reportDescriptor, buffer.cast(), HID_MAX_DESCRIPTOR_SIZE);
-      if (readLength < 0) {
-        // TODO strerror()
-        print('read error');
-        return null;
-      }
-      return Uint8List.fromList(buffer.asTypedList(readLength));
+      var buffer = read(reportDescriptor, HID_MAX_DESCRIPTOR_SIZE);
+      return Uint8List.fromList(buffer);
     } finally {
-      _libc.close(reportDescriptor);
-      calloc.free(buffer);
+      close(reportDescriptor);
     }
   }
 
@@ -194,35 +174,19 @@ class LogicConfLinux extends LogicConfPlatform {
 
   @override
   bool openDevice(String path) {
-    var descriptor = using((Arena arena) {
-      var nativeUtf8 = path.toNativeUtf8(allocator: arena);
-      return _libc.open2(nativeUtf8.cast(), O_RDWR);
-    });
-
-    if (descriptor < 0) {
-      // TODO strerror()
-      print('open2 error');
-      return false;
-    };
-    _devDescriptor = descriptor;
+    _devDescriptor = open(path);
     return true;
   }
 
   @override
   void closeDevice() {
     if (_devDescriptor >= 0) {
-      _libc.close(_devDescriptor);
+      close(_devDescriptor);
     }
   }
 
   @override
   int sendData(Uint8List data) {
-    var dataPtr = calloc<Uint8>(data.length);
-    dataPtr.asTypedList(data.length).setAll(0, data);
-    try {
-      return _libc.write(_devDescriptor, dataPtr.cast(), data.length);
-    } finally {
-      calloc.free(dataPtr);
-    }
+    return write(_devDescriptor, data);
   }
 }
